@@ -153,39 +153,10 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Card 2: Minimalist T-shirt Pattern (SVG) */}
+          {/* Card 2: Gradient background */}
           <div className={styles.featureCard}>
             <div className={`${styles.cardVisual} ${styles.visualPattern}`}>
-              <div className={styles.apparelGrid}>
-                <div className={`${styles.apparelItem} ${styles.apparelTee}`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
-                    <path d="M20.38 3.46L16 6a2 2 0 01-2-2V2H10v2a2 2 0 01-2 2L3.62 3.46a2 2 0 00-2.54.85l-1 1.73a2 2 0 00.75 2.74L4 10.27V19a2 2 0 002 2h12a2 2 0 002-2v-8.73l3.17-1.49a2 2 0 00.75-2.74l-1-1.73a2 2 0 00-2.54-.85z" />
-                  </svg>
-                  <span>티셔츠</span>
-                </div>
-                <div className={`${styles.apparelItem} ${styles.apparelHoodie}`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
-                    <path d="M18 10h-2V7a4 4 0 00-8 0v3H6a2 2 0 00-2 2v7a2 2 0 002 2h12a2 2 0 002-2v-7a2 2 0 00-2-2z" />
-                    <path d="M9 10v3a3 3 0 006 0v-3" />
-                  </svg>
-                  <span>후디</span>
-                </div>
-                <div className={`${styles.apparelItem} ${styles.apparelCap}`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
-                    <path d="M2 18h14a6 6 0 10-12 0h-2z" />
-                    <path d="M12 6a2 2 0 110 4 2 2 0 010-4z" />
-                    <path d="M16 14h6a2 2 0 012 2v1a1 1 0 01-1 1h-7" />
-                  </svg>
-                  <span>모자</span>
-                </div>
-                <div className={`${styles.apparelItem} ${styles.apparelTote}`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
-                    <path d="M6 2v4h12V2" />
-                    <path d="M4 6h16l-1.5 14H5.5L4 6z" />
-                  </svg>
-                  <span>에코백</span>
-                </div>
-              </div>
+              {/* Plain gradient wave background with no floating elements */}
             </div>
             <p className={styles.cardCaption}>
               팀의 개성을 돋보이게 할 다채로운 라이프스타일 웨어 제안
