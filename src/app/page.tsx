@@ -20,13 +20,32 @@ export default function Home() {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: scrollContainerRef,
-    offset: ["start start", "end end"],
-  });
-
   useEffect(() => {
     const handleScroll = () => {
+      // Calculate scroll progress manually for the hero section to prevent bugs with Framer Motion useScroll
+      if (scrollContainerRef.current) {
+        const rect = scrollContainerRef.current.getBoundingClientRect();
+        const containerTop = rect.top + window.scrollY;
+        const containerHeight = rect.height;
+        const viewportHeight = window.innerHeight;
+        
+        const scrollStart = containerTop;
+        const scrollEnd = containerTop + containerHeight - viewportHeight;
+        
+        let progress = 0;
+        if (window.scrollY > scrollStart) {
+          progress = (window.scrollY - scrollStart) / (scrollEnd - scrollStart);
+        }
+        if (progress > 1) progress = 1;
+        if (progress < 0) progress = 0;
+        
+        let index = Math.floor(progress * 4);
+        if (index > 3) index = 3;
+        if (index < 0) index = 0;
+        
+        setActiveImageIdx(index);
+      }
+
       // Show floating CTA once we scroll past 50% of viewport height
       if (window.scrollY > window.innerHeight * 0.5) {
         setShowFloatingCta(true);
@@ -36,16 +55,11 @@ export default function Home() {
     };
 
     window.addEventListener("scroll", handleScroll);
+    // Initialize immediately
+    handleScroll();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Map scroll progress [0, 1] to index 0, 1, 2, 3
-    let index = Math.floor(latest * 4);
-    if (index > 3) index = 3;
-    if (index < 0) index = 0;
-    setActiveImageIdx(index);
-  });
 
   // Framer Motion Custom Transition
   const customTransition = {
