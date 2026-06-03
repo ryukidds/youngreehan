@@ -137,9 +137,6 @@ export default function Home() {
               디자인 구상부터 최종 배송까지, 가장 스마트하고 유연한 방식으로 단체티와 굿즈를 기획하세요.
             </p>
           </div>
-          <Link href="/collections/all" className={styles.featuresLearnMore}>
-            더 알아보기
-          </Link>
         </div>
 
         <div className={styles.featuresGrid}>

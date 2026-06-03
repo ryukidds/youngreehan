@@ -192,8 +192,8 @@
 
 .productsGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 48px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
   width: 100%;
 }
 
@@ -307,6 +307,11 @@
   
   .heroLayout {
     gap: 24px;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
   }
 }
 
