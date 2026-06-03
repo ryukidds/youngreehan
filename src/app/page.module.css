@@ -228,10 +228,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px;
 }
 
 .productImage {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }

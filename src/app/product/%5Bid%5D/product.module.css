@@ -46,10 +46,11 @@
   align-items: center;
   overflow: hidden;
   position: relative;
+  padding: 24px;
 }
 
 .mainImage {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
   transition: transform 0.4s var(--transition-smooth);
