@@ -2584,4 +2584,1938 @@ export const products: Product[] = [
     sizes: ["FREE"],
     sizeUpcharges: {}
   },
+  {
+    id: "63000",
+    name: "63000 아시아 핏 베이직 티셔츠 (면30수)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "150 g/m² (4.5 oz per sq yd)",
+    description: "100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, see color list for details | Single needle 2cm collar | Taped neck and shoulders | Double needle sleeve and bottom hems | TearAway label | Quarterturned to eliminate center crease | Sizes: XS~3XL | 12 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "데이지",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "라임",
+          "hex": "#84cc16",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "퍼플",
+          "hex": "#48339b",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "라이트 블루",
+          "hex": "#a2dbe7",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "76000",
+    name: "76000 아시아 핏 프리미엄 티셔츠 (면24수)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "180g/m/two.numerator (5.3 oz per sq yd)",
+    description: "100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, | Taped neck and shoulders | Satin label | Double needle sleeve and bottom hems | Single needle 2cm collar | Quarterturned to eliminate center crease | Sizes: XS~5XL | 32 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "헬리코니아",
+          "hex": "#e6006f",
+          "image": ""
+        },
+        {
+          "name": "사파이어",
+          "hex": "#00a2cc",
+          "image": ""
+        },
+        {
+          "name": "라이트 블루",
+          "hex": "#a2dbe7",
+          "image": ""
+        },
+        {
+          "name": "캐롤라이나 블루",
+          "hex": "#a2dbe7",
+          "image": ""
+        },
+        {
+          "name": "다크 초콜릿",
+          "hex": "#3b2314",
+          "image": ""
+        },
+        {
+          "name": "샌드",
+          "hex": "#e2dbcd",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "그래블",
+          "hex": "#5e5f61",
+          "image": ""
+        },
+        {
+          "name": "퍼플",
+          "hex": "#48339b",
+          "image": ""
+        },
+        {
+          "name": "바이올렛",
+          "hex": "#7c3aed",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "세이프티 핑크",
+          "hex": "#ff5fa2",
+          "image": ""
+        },
+        {
+          "name": "코랄 실크",
+          "hex": "#ff7f50",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "데이지",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "라임",
+          "hex": "#84cc16",
+          "image": ""
+        },
+        {
+          "name": "밀리터리 그린",
+          "hex": "#4a533c",
+          "image": ""
+        },
+        {
+          "name": "세이프티 오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "네온 핑크",
+          "hex": "#ff1493",
+          "image": ""
+        },
+        {
+          "name": "네온 그린",
+          "hex": "#39ff14",
+          "image": ""
+        },
+        {
+          "name": "세이프티 그린",
+          "hex": "#adff2f",
+          "image": ""
+        }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500, "4XL": 2000, "5XL": 2500}
+  },
+  {
+    id: "76000l",
+    name: "76000L 여성용 프리미엄 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "180g/m/two.numerator (5.3 oz per sq yd)",
+    description: "100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, see color list for details | Taped neck and shoulders | Satin label | Double needle sleeve and bottom hems | Semi/f_itted contoured silhouette with side seam | Single needle 1.3cm collar | Sizes: LS~LXL | 8 colors | 180g/m² (5.3 oz per sq yd) | 100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, see color list for details | Taped neck and shoulders | Satin label | Double needle sleeve and bottom hems | Single needle 1.5cm collar | Sideseamed | CPSIA tracking label compliant | Sizes: XS~XL | 12 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "퍼플",
+          "hex": "#48339b",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "세이프티 핑크",
+          "hex": "#ff5fa2",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "데이지",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "라임",
+          "hex": "#84cc16",
+          "image": ""
+        },
+        {
+          "name": "사파이어",
+          "hex": "#00a2cc",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "헬리코니아",
+          "hex": "#e6006f",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "76000b",
+    name: "76000B 아동용 프리미엄 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "180g/m/two.numerator (5.3 oz per sq yd)",
+    description: "100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, see color list for details | Taped neck and shoulders | Satin label | Double needle sleeve and bottom hems | Semi/f_itted contoured silhouette with side seam | Single needle 1.3cm collar | Sizes: LS~LXL | 8 colors | 180g/m² (5.3 oz per sq yd) | 100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, see color list for details | Taped neck and shoulders | Satin label | Double needle sleeve and bottom hems | Single needle 1.5cm collar | Sideseamed | CPSIA tracking label compliant | Sizes: XS~XL | 12 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "퍼플",
+          "hex": "#48339b",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "세이프티 핑크",
+          "hex": "#ff5fa2",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "데이지",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "라임",
+          "hex": "#84cc16",
+          "image": ""
+        },
+        {
+          "name": "사파이어",
+          "hex": "#00a2cc",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "헬리코니아",
+          "hex": "#e6006f",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "76500",
+    name: "76500 프리미엄 나그랑 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "180g/m² (5.3 oz per sq yd)",
+    description: "100% ring spun cotton preshrunk jersey knit | Fiber content varies by color, see color list for details | Satin label | Double needle sleeve and bottom hems | Quarterturned to eliminate center crease | Contrast color 2cm seamed collar | Raglan short sleeves | Sizes: S~2XL | 4 color combinations",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "ha00",
+    name: "HA00 해머 헤비웨이트 티셔츠 (면20수)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "203g/m² (6 oz per sq yd)",
+    description: "100% Ring Spun Cotton | Fiber content varies by color, see color list for details | High stitch density for smoother printing surface | Classic ﬁt | 2.3 cm rib collar | Taped neck and shoulders | 2.0 cm double needle sleeve and bottom hems | TearAway label | Quarterturned to eliminate center crease | Sizes: S~3XL | 12 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "코랄 실크",
+          "hex": "#ff7f50",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "샌드",
+          "hex": "#e2dbcd",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "슬레이트",
+          "hex": "#5b6d7a",
+          "image": ""
+        },
+        {
+          "name": "데님",
+          "hex": "#536881",
+          "image": ""
+        },
+        {
+          "name": "마룬",
+          "hex": "#731630",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "858a0",
+    name: "858A0 더블 피케 카라티셔츠 (폴로)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "220g/m2 (6.5 oz per sq yd)",
+    description: "100% cotton | Soft, heavyweight ring spun cotton double piqué fabric | Flat knit rib collar | 3 colormatched pearlized buttons | Rolled forward shoulder for an even more comfortable /f_it | Rib /f_inished sleeves | Double needle bottom hem | Sizes: S~2XL | 4 colors",
+    basePrice: 12000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1500}
+  },
+  {
+    id: "88000",
+    name: "88000 헤비블렌드 크루넥 맨투맨 (8.4oz)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "285g/m/two.numerator (8.4 oz per sq yd)",
+    description: "50% cotton / 50% polyester preshrunk /f_leece knit | Air jet yarns = softer feel and reduced pilling | Satin label | Sideseamed | 1 x 1 rib with spandex | Double needle stitching at waistband and cuﬀs | Quarterturned to eliminate center crease | Sizes: XS~2XL | 5 colors",
+    basePrice: 18000,
+    colors: [
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 2000}
+  },
+  {
+    id: "88500",
+    name: "88500 헤비블렌드 풀오버 후드티 (8.4oz)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "285g/m/two.numerator (8.4 oz per sq yd)",
+    description: "50% cotton / 50% polyester preshrunk /f_leece knit | Air jet yarns = softer feel and reduced pilling | Satin label | Sideseamed | Double needle stitching at waistband and cuﬀs | 1 x 1 rib with spandex | Quarterturned to eliminate center crease | Doublelined hood with colormatched drawcord | Pouch pocket | Sizes: XS~2XL | 5 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 2000}
+  },
+  {
+    id: "88600",
+    name: "88600 헤비블렌드 집업 후드티 (8.4oz)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "285g/m/two.numerator (8.4 oz per sq yd)",
+    description: "50% cotton / 50% polyester preshrunk /f_leece knit | Air jet yarns = softer feel and reduced pilling | Satin label | Sideseamed | Double needle stitching at waistband and cuﬀs | 1 x 1 rib with spandex | Quarterturned to eliminate center crease | Unlined hood with colormatched drawcord | Metal zipper | Overlapped fabric across zipper allows full | Pouch pockets | Sizes: XS~2XL | 5 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 2000}
+  },
+  {
+    id: "2000",
+    name: "2000 울트라 코튼 티셔츠 (면18수)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "200g/ɝ (6.0 oz per sq yd)",
+    description: "100% cotton preshrunk jersey knit | Fiber content varies by color, | Seamless double needle 2 cm collar | Taped neck and shoulders | Double needle sleeve and bottom hems | TearAway label | Quarterturned to eliminate centre crease | Sizes: S~5XL | 33 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "사파이어",
+          "hex": "#00a2cc",
+          "image": ""
+        },
+        {
+          "name": "카디널 레드",
+          "hex": "#991b1b",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "캐롤라이나 블루",
+          "hex": "#a2dbe7",
+          "image": ""
+        },
+        {
+          "name": "슬레이트 그레이",
+          "hex": "#5f6b73",
+          "image": ""
+        },
+        {
+          "name": "샌드",
+          "hex": "#e2dbcd",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "그래블",
+          "hex": "#5e5f61",
+          "image": ""
+        },
+        {
+          "name": "올리브 카키",
+          "hex": "#854d0e",
+          "image": ""
+        },
+        {
+          "name": "퍼플",
+          "hex": "#48339b",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "세이프티 핑크",
+          "hex": "#ff5fa2",
+          "image": ""
+        },
+        {
+          "name": "코랄 실크",
+          "hex": "#ff7f50",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "데이지",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "민트",
+          "hex": "#a7f3d0",
+          "image": ""
+        },
+        {
+          "name": "밀리터리 그린",
+          "hex": "#4a533c",
+          "image": ""
+        },
+        {
+          "name": "틸",
+          "hex": "#0f766e",
+          "image": ""
+        },
+        {
+          "name": "세이프티 오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "네온 핑크",
+          "hex": "#ff1493",
+          "image": ""
+        },
+        {
+          "name": "네온 그린",
+          "hex": "#39ff14",
+          "image": ""
+        },
+        {
+          "name": "세이프티 그린",
+          "hex": "#adff2f",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500, "4XL": 2000, "5XL": 2500}
+  },
+  {
+    id: "2300",
+    name: "2300 울트라 코튼 포켓 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "200g/ɝ (6.0 oz per sq yd)",
+    description: "100% cotton preshrunk jersey knit | Preshrunk jersey knit | Seamless doubleneedle 7/8\" collar | Taped neck and shoulders | Satin label | Singleneedle left chest pocket | Doubleneedle pocket, sleeve and bottom hems | Quarterturned to eliminate center crease | SIZE: S~2XL | 2 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "2400",
+    name: "2400 울트라 코튼 긴팔 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "200g/ɝ (6.0 oz per sq yd)",
+    description: "100% cotton preshrunk jersey knit | Quarterturned to eliminate center crease | Seamless double needle 7/8” collar | Taped neck and shoulders | Rib cuﬀs | Double needle bottom hem | Sizes: S~3XL | 11 colors",
+    basePrice: 9000,
+    colors: [
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "샌드",
+          "hex": "#e2dbcd",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1500, "3XL": 2000}
+  },
+  {
+    id: "2000t",
+    name: "2000T 울트라 코튼 톨(Tall) 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "200g/ɝ (6.0 oz per sq yd 18/1)",
+    description: "100% cotton | Classic heavyweight fabric 7/8\" rib collar | Taped neck and shoulders | Doubleneedle sleeve and bottom hems | Sizes: LT~2XLT | 2 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "5200",
+    name: "5200 헤비 코튼 나시 민소매 (탱크탑)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "180g/ɝ (5.3 oz per sq yd 20/1)",
+    description: "100% cotton | Classic midweight fabric | Doubleneedle bottom hem | Sizes: S~2XL | 2 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "5100",
+    name: "5100 헤비 코튼 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "180g/m/two.numerator (5.3 oz per sq yd)",
+    description: "100% cotton preshrunk jersey knit | Seamless non topstitched 2 cm collar | Taped neck and shoulders | Tearaway label for easy relabelling | Double needle sleeve and bottom hems | Quarterturned to eliminate centre crease | Sizes: S~3XL | 2 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "42000",
+    name: "42000 드라이블렌드 기능성 스포츠 티셔츠",
+    brand: "길단",
+    category: "액티브 웨어",
+    tagline: "150g/m² (4.5 oz per sq yd)",
+    description: "100% polyester | AquaFX™ | Back neck tape | Double needle sleeve and bottom hems | Tearaway label҃઺ | Sizes: S~3XL | 8 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "세이프티 그린",
+          "hex": "#adff2f",
+          "image": ""
+        },
+        {
+          "name": "라이트 블루",
+          "hex": "#a2dbe7",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "8000",
+    name: "8000 드라이블렌드 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "࢚࢝",
+    description: "180g/m² (5.3 oz per sq yd) | 50% cotton / 50% polyester | Dry Blend technology ( | Taped neck and shoulders | Double needle sleeve and bottom hems | Tearaway label҃઺ | Sizes: S~XL | 3 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "67000",
+    name: "67000 소프트스타일 CVC 티셔츠",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "150g/m² (4.5 oz per sq yd)",
+    description: "60% combed ring spun cotton / 40% polyester | High stitch density for smoother printing | Modernclassic Fit | TearAway label | Sizes: S~3XL | 4 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "핑크",
+          "hex": "#f472b6",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#1e3a8a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "sf000",
+    name: "SF000 소프트스타일 플리스 크루넥 맨투맨",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "\u0013\u0019\u0016H\u0010ɝ\u0001\t8.4 oz per sq yd)",
+    description: "80% Ring Spun Cotton, 20% Polyester | 1x1 rib with spandex cuﬀs and bottom band for enhanced stretch and recovery | Dropped shoulder | Classic /f_it, seamless body | Highperforming recycled tearaway label | Sizes: S3XL | 4 colors",
+    basePrice: 18000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "sf500",
+    name: "SF500 소프트스타일 플리스 풀오버 후드티",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "\u0013\u0019\u0016H\u0010ɝ\u0001\t8.4 oz per sq yd)",
+    description: "80% Ring Spun Cotton, 20% Polyester | 2piece color matched jersey fabric lined hood | 1x1 rib with spandex cuﬀs and bottom band for enhanced stretch and recovery | Dropped shoulder | pouch pocket | Classic /f_it, seamless body | Highperforming recycled tearaway label | Sizes: S3XL | 5 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "켈리 그린",
+          "hex": "#22c55e",
+          "image": ""
+        }
+    ],
+    sizes: ["S"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "sf600",
+    name: "SF600 소프트스타일 플리스 집업 후드티",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "\u0013\u0019\u0016H\u0010ɝ\u0001\t8.4 oz per sq yd)",
+    description: "80% Ring Spun Cotton, 20% Polyester | 2piece color matched jersey fabric lined hood | 1x1 rib with spandex cuﬀs and bottom band for enhanced stretch and recovery | Dropped shoulder | pouch pocket | YKK metal zipper | Classic /f_it, seamless body | Highperforming recycled tearaway label | Sizes: S3XL | 2 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "12000",
+    name: "12000 드라이블렌드 맨투맨",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "9.3 oz per sq yd",
+    description: "50% cotton / 50% polyester preshrunk /f_leece knit | DryBlend technology delivers | moisturewicking properties | Air jet yarn = softer feel and reduced pilling | Tearaway label҃઺ | Double needle stitching | Waistband cuﬀs | 1 x 1 athletic rib with spandex | Quarterturned to eliminate center crease | Sizes: S3XL | 8 colors",
+    basePrice: 18000,
+    colors: [
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "12500",
+    name: "12500 드라이블렌드 풀오버 후드티",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "Doublelined hooded sweatshirt with matching drawcord",
+    description: "Double needle stitching  Pouch pocket | 1 x 1 athletic rib with spandex | Tearaway label҃઺ | Quarterturned to eliminate center crease | Sizes: S3XL | 11 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "코랄 실크",
+          "hex": "#ff7f50",
+          "image": ""
+        },
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "세이프티 그린",
+          "hex": "#adff2f",
+          "image": ""
+        }
+    ],
+    sizes: ["S"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "18500",
+    name: "18500 헤비블렌드 풀오버 후드티",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "8.0 oz per sq yd",
+    description: "50% Cotton / 50% Polyester | Preshrunk /f_leece knit | Doublelined hood with colormatched drawcord | Doubleneedle stitching at waistband and cuﬀs | Pouch pocket | 1 x 1 rib with spandex | Quarterturned to eliminate center crease | Tearaway label҃઺ | Classic Fit | Sizes: S~4XL | 5 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "샌드",
+          "hex": "#e2dbcd",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+    sizeUpcharges: {"2XL": 2000, "3XL": 3000, "4XL": 4000}
+  },
+  {
+    id: "18500b",
+    name: "18500B 아동용 헤비블렌드 풀오버 후드티",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "270g/m/two.numerator (8.0 oz per sq yd)",
+    description: "50% cotton / 50% polyester preshrunk /f_leece knit | Spun yarn for softer feel and reduced pilling | Doublelined hood | Doubleneedle stitching at shoulders, armholes, | Doubleneedle pouch pocket for added reinforcement 1 x 1 rib | Sizes: S~XL | 6 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "18000b",
+    name: "18000B 아동용 헤비블렌드 크루넥 맨투맨",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "270g/m/two.numerator (8.0 oz per sq yd)",
+    description: "50% cotton / 50% polyester preshrunk /f_leece knit | Spun yarn for softer feel and reduced pilling | Doubleneedle stitching at shoulder, armhole, neck, | Sizes: S~XL | 6 colors",
+    basePrice: 18000,
+    colors: [
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "스포츠 그레이",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "애슬레틱 헤더",
+          "hex": "#c6c8c9",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "1567",
+    name: "1567 가먼트다이 풀오버 후드티 (9.5oz)",
+    brand: "컴포트 컬러스",
+    category: "데일리 웨어",
+    tagline: "320g/m/two.numerator (9.5 oz per sp yd)",
+    description: "80% ring spun cotton / 20% polyester | Soft washed garment dyed fabric | Twill taped back and neck | Sideseamed | 1x1 rib on collar, cuﬀs and waistband | Double needle neck, shoulder, armhole, cuﬀ and waistband | Sizes : M~XL | 7 colors",
+    basePrice: 24000,
+    colors: [
+        {
+          "name": "크림슨",
+          "hex": "#991b1b",
+          "image": ""
+        },
+        {
+          "name": "슬레이트",
+          "hex": "#5b6d7a",
+          "image": ""
+        },
+        {
+          "name": "데님 블루",
+          "hex": "#475569",
+          "image": ""
+        },
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "라벤더",
+          "hex": "#c084fc",
+          "image": ""
+        },
+        {
+          "name": "오키드",
+          "hex": "#a78bfa",
+          "image": ""
+        }
+    ],
+    sizes: ["M", "L", "XL"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "1566",
+    name: "1566 가먼트다이 크루넥 맨투맨 (9.5oz)",
+    brand: "컴포트 컬러스",
+    category: "데일리 웨어",
+    tagline: "320g/m/two.numerator (9.5 oz per sp yd)",
+    description: "80% ring spun cotton / 20% polyester | Soft washed garment dyed fabric | Twill taped back and neck | 1x1 rib on collar, cuﬀs and waistband | Double needle neck, shoulder, armhole, cuﬀ and waistband | Sizes : M~XL | 5 colors",
+    basePrice: 18000,
+    colors: [
+        {
+          "name": "크림슨",
+          "hex": "#991b1b",
+          "image": ""
+        },
+        {
+          "name": "라벤더",
+          "hex": "#c084fc",
+          "image": ""
+        },
+        {
+          "name": "데님 블루",
+          "hex": "#475569",
+          "image": ""
+        },
+        {
+          "name": "오키드",
+          "hex": "#a78bfa",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        }
+    ],
+    sizes: ["M", "L", "XL"],
+    sizeUpcharges: {}
+  },
+  {
+    id: "1717",
+    name: "1717 가먼트다이 베이직 티셔츠 (6.1oz)",
+    brand: "컴포트 컬러스",
+    category: "데일리 웨어",
+    tagline: "210g/m/two.numerator (6.1 oz per sp yd)",
+    description: "100% ring spun cotton | Soft washed garment dyed fabric | Doubleneedle collar | Twill taped neck and shoulders | Twill label | Double needle armhole, sleeve and bottom hems | Sizes : S~2XL | 14 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "마룬",
+          "hex": "#7f1d1d",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "코랄",
+          "hex": "#f87171",
+          "image": ""
+        },
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "옐로우",
+          "hex": "#facc15",
+          "image": ""
+        },
+        {
+          "name": "슬레이트",
+          "hex": "#5b6d7a",
+          "image": ""
+        },
+        {
+          "name": "터코이즈",
+          "hex": "#06b6d4",
+          "image": ""
+        },
+        {
+          "name": "데님 블루",
+          "hex": "#475569",
+          "image": ""
+        },
+        {
+          "name": "로얄 블루",
+          "hex": "#1d4ed8",
+          "image": ""
+        },
+        {
+          "name": "웜 그레이",
+          "hex": "#adabb0",
+          "image": ""
+        },
+        {
+          "name": "라벤더",
+          "hex": "#c084fc",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "오키드",
+          "hex": "#a78bfa",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "6014",
+    name: "6014 가먼트다이 긴팔 티셔츠 (6.1oz)",
+    brand: "컴포트 컬러스",
+    category: "데일리 웨어",
+    tagline: "210g/m/two.numerator (6.1 oz per sp yd)",
+    description: "100% ring spun cotton | Soft washed garment dyed fabric | Topstitched, classic width, collar | Twill taped neck and shoulders | Twill label | Rib cuﬀs | Relaxed /f_it, seamless body | Sizes : M~2XL | 4 colors | 210g/m/two.numerator (6.1 oz per sp yd)",
+    basePrice: 9000,
+    colors: [
+        {
+          "name": "데님 블루",
+          "hex": "#475569",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "오키드",
+          "hex": "#a78bfa",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1500}
+  },
+  {
+    id: "1301",
+    name: "1301 헤비웨이트 클래식 티셔츠 (면18수)",
+    brand: "올스타일",
+    category: "데일리 웨어",
+    tagline: "203g/m/two.numerator (6.0 oz per sp yd)",
+    description: "100% cotton jersey | Setin rib collar with shouldertoshoulder taping | Doubleneedle sleeve and bottom hem | Preshrunk to minimize shrinkage | Tearaway label for easy relabelling | Sizes : S~4XL | 13 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "핑크",
+          "hex": "#f472b6",
+          "image": ""
+        },
+        {
+          "name": "옐로우",
+          "hex": "#facc15",
+          "image": ""
+        },
+        {
+          "name": "켈리 그린",
+          "hex": "#22c55e",
+          "image": ""
+        },
+        {
+          "name": "애슬레틱 헤더",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500, "4XL": 2000}
+  },
+  {
+    id: "2001w",
+    name: "2001W 파인 져지 크루넥 티셔츠",
+    brand: "올스타일",
+    category: "데일리 웨어",
+    tagline: "146g/m² (4.3 oz per sq yd)",
+    description: "100% ring spun combed cotton | 30singles | Iconic AA classic tee shirt in our /f_ine jersey | Fine jersey crewneck tshirt | Unisex | Calssic /f_it | Sizes: XS~2XL | 13 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#be123c",
+          "image": ""
+        },
+        {
+          "name": "트러플",
+          "hex": "#3f2e2e",
+          "image": ""
+        },
+        {
+          "name": "라이트 핑크",
+          "hex": "#ffccd5",
+          "image": ""
+        },
+        {
+          "name": "오렌지",
+          "hex": "#ff5f00",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "라이트 블루",
+          "hex": "#93c5fd",
+          "image": ""
+        },
+        {
+          "name": "포레스트 그린",
+          "hex": "#064e3b",
+          "image": ""
+        },
+        {
+          "name": "쿨그레이 8",
+          "hex": "#b8b6b9",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "헤더 그레이",
+          "hex": "#9ca3af",
+          "image": ""
+        },
+        {
+          "name": "미드나잇 네이비",
+          "hex": "#1e293b",
+          "image": ""
+        }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    sizeUpcharges: {"2XL": 1000}
+  },
+  {
+    id: "1304",
+    name: "1304 헤비웨이트 클래식 긴팔 티셔츠",
+    brand: "올스타일",
+    category: "데일리 웨어",
+    tagline: "203g/m/two.numerator (6.0 oz per sp yd)",
+    description: "100% cotton jersey | Setin rib collar with shouldertoshoulder taping | Doubleneedle sleeve and bottom hem | Preshrunk to minimize shrinkage | Tearaway label for easy relabelling | Sizes : S~4XL | 13 colors",
+    basePrice: 9000,
+    colors: [
+        {
+          "name": "로얄 블루",
+          "hex": "#054cb9",
+          "image": ""
+        },
+        {
+          "name": "레드",
+          "hex": "#e6193c",
+          "image": ""
+        },
+        {
+          "name": "골드",
+          "hex": "#ffcc00",
+          "image": ""
+        },
+        {
+          "name": "핑크",
+          "hex": "#f472b6",
+          "image": ""
+        },
+        {
+          "name": "옐로우",
+          "hex": "#facc15",
+          "image": ""
+        },
+        {
+          "name": "켈리 그린",
+          "hex": "#22c55e",
+          "image": ""
+        },
+        {
+          "name": "애슬레틱 헤더",
+          "hex": "#c6c8c9",
+          "image": ""
+        },
+        {
+          "name": "애쉬 그레이",
+          "hex": "#e1e4e6",
+          "image": ""
+        },
+        {
+          "name": "차콜",
+          "hex": "#494b52",
+          "image": ""
+        },
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "네이비",
+          "hex": "#0f1d35",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+    sizeUpcharges: {"2XL": 1500, "3XL": 2000, "4XL": 2500}
+  },
+  {
+    id: "1301gd",
+    name: "1301GD 헤비웨이트 가먼트다이 티셔츠",
+    brand: "올스타일",
+    category: "데일리 웨어",
+    tagline: "203g/m/two.numerator /parenleft.numerator6.0 oz per sp yd)",
+    description: "100% U.S. Cotton | Garment dyed for that vintage | Wide rib collar, single needle top stitch | Taped neck and shoulders for comfort and durability | Relaxed /f_it, seamless body | Recycled tearaway label | Sizes : S~3XL | 2 colors | 203g/m/two.numerator /parenleft.numerator6.0 oz per sp yd)",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "테라코타",
+          "hex": "#c26a5a",
+          "image": ""
+        },
+        {
+          "name": "블랙 오키드",
+          "hex": "#2e2a38",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "207gd",
+    name: "207GD 헤비웨이트 가먼트다이 머슬 티셔츠 (민소매)",
+    brand: "올스타일",
+    category: "데일리 웨어",
+    tagline: "203g/m/two.numerator /parenleft.numerator6.0 oz per sp yd)",
+    description: "100% U.S. Cotton | Garment dyed for that vintage | Wide rib collar, single needle top stitch | Taped neck and shoulders for comfort and durability | Boxy /f_it, midlength, seamless body | Recycled tearaway label | Sizes : S~3XL | 2 colors | 203g/m/two.numerator /parenleft.numerator6.0 oz per sp yd)",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "앤틱 골드",
+          "hex": "#d4af37",
+          "image": ""
+        },
+        {
+          "name": "블랙 오키드",
+          "hex": "#2e2a38",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "9001",
+    name: "9001 슈퍼 헤비웨이트 남녀공용 티셔츠 (9.0oz)",
+    brand: "아메리칸 어패럴",
+    category: "데일리 웨어",
+    tagline: "300g/m/two.numerator /parenleft.numerator9.0 oz per sp yd)",
+    description: "80% Cotton, 20% Polyester | Wide 2x2 rib collar | Taped neck and shoulders for comfort and durability | Rolled forward drop shoulder | Oversized /f_it with side seamed body | Recycled tearaway label | Sizes : S~3XL | 3 colors | 300g/m/two.numerator /parenleft.numerator9.0 oz per sp yd) | 300g/m/two.numerator /parenleft.numerator9.0 oz per sp yd) | 80% Cotton, 20% Polyester | Wide 2x2 rib collar | Taped neck and shoulders for comfort and durability | Rolled forward drop shoulder | Oversized /f_it with side seamed body | Recycled tearaway label | Sizes : S~3XL | 3 colors | 300g/m/two.numerator /parenleft.numerator9.0 oz per sp yd)",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "헤더 그레이",
+          "hex": "#9ca3af",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  },
+  {
+    id: "h000",
+    name: "H000 해머 클래식 핏 티셔츠 (6.0oz)",
+    brand: "길단",
+    category: "데일리 웨어",
+    tagline: "\u0013\u0011\u0014H\u0010N͋\u0001\t6 oz per sq yd)",
+    description: "100% Ring Spun Cotton | Gildan Hammer® | Classic width, rib collar | Taped neck and shoulders for comfort and durability | Modern classic /f_it, seamless body | Highperforming recycled tearaway label | Sizes: S~3XL | 2 colors",
+    basePrice: 6000,
+    colors: [
+        {
+          "name": "화이트",
+          "hex": "#ffffff",
+          "image": ""
+        },
+        {
+          "name": "블랙",
+          "hex": "#1a1a1a",
+          "image": ""
+        }
+    ],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeUpcharges: {"2XL": 1000, "3XL": 1500}
+  }
 ];
