@@ -19,6 +19,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 60px; /* Wide side padding for edge-to-edge feel */
+  height: 100%;
 }
 
 .logo {
@@ -41,16 +42,23 @@
 
 .desktopNav {
   display: flex;
-  gap: 32px;
+  height: 100%;
+  gap: 0;
 }
 
 .navLink {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-muted);
   transition: color 0.2s var(--transition-smooth);
   position: relative;
-  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 calc(12.2857px + .535714vw);
+  line-height: 1;
+  text-decoration: none;
 }
 
 .navLink:hover {
@@ -64,37 +72,46 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  height: 100%;
+  gap: 0;
 }
 
 .loginBtn {
   font-size: 14px;
   font-weight: 600;
   color: var(--foreground);
-  padding: 10px 20px;
-  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 calc(12.2857px + .535714vw);
+  line-height: 1;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
 .loginBtn:hover {
-  opacity: 0.8;
+  color: var(--primary-color);
 }
 
 .signUpBtn {
   font-size: 14px;
-  font-weight: 600;
-  background-color: var(--primary-color);
-  color: #ffffff;
-  padding: 10px 20px;
-  border-radius: 40px;
+  font-weight: 700;
+  color: var(--primary-color);
   display: flex;
+  justify-content: center;
   align-items: center;
+  height: 100%;
+  padding: 0 calc(12.2857px + .535714vw);
+  line-height: 1;
+  text-decoration: none;
+  background-color: transparent;
   gap: 4px;
-  transition: background-color 0.2s, transform 0.2s var(--transition-smooth);
+  transition: color 0.2s var(--transition-smooth);
 }
 
 .signUpBtn:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
+  color: var(--primary-hover);
 }
 
 .arrow {
