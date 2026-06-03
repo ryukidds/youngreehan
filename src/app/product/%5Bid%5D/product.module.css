@@ -1,0 +1,563 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  width: 100%;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  transition: color 0.2s var(--transition-smooth);
+}
+
+.backBtn:hover {
+  color: var(--foreground);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* Left: Image & Position SVG */
+.imageSection {
+  position: sticky;
+  top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Images fill frame entirely - No borders */
+.imageFrame {
+  background-color: var(--bg-card);
+  border: none;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.mainImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s var(--transition-smooth);
+}
+
+.imageFrame:hover .mainImage {
+  transform: scale(1.03);
+}
+
+/* Right: Details Section */
+.detailsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.brand {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #000000;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.priceUnit {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.priceVal {
+  font-size: 24px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.ratingStar {
+  color: #ff9500;
+}
+
+.reviewsCount {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  word-break: keep-all;
+  border-top: none; /* Removed border lines */
+  padding-top: 16px;
+}
+
+/* Selection Groups */
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: none; /* Removed border lines */
+  padding-top: 24px;
+}
+
+.optionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.5px;
+}
+
+.optionValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Colors Circle Dot Grid */
+.colorPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.colorDotBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none; /* Removed border lines */
+  padding: 2px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.colorDotBtn:hover {
+  transform: scale(1.1);
+}
+
+.colorDotBtn.active {
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.colorInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Sizes Horizontal Grid - No borders, solid flat styling */
+.sizeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.sizeBox {
+  border: none; /* Removed border lines */
+  background-color: var(--bg-card); /* Solid flat light gray */
+  border-radius: var(--radius-sm);
+  padding: 14px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sizeBox:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.sizeBox.active {
+  background-color: var(--primary-color); /* Solid Primary color background */
+  color: #ffffff;
+}
+
+.sizeName {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.sizeBox.active .sizeName {
+  color: #ffffff;
+}
+
+.sizePriceText {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.sizeBox.active .sizePriceText {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Selected Sizes Steppers Matrix */
+.selectedSizesList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 8px;
+}
+
+.selectedSizeRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectedSizeLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: none; /* Removed border lines */
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.stepBtn:hover:not(:disabled) {
+  background-color: #e4e4e7;
+}
+
+.stepBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.stepCount {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Printing Options Toggles */
+.printOptionToggleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.toggleBtn {
+  border: none; /* Removed border lines */
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  padding: 14px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.toggleBtn:hover {
+  background-color: var(--bg-card-hover);
+  color: #000000;
+}
+
+.toggleBtn.active {
+  background-color: #000000; /* Solid flat black for active state */
+  color: #ffffff;
+}
+
+/* Checkbox Button Tag Grids */
+.checkGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.checkGridPosition {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.checkBtn {
+  border: none; /* Removed border lines */
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.checkBtn:hover {
+  background-color: var(--bg-card-hover);
+  color: #000000;
+}
+
+.checkBtn.active {
+  background-color: var(--primary-color); /* Solid Primary color background */
+  color: #ffffff;
+}
+
+.helpText {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Attachment Mock Input - No borders */
+.attachmentBox {
+  border: none; /* Removed borders */
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg-card);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.attachmentBox:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.attachIcon {
+  color: var(--text-muted);
+}
+
+.attachLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.attachHelpText {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Textarea requests input - No borders */
+.textarea {
+  width: 100%;
+  height: 100px;
+  background-color: var(--bg-card);
+  border: none; /* Removed borders */
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #000000;
+  resize: none;
+  transition: background-color 0.2s;
+}
+
+.textarea:focus {
+  background-color: var(--bg-card-hover);
+}
+
+/* Calculator Box - No borders */
+.calcBox {
+  background-color: var(--bg-card);
+  border: none; /* Removed borders */
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.calcRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.calcTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: none; /* Removed divider line */
+  padding-top: 16px;
+  margin-top: 4px;
+}
+
+.calcTotalLabel {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.calcTotalVal {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.discountBadge {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* Actions */
+.actionRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.orderBtn {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s, transform 0.2s var(--transition-smooth);
+}
+
+.orderBtn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Inquiry button redesigned as soft gray background ghost button */
+.inquiryBtn {
+  border: none; /* Removed borders */
+  background-color: var(--bg-card); /* Soft gray background */
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s, transform 0.2s var(--transition-smooth);
+}
+
+.inquiryBtn:hover {
+  background-color: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background-color: #10b981;
+  color: white;
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  box-shadow: none; /* Removed box-shadow */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-top: 100px;
+  }
+  
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .imageSection {
+    position: static;
+  }
+  
+  .checkGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .actionRow {
+    grid-template-columns: 1fr;
+  }
+}

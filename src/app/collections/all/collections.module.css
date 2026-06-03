@@ -1,0 +1,264 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #000000;
+  width: 100%;
+}
+
+.mainLayout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 48px;
+  padding: 120px 60px 80px; /* Matching header padding */
+  width: 100%;
+  align-items: start;
+}
+
+/* Left Sidebar Filters */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: sticky;
+  top: 112px;
+}
+
+.filterHeader {
+  font-size: 15px;
+  font-weight: 800;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #000000;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.filterTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxInput {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #000000;
+  border-radius: 2px;
+  appearance: none;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.checkboxInput:checked {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.checkboxInput:checked::after {
+  content: "✓";
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+/* Right Content Area */
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.galleryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -1.5px;
+}
+
+/* Sort dropdown styling */
+.sortWrapper {
+  position: relative;
+}
+
+.sortSelect {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  background-color: var(--bg-card);
+  padding: 10px 18px;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Product Gallery Grid - 3 Columns */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  width: 100%;
+}
+
+.productWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card Box: Tall Rectangle ratio, e.g. 3/4 */
+.productCard {
+  background-color: var(--bg-card);
+  border: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 3 / 4; /* Taller rectangle as requested */
+  cursor: pointer;
+  transition: transform var(--transition-duration) var(--transition-smooth);
+}
+
+.productCard:hover {
+  transform: translateY(-4px);
+}
+
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.productImage {
+  object-fit: contain; /* Contain standard t-shirt cutout inside card */
+  width: 100%;
+  height: 100%;
+}
+
+/* Card captions under the image */
+.cardCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 4px;
+}
+
+.brandLabel {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.productName {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.priceLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-top: 2px;
+}
+
+.noProducts {
+  grid-column: span 3;
+  text-align: center;
+  padding: 80px 0;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Mobile responsive */
+@media (max-width: 1024px) {
+  .productGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainLayout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 100px 24px 80px;
+  }
+  
+  .sidebar {
+    position: static;
+    gap: 20px;
+  }
+  
+  .filterHeader {
+    padding-bottom: 8px;
+  }
+  
+  .productGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .productGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .galleryHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

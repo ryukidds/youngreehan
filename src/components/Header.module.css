@@ -1,0 +1,199 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: none; /* Removed layout constraints for full frame */
+  height: 80px;
+  background-color: #ffffff;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  border-bottom: none;
+}
+
+.container {
+  width: 100%;
+  max-width: none; /* Full frame stretching */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px; /* Wide side padding for edge-to-edge feel */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--foreground);
+  display: flex;
+  align-items: baseline;
+  transition: transform 0.2s var(--transition-smooth);
+}
+
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.dot {
+  color: var(--primary-color);
+}
+
+.desktopNav {
+  display: flex;
+  gap: 32px;
+}
+
+.navLink {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.2s var(--transition-smooth);
+  position: relative;
+  padding: 8px 0;
+}
+
+.navLink:hover {
+  color: var(--foreground);
+}
+
+.navLink.active {
+  color: var(--primary-color);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.loginBtn {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  padding: 10px 20px;
+  border-radius: 40px;
+}
+
+.loginBtn:hover {
+  opacity: 0.8;
+}
+
+.signUpBtn {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s, transform 0.2s var(--transition-smooth);
+}
+
+.signUpBtn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.arrow {
+  transition: transform 0.2s;
+}
+
+.signUpBtn:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+.menuBtn {
+  display: none;
+  color: #ffffff;
+  background-color: var(--primary-color);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.menuBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Mobile overlay & nav */
+.mobileOverlay {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background-color: #ffffff;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 24px;
+  gap: 32px;
+}
+
+.mobileNavLink {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+  padding-bottom: 16px;
+}
+
+.mobileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.mobileLoginBtn {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  padding: 16px;
+  border-radius: 40px;
+  text-align: center;
+  background-color: var(--bg-card);
+}
+
+.mobileSignUpBtn {
+  font-size: 16px;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 16px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .desktopNav {
+    display: none;
+  }
+  
+  .loginBtn, .signUpBtn {
+    display: none;
+  }
+  
+  .menuBtn {
+    display: flex;
+  }
+  
+  .container {
+    padding: 0 24px; /* Slightly tighter on mobile */
+  }
+}

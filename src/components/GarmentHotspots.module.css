@@ -1,0 +1,109 @@
+.container {
+  width: 100%;
+  padding: 16px 0;
+}
+
+.viewsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.viewPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.viewLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.garmentFrame {
+  background-color: var(--bg-card);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.garmentSvg {
+  max-width: 180px;
+  max-height: 220px;
+}
+
+/* Hotspots styling */
+.hotspotGroup {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.hotspotCircle {
+  fill: #ffffff;
+  stroke: #18181b;
+  stroke-width: 1.5px;
+  transition: fill 0.2s, stroke 0.2s, r 0.2s var(--transition-smooth);
+}
+
+.hotspotText {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  fill: #18181b;
+  user-select: none;
+  pointer-events: none;
+  transition: fill 0.2s;
+}
+
+.hotspotGroup:hover .hotspotCircle {
+  r: 11px;
+  stroke: var(--primary-color);
+}
+
+/* Active State */
+.hotspotGroup.active .hotspotCircle {
+  fill: var(--primary-color);
+  stroke: var(--primary-color);
+  r: 10px;
+}
+
+.hotspotGroup.active .hotspotText {
+  fill: #ffffff;
+}
+
+/* Pulsing Glow Ring */
+.pulseRing {
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 1.5px;
+  opacity: 0;
+  transform-origin: center;
+  animation: pulse 1.8s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+@keyframes pulse {
+  0% {
+    r: 9px;
+    opacity: 0.6;
+  }
+  100% {
+    r: 20px;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .viewsContainer {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

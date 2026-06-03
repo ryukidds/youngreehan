@@ -1,0 +1,56 @@
+product_id,color_name,color_hex,image_path
+tshirt,코발트 블루,#0052ff,/images/tshirt.png
+tshirt,화이트,#ffffff,/images/tshirt.png
+tshirt,블랙,#000000,/images/tshirt.png
+tshirt,차콜,#3f3f46,/images/tshirt.png
+hoodie,코발트 블루,#0052ff,/images/hoodie.png
+hoodie,화이트,#ffffff,/images/hoodie.png
+hoodie,블랙,#000000,/images/hoodie.png
+hoodie,차콜,#3f3f46,/images/hoodie.png
+sweatshirt,그레이,#d1d5db,/images/hoodie.png
+sweatshirt,블랙,#000000,/images/hoodie.png
+sweatshirt,네이비,#1e3a8a,/images/hoodie.png
+aaa-tshirt,화이트,#ffffff,/images/tshirt.png
+aaa-tshirt,블랙,#000000,/images/tshirt.png
+aaa-tshirt,차콜,#3f3f46,/images/tshirt.png
+cap,블랙,#000000,/images/tshirt.png
+cap,베이지,#f5f5dc,/images/tshirt.png
+cap,그린,#15803d,/images/tshirt.png
+ecobag,아이보리,#fafaf9,/images/tshirt.png
+ecobag,블랙,#000000,/images/tshirt.png
+printstar-cvt,오트밀,#e2dbcd,/images/products/printstar-cvt/00085-CVT-039_M.jpg
+printstar-cvt,모스그레이,#859897,/images/products/printstar-cvt/00085-CVT-424_M.jpg
+printstar-cvt,스모크옐로우,#d2b786,/images/products/printstar-cvt/00085-CVT-213_M.jpg
+printstar-cvt,코코아브라운,#5a4540,/images/products/printstar-cvt/00085-CVT-207_M.jpg
+printstar-cvt,애시드블루,#98adc2,/images/products/printstar-cvt/00085-CVT-426_M.jpg
+printstar-cvt,라이트세이지,#9cb8a7,/images/products/printstar-cvt/00085-CVT-423_M.jpg
+printstar-cvt,틸그린,#134e4d,/images/products/printstar-cvt/00085-CVT-206_M.jpg
+printstar-cvt,화이트,#ffffff,/images/products/printstar-cvt/00085-CVT-001_M.jpg
+printstar-cvt,모쿠 그레이,#c6c8c9,/images/products/printstar-cvt/00085-CVT-003_M.jpg
+printstar-cvt,레드,#e6193c,/images/products/printstar-cvt/00085-CVT-010_M.jpg
+printstar-cvt,네이비,#0f1d35,/images/products/printstar-cvt/00085-CVT-031_M.jpg
+printstar-cvt,블랙,#1a1a1a,/images/products/printstar-cvt/00085-CVT-005_M.jpg
+printstar-cvt,아이보리,#faf8f0,/images/products/printstar-cvt/00085-CVT-073_M.jpg
+printstar-cvt,애쉬,#e1e4e6,/images/products/printstar-cvt/00085-CVT-044_M.jpg
+printstar-cvt,실버 그레이,#b8b6b9,/images/products/printstar-cvt/00085-CVT-153_M.jpg
+printstar-cvt,라이트 퍼플,#c3b2db,/images/products/printstar-cvt/00085-CVT-188_M.jpg
+printstar-cvt,퍼플,#48339b,/images/products/printstar-cvt/00085-CVT-014_M.jpg
+printstar-cvt,데님,#536881,/images/products/printstar-cvt/00085-CVT-109_M.jpg
+printstar-cvt,차콜,#494b52,/images/products/printstar-cvt/00085-CVT-129_M.jpg
+printstar-cvt,라이트 블루,#a2dbe7,/images/products/printstar-cvt/00085-CVT-133_M.jpg
+printstar-cvt,터코이즈,#00a2cc,/images/products/printstar-cvt/00085-CVT-034_M.jpg
+printstar-cvt,재팬 블루,#1b4aa6,/images/products/printstar-cvt/00085-CVT-171_M.jpg
+printstar-cvt,로얄 블루,#054cb9,/images/products/printstar-cvt/00085-CVT-032_M.jpg
+printstar-cvt,아이스 그린,#9be0cd,/images/products/printstar-cvt/00085-CVT-195_M.jpg
+printstar-cvt,그린,#00874e,/images/products/printstar-cvt/00085-CVT-025_M.jpg
+printstar-cvt,올리브,#565d38,/images/products/printstar-cvt/00085-CVT-128_M.jpg
+printstar-cvt,라이트 핑크,#ffccd5,/images/products/printstar-cvt/00085-CVT-132_M.jpg
+printstar-cvt,핑크,#ec839e,/images/products/printstar-cvt/00085-CVT-011_M.jpg
+printstar-cvt,핫핑크,#e6006f,/images/products/printstar-cvt/00085-CVT-146_M.jpg
+printstar-cvt,라이트 옐로우,#fff4ab,/images/products/printstar-cvt/00085-CVT-134_M.jpg
+printstar-cvt,데이지,#ffcc00,/images/products/printstar-cvt/00085-CVT-165_M.jpg
+printstar-cvt,오렌지,#ff5f00,/images/products/printstar-cvt/00085-CVT-015_M.jpg
+printstar-cvt,버건디,#731630,/images/products/printstar-cvt/00085-CVT-112_M.jpg
+printstar-cvt,인디고,#182a47,/images/products/printstar-cvt/00085-CVT-097_M.jpg
+printstar-cvt,아미그린,#4a533c,/images/products/printstar-cvt/00085-CVT-037_M.jpg
+printstar-cvt,라이트 베이지,#eddabf,/images/products/printstar-cvt/00095-CVE-455_M.jpg
