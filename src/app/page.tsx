@@ -166,33 +166,93 @@ export default function Home() {
           {/* Card 3: Instant Quote Widget */}
           <div className={styles.featureCard}>
             <div className={`${styles.cardVisual} ${styles.visualImage}`}>
-              <div className={styles.quoteCardContainer}>
-                <div className={styles.quoteWidget}>
-                  <div className={styles.quoteHeader}>
-                    <span className={styles.quoteBadge}>Live</span>
-                    <span className={styles.quoteTitle}>실시간 견적서</span>
+              <div className={styles.offersMockup}>
+                {/* Mock Search Bar */}
+                <div className={styles.mockSearchBar}>
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#a1a1aa" strokeWidth="2.5" className={styles.searchIcon}>
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <div className={styles.mockSearchTextPlaceholder} />
+                </div>
+                
+                {/* Grid Layout */}
+                <div className={styles.offersGrid}>
+                  {/* Left Column */}
+                  <div className={styles.offersLeftCol}>
+                    <div className={styles.greenCard}>
+                      <div className={styles.greenCardLine1} />
+                      <div className={styles.greenCardLine2} />
+                    </div>
+                    <div className={styles.smallOfferCard}>
+                      <div className={styles.blackCircleIcon}>
+                        {/* Car / Taxi Icon */}
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#ffffff" strokeWidth="2.5">
+                          <rect x="3" y="11" width="18" height="11" rx="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                      </div>
+                      <div className={styles.mockTextLine} />
+                    </div>
                   </div>
                   
-                  <div className={styles.quoteDetails}>
-                    <div className={styles.quoteRow}>
-                      <span className={styles.quoteLabel}>선택 품목</span>
-                      <span className={styles.quoteVal}>프리미엄 특양면 맨투맨</span>
+                  {/* Right Column */}
+                  <div className={styles.offersRightCol}>
+                    <div className={styles.smallOfferCard}>
+                      <div className={styles.blackCircleIcon}>
+                        {/* Coffee Cup Icon */}
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#ffffff" strokeWidth="2.5">
+                          <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+                          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z" />
+                          <line x1="6" y1="2" x2="6" y2="4" />
+                          <line x1="10" y1="2" x2="10" y2="4" />
+                          <line x1="14" y1="2" x2="14" y2="4" />
+                        </svg>
+                      </div>
+                      <div className={styles.mockTextLine} />
                     </div>
-                    <div className={styles.quoteRow}>
-                      <span className={styles.quoteLabel}>주문 수량</span>
-                      <span className={styles.quoteVal}>100 장</span>
-                    </div>
-                    <div className={styles.quoteRow}>
-                      <span className={styles.quoteLabel}>인쇄 방식</span>
-                      <span className={styles.quoteVal}>나염 인쇄 (전면 1도)</span>
+                    
+                    <div className={styles.tallOfferCard}>
+                      <div className={styles.iconContainerWithCheck}>
+                        <div className={styles.blackCircleIcon}>
+                          {/* Clothing / Shirt Icon */}
+                          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#ffffff" strokeWidth="2.5">
+                            <path d="M20.38 3.46L16 6a2 2 0 01-2-2V2H10v2a2 2 0 01-2 2L3.62 3.46a2 2 0 00-2.54.85l-1 1.73a2 2 0 00.75 2.74L4 10.27V19a2 2 0 002 2h12a2 2 0 002-2v-8.73l3.17-1.49a2 2 0 00.75-2.74l-1-1.73a2 2 0 00-2.54-.85z" />
+                          </svg>
+                        </div>
+                        <div className={styles.checkBadge}>
+                          <svg viewBox="0 0 24 24" width="6" height="6" fill="none" stroke="#00d632" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className={styles.mockTextLineLong} />
+                      <div className={styles.mockTextLineShort} />
                     </div>
                   </div>
-                  
-                  <div className={styles.quoteDivider} />
-                  
-                  <div className={styles.quoteFooter}>
-                    <span className={styles.quoteTotalLabel}>예상 총 견적</span>
-                    <span className={styles.quoteTotalVal}>₩1,250,000</span>
+                </div>
+
+                {/* Categories Divider Line */}
+                <div className={styles.categoriesHeaderMock} />
+
+                {/* Categories Grid */}
+                <div className={styles.categoriesGrid}>
+                  <div className={styles.categoryCard}>
+                    {/* Glasses Icon */}
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#000000" strokeWidth="2.5">
+                      <circle cx="6" cy="12" r="3" />
+                      <circle cx="18" cy="12" r="3" />
+                      <path d="M9 12h6" />
+                      <path d="M3 12a9 9 0 0 1 18 0" />
+                    </svg>
+                    <div className={styles.mockCategoryText} />
+                  </div>
+                  <div className={styles.categoryCard}>
+                    {/* Shirt Icon */}
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#000000" strokeWidth="2.5">
+                      <path d="M20.38 3.46L16 6a2 2 0 01-2-2V2H10v2a2 2 0 01-2 2L3.62 3.46a2 2 0 00-2.54.85l-1 1.73a2 2 0 00.75 2.74L4 10.27V19a2 2 0 002 2h12a2 2 0 002-2v-8.73l3.17-1.49a2 2 0 00.75-2.74l-1-1.73a2 2 0 00-2.54-.85z" />
+                    </svg>
+                    <div className={styles.mockCategoryText} />
                   </div>
                 </div>
               </div>

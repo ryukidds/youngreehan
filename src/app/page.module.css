@@ -488,96 +488,184 @@
 }
 
 .visualImage {
-  background-color: #f1f5f9;
-  padding: 20px;
+  background-color: #000000;
+  padding: 24px;
 }
 
-.quoteCardContainer {
-  width: 100%;
-  height: 100%;
+.offersMockup {
+  background-color: #ffffff;
+  border-radius: 28px;
+  width: 90%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #f4f4f5;
+}
+
+.mockSearchBar {
+  background-color: #f1f5f9;
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.searchIcon {
+  flex-shrink: 0;
+}
+
+.mockSearchTextPlaceholder {
+  height: 8px;
+  width: 100px;
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+.offersGrid {
+  display: flex;
+  gap: 12px;
+}
+
+.offersLeftCol,
+.offersRightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.greenCard {
+  background-color: #00d632;
+  border-radius: 18px;
+  height: 90px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.greenCardLine1 {
+  height: 8px;
+  width: 70%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+.greenCardLine2 {
+  height: 8px;
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+.smallOfferCard {
+  background-color: #ffffff;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 18px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+}
+
+.blackCircleIcon {
+  width: 24px;
+  height: 24px;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mockTextLine {
+  height: 6px;
+  width: 50%;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+}
+
+.tallOfferCard {
+  background-color: #ffffff;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 18px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90px;
+}
+
+.iconContainerWithCheck {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.checkBadge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background-color: #ffffff;
+  border: 1.5px solid #00d632;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.quoteWidget {
+.mockTextLineLong {
+  height: 6px;
+  width: 75%;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  margin-top: 8px;
+}
+
+.mockTextLineShort {
+  height: 6px;
+  width: 40%;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+}
+
+.categoriesHeaderMock {
+  height: 8px;
+  width: 60px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.categoriesGrid {
+  display: flex;
+  gap: 12px;
+}
+
+.categoryCard {
+  flex: 1;
   background-color: #ffffff;
-  border-radius: 24px;
-  padding: 20px;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
-}
-
-.quoteHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.quoteBadge {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.quoteTitle {
-  font-size: 12px;
-  font-weight: 800;
-  color: #000000;
-}
-
-.quoteDetails {
+  border: 1.5px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.quoteRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
-}
-
-.quoteLabel {
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.quoteVal {
-  color: #000000;
-  font-weight: 700;
-}
-
-.quoteDivider {
-  height: 1px;
-  background-color: #f1f5f9;
-}
-
-.quoteFooter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.quoteTotalLabel {
-  font-size: 11px;
-  font-weight: 700;
-  color: #000000;
-}
-
-.quoteTotalVal {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--primary-color);
+.mockCategoryText {
+  height: 6px;
+  width: 60%;
+  background-color: #e2e8f0;
+  border-radius: 3px;
 }
 
 .visualNotification {
