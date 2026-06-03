@@ -82,25 +82,24 @@ export default function Home() {
               transition={{ ...customTransition, delay: 0.1 }}
             >
               <div className={styles.imageBox}>
-                <AnimatePresence mode="wait">
+                {heroImages.map((src, index) => (
                   <motion.div
-                    key={activeImageIdx}
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.04 }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    key={index}
                     className={styles.heroImageWrapper}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: index === activeImageIdx ? 1 : 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <Image
-                      src={heroImages[activeImageIdx]}
-                      alt={`영리한 룩북 이미지 ${activeImageIdx + 1}`}
+                      src={src}
+                      alt={`영리한 룩북 이미지 ${index + 1}`}
                       fill
-                      sizes="320px"
-                      priority
+                      sizes="(max-width: 768px) 320px, 480px"
+                      priority={index === 0}
                       className={styles.heroCenterImage}
                     />
                   </motion.div>
-                </AnimatePresence>
+                ))}
               </div>
             </motion.div>
 
@@ -228,7 +227,7 @@ export default function Home() {
             제작부터 배송까지 완료되는<br />
             주요 품목을 직접 확인하세요
           </h2>
-          <div className={styles.sectionRight}>
+          <div className={`${styles.sectionRight} ${styles.desktopOnly}`}>
             <Link href="/collections/all" className={styles.learnMoreBtn}>
               더 알아보기
             </Link>
@@ -292,6 +291,13 @@ export default function Home() {
               </motion.div>
             </Link>
           ))}
+        </div>
+
+        {/* Mobile-Only Learn More Button at the bottom */}
+        <div className={`${styles.mobileOnly} ${styles.learnMoreBtnMobileWrapper}`}>
+          <Link href="/collections/all" className={styles.learnMoreBtn}>
+            더 알아보기
+          </Link>
         </div>
       </section>
 

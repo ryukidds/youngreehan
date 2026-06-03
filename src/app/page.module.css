@@ -8,6 +8,14 @@
   width: 100%;
 }
 
+.desktopOnly {
+  display: block;
+}
+
+.mobileOnly {
+  display: none;
+}
+
 .heroScrollContainer {
   position: relative;
   height: 300vh; /* Scroll pinning duration */
@@ -65,7 +73,7 @@
 
 .imageBox {
   width: 100%;
-  max-width: 440px; /* Increased size to match smartphone footprint and occupy desktop grid column beautifully */
+  max-width: 480px; /* Increased size to match smartphone footprint height and occupy desktop grid column beautifully */
   aspect-ratio: 3 / 4; /* Rectangular aspect ratio for clean portrait look */
   background-color: var(--bg-card);
   border-radius: var(--radius-xl);
@@ -321,8 +329,12 @@
   }
   
   .imageBox {
-    max-width: 260px; /* Sized down on mobile to prevent viewport overflow but keep it prominent */
+    max-width: 320px; /* Restored to smartphone image size (320px) on mobile for clear lookbook prominence */
     margin: 0 auto;
+  }
+
+  .heroCta {
+    display: none !important; /* Hide small Hero CTA button on mobile */
   }
   
   .heroLeft, .heroRight {
@@ -358,6 +370,22 @@
   .learnMoreBtn {
     width: 100%;
     text-align: center;
+  }
+
+  .desktopOnly {
+    display: none !important;
+  }
+
+  .mobileOnly {
+    display: block !important;
+  }
+
+  .learnMoreBtnMobileWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    padding: 0 24px;
   }
 }
 
