@@ -221,7 +221,7 @@ export default function Home() {
                           </svg>
                         </div>
                         <div className={styles.checkBadge}>
-                          <svg viewBox="0 0 24 24" width="6" height="6" fill="none" stroke="#00d632" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <svg viewBox="0 0 24 24" width="6" height="6" fill="none" stroke="#0052ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
                         </div>
