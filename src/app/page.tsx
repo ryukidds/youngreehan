@@ -1,19 +1,33 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 import { products } from "@/data/products";
 
+const heroImages = [
+  "/images/hero/hero1.jpg",
+  "/images/hero/hero2.jpg",
+  "/images/hero/hero3.jpg",
+  "/images/hero/hero4.jpg",
+];
+
 export default function Home() {
   const [showFloatingCta, setShowFloatingCta] = useState(false);
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: scrollContainerRef,
+    offset: ["start start", "end end"],
+  });
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show floating CTA once we scroll past 60% of viewport height
+      // Show floating CTA once we scroll past 50% of viewport height
       if (window.scrollY > window.innerHeight * 0.5) {
         setShowFloatingCta(true);
       } else {
@@ -25,6 +39,16 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    return scrollYProgress.onChange((latest) => {
+      // Map scroll progress [0, 1] to index 0, 1, 2, 3
+      let index = Math.floor(latest * 4);
+      if (index > 3) index = 3;
+      if (index < 0) index = 0;
+      setActiveImageIdx(index);
+    });
+  }, [scrollYProgress]);
+
   // Framer Motion Custom Transition
   const customTransition = {
     duration: 0.95,
@@ -33,66 +57,79 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* 3-Column Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.gridPattern} />
+      {/* 3-Column Hero Section with Sticky Scroll */}
+      <div className={styles.heroScrollContainer} ref={scrollContainerRef}>
+        <section className={styles.hero}>
+          <div className={styles.gridPattern} />
 
-        <div className={styles.heroLayout}>
-          {/* Left Column: Title */}
-          <motion.div
-            className={styles.heroLeft}
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={customTransition}
-          >
-            <h1 className={styles.title}>
-              복잡한 티셔츠 제작 <br />
-              영리하게 원스톱으로
-            </h1>
-          </motion.div>
-
-          {/* Center Column: Phone Mockup Shell (Undecided Gray Image) */}
-          <motion.div
-            className={styles.heroCenter}
-            initial={{ opacity: 0, y: 70, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ ...customTransition, delay: 0.1 }}
-          >
-            <div className={styles.phoneMockup}>
-              <div className={styles.phoneNotch} />
-              <div className={styles.phoneContentPlaceholder}>
-                <div className={styles.mockLogoDot} />
-                <span>Undecided</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Description & Inquire CTA */}
-          <motion.div
-            className={styles.heroRight}
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ ...customTransition, delay: 0.2 }}
-          >
-            <p className={styles.subtitle}>
-              제작부터 배송까지, 영리하게. 견적 비교하느라 시간 낭비하지 마세요.
-              고품질 원단 선정, 고정밀 인쇄 기법, 문앞까지 배송까지 영리한 솔루션이 책임집니다.
-            </p>
-            <Link
-              href="https://pf.kakao.com/_xbYwGX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.heroCta}
+          <div className={styles.heroLayout}>
+            {/* Left Column: Title */}
+            <motion.div
+              className={styles.heroLeft}
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={customTransition}
             >
-              <span>견적 문의하기</span>
-              <ArrowRight className={styles.ctaArrow} size={16} />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+              <h1 className={styles.title}>
+                복잡한 티셔츠 제작 <br />
+                영리하게 원스톱으로
+              </h1>
+            </motion.div>
+
+            {/* Center Column: Round image container with sequential scroll images */}
+            <motion.div
+              className={styles.heroCenter}
+              initial={{ opacity: 0, y: 70, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ ...customTransition, delay: 0.1 }}
+            >
+              <div className={styles.imageBox}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImageIdx}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.04 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className={styles.heroImageWrapper}
+                  >
+                    <Image
+                      src={heroImages[activeImageIdx]}
+                      alt={`영리한 룩북 이미지 ${activeImageIdx + 1}`}
+                      fill
+                      sizes="320px"
+                      priority
+                      className={styles.heroCenterImage}
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Description & Inquire CTA */}
+            <motion.div
+              className={styles.heroRight}
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ ...customTransition, delay: 0.2 }}
+            >
+              <p className={styles.subtitle}>
+                제작부터 배송까지, 영리하게. 견적 비교하느라 시간 낭비하지 마세요.
+                고품질 원단 선정, 고정밀 인쇄 기법, 문앞까지 배송까지 영리한 솔루션이 책임집니다.
+              </p>
+              <Link
+                href="https://pf.kakao.com/_xbYwGX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroCta}
+              >
+                <span>견적 문의하기</span>
+                <ArrowRight className={styles.ctaArrow} size={16} />
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+      </div>
 
       {/* Desktop-Only Feature Showcase Section */}
       <section className={styles.featuresSection}>
@@ -214,14 +251,34 @@ export default function Home() {
                 {/* Square Card Box - Full image, no text overlays */}
                 <div className={styles.productCard}>
                   <div className={styles.imageWrapper}>
-                    <Image
-                      src={product.colors[0].image}
-                      alt={product.name}
-                      width={500}
-                      height={500}
-                      className={styles.productImage}
-                      priority={idx === 0}
-                    />
+                    {product.colors.length > 0 && product.colors[0].image ? (
+                      <Image
+                        src={product.colors[0].image}
+                        alt={product.name}
+                        width={500}
+                        height={500}
+                        className={styles.productImage}
+                        priority={idx === 0}
+                      />
+                    ) : (
+                      <div className={styles.noImagePlaceholderHome}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className={styles.noImageIconHome}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.9 2.9m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375 0 11-.75 0 .375 0 01.75 0z"
+                          />
+                        </svg>
+                        <span>NO IMAGE</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 

@@ -8,10 +8,17 @@
   width: 100%;
 }
 
+.heroScrollContainer {
+  position: relative;
+  height: 300vh; /* Scroll pinning duration */
+  width: 100%;
+}
+
 /* 3-Column Hero Section - Full Frame */
 .hero {
-  position: relative;
-  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
   padding: 120px 60px 80px; /* 60px padding for full frame */
@@ -56,54 +63,34 @@
   width: 100%;
 }
 
-.phoneMockup {
+.imageBox {
   width: 100%;
   max-width: 320px;
-  aspect-ratio: 9 / 18.5;
-  background-color: #f4f4f5; /* Light gray fill */
-  border-radius: 44px;
+  aspect-ratio: 3 / 4; /* Rectangular aspect ratio for clean portrait look */
+  background-color: var(--bg-card);
+  border-radius: var(--radius-xl);
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Mock notch at top of phone */
-.phoneNotch {
+.heroImageWrapper {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 24px;
-  background-color: #e4e4e7;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-  z-index: 5;
-}
-
-.phoneContentPlaceholder {
-  color: #a1a1aa;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.mockLogoDot {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: #e4e4e7;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.heroCenterImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .heroRight {
@@ -315,15 +302,27 @@
 }
 
 @media (max-width: 768px) {
+  .heroScrollContainer {
+    height: 200vh; /* Shorter scroll pinning on mobile for snappier feel */
+  }
+
   .hero {
-    padding: 100px 24px 80px; /* Tighter padding on mobile */
-    height: auto;
+    padding: 80px 24px 60px; /* Tighter padding on mobile */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .heroLayout {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 20px;
     text-align: center;
+  }
+  
+  .imageBox {
+    max-width: 200px; /* Sized down on mobile to prevent viewport overflow */
+    margin: 0 auto;
   }
   
   .heroLeft, .heroRight {
@@ -332,8 +331,9 @@
   }
 
   .title {
-    font-size: 38px;
+    font-size: 30px; /* Sized down to ensure title fits */
     letter-spacing: -1.5px;
+    line-height: 1.2;
   }
   
   .productsGrid {
@@ -530,5 +530,25 @@
   .featuresSection {
     display: none;
   }
+}
+
+.noImagePlaceholderHome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  width: 100%;
+  height: 100%;
+}
+
+.noImageIconHome {
+  width: 32px;
+  height: 32px;
+  opacity: 0.4;
 }
 

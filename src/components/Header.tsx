@@ -11,7 +11,7 @@ export default function Header() {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: "상품소개", href: "/collections/all" },
+    { name: "상품", href: "/collections/all" },
     { name: "견적문의", href: "https://pf.kakao.com/_xbYwGX" },
   ];
 
