@@ -156,53 +156,113 @@ export default function Home() {
           {/* Card 2: Minimalist T-shirt Pattern (SVG) */}
           <div className={styles.featureCard}>
             <div className={`${styles.cardVisual} ${styles.visualPattern}`}>
-              <svg viewBox="0 0 200 200" className={styles.tshirtPatternSvg}>
-                <pattern id="shirt-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path
-                    d="M 10,8 L 14,10 L 16,7 L 24,7 L 26,10 L 30,8 L 32,13 L 29,14 L 29,32 L 11,32 L 11,14 L 8,13 Z"
-                    fill="none"
-                    stroke="#a1a1aa"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#shirt-pattern)" />
-              </svg>
+              <div className={styles.apparelGrid}>
+                <div className={`${styles.apparelItem} ${styles.apparelTee}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
+                    <path d="M20.38 3.46L16 6a2 2 0 01-2-2V2H10v2a2 2 0 01-2 2L3.62 3.46a2 2 0 00-2.54.85l-1 1.73a2 2 0 00.75 2.74L4 10.27V19a2 2 0 002 2h12a2 2 0 002-2v-8.73l3.17-1.49a2 2 0 00.75-2.74l-1-1.73a2 2 0 00-2.54-.85z" />
+                  </svg>
+                  <span>티셔츠</span>
+                </div>
+                <div className={`${styles.apparelItem} ${styles.apparelHoodie}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
+                    <path d="M18 10h-2V7a4 4 0 00-8 0v3H6a2 2 0 00-2 2v7a2 2 0 002 2h12a2 2 0 002-2v-7a2 2 0 00-2-2z" />
+                    <path d="M9 10v3a3 3 0 006 0v-3" />
+                  </svg>
+                  <span>후디</span>
+                </div>
+                <div className={`${styles.apparelItem} ${styles.apparelCap}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
+                    <path d="M2 18h14a6 6 0 10-12 0h-2z" />
+                    <path d="M12 6a2 2 0 110 4 2 2 0 010-4z" />
+                    <path d="M16 14h6a2 2 0 012 2v1a1 1 0 01-1 1h-7" />
+                  </svg>
+                  <span>모자</span>
+                </div>
+                <div className={`${styles.apparelItem} ${styles.apparelTote}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.apparelIcon}>
+                    <path d="M6 2v4h12V2" />
+                    <path d="M4 6h16l-1.5 14H5.5L4 6z" />
+                  </svg>
+                  <span>에코백</span>
+                </div>
+              </div>
             </div>
             <p className={styles.cardCaption}>
               팀의 개성을 돋보이게 할 다채로운 라이프스타일 웨어 제안
             </p>
           </div>
 
-          {/* Card 3: Product image fill (using tshirt mockup) */}
+          {/* Card 3: Instant Quote Widget */}
           <div className={styles.featureCard}>
             <div className={`${styles.cardVisual} ${styles.visualImage}`}>
-              <Image
-                src="/images/tshirt.png"
-                alt="영리한 무지 티셔츠 샘플"
-                width={300}
-                height={300}
-                className={styles.visualProductImg}
-              />
+              <div className={styles.quoteCardContainer}>
+                <div className={styles.quoteWidget}>
+                  <div className={styles.quoteHeader}>
+                    <span className={styles.quoteBadge}>Live</span>
+                    <span className={styles.quoteTitle}>실시간 견적서</span>
+                  </div>
+                  
+                  <div className={styles.quoteDetails}>
+                    <div className={styles.quoteRow}>
+                      <span className={styles.quoteLabel}>선택 품목</span>
+                      <span className={styles.quoteVal}>프리미엄 특양면 맨투맨</span>
+                    </div>
+                    <div className={styles.quoteRow}>
+                      <span className={styles.quoteLabel}>주문 수량</span>
+                      <span className={styles.quoteVal}>100 장</span>
+                    </div>
+                    <div className={styles.quoteRow}>
+                      <span className={styles.quoteLabel}>인쇄 방식</span>
+                      <span className={styles.quoteVal}>나염 인쇄 (전면 1도)</span>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.quoteDivider} />
+                  
+                  <div className={styles.quoteFooter}>
+                    <span className={styles.quoteTotalLabel}>예상 총 견적</span>
+                    <span className={styles.quoteTotalVal}>₩1,250,000</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <p className={styles.cardCaption}>
               누구나 쉽고 편리하게 확인하는 실시간 견적
             </p>
           </div>
 
-          {/* Card 4: Gradient / cobalt blue backdrop with floating paycheck-style card */}
+          {/* Card 4: Delivery Timeline Tracker */}
           <div className={styles.featureCard}>
             <div className={`${styles.cardVisual} ${styles.visualNotification}`}>
-              <div className={styles.notificationBubble}>
-                <div className={styles.notificationIcon}>
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </div>
-                <div className={styles.notificationText}>
-                  <div className={styles.notificationTitle}>무료 배송 출발</div>
-                  <div className={styles.notificationTime}>방금 전</div>
+              <div className={styles.deliveryContainer}>
+                <div className={styles.deliveryCard}>
+                  <div className={styles.deliveryStatus}>
+                    <span className={styles.deliveryPulse} />
+                    <span className={styles.deliveryStatusText}>다이렉트 당일 배송 중</span>
+                  </div>
+                  <div className={styles.deliveryTimeline}>
+                    <div className={`${styles.timelineStep} ${styles.stepDone}`}>
+                      <div className={styles.stepCircle}>✓</div>
+                      <span className={styles.stepLabel}>제작 완료</span>
+                    </div>
+                    <div className={styles.timelineLine} />
+                    <div className={`${styles.timelineStep} ${styles.stepActive}`}>
+                      <div className={styles.stepCircle}>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <rect x="1" y="3" width="15" height="13" />
+                          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                          <circle cx="5.5" cy="18.5" r="2.5" />
+                          <circle cx="18.5" cy="18.5" r="2.5" />
+                        </svg>
+                      </div>
+                      <span className={styles.stepLabel}>직출고 배송</span>
+                    </div>
+                    <div className={styles.timelineLine} />
+                    <div className={styles.timelineStep}>
+                      <div className={styles.stepCircle} />
+                      <span className={styles.stepLabel}>당일 도착</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
