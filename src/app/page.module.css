@@ -466,7 +466,10 @@
 }
 
 .visualBlue {
-  background-color: var(--primary-color);
+  background-image: url('/images/gradient.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .ovalPill {
@@ -480,11 +483,7 @@
 }
 
 .visualPattern {
-  background-image: url('/images/gradient.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 24px;
+  background-color: var(--primary-color);
 }
 
 .visualImage {

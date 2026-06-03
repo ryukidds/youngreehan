@@ -5,7 +5,7 @@
   width: 100%;
   max-width: none; /* Removed layout constraints for full frame */
   height: 80px;
-  background-color: #ffffff;
+  background-color: transparent;
   z-index: 100;
   display: flex;
   align-items: center;
