@@ -128,7 +128,7 @@
   align-items: center;
   gap: 8px;
   transition: background-color 0.2s, transform 0.2s var(--transition-smooth);
-  box-shadow: 0 8px 20px rgba(0, 82, 255, 0.15);
+  box-shadow: none; /* Removed box-shadow */
 }
 
 .heroCta:hover {
@@ -276,7 +276,7 @@
   font-size: 16px;
   padding: 18px 28px;
   border-radius: 40px;
-  box-shadow: 0 8px 24px rgba(0, 82, 255, 0.2);
+  box-shadow: none; /* Removed box-shadow */
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -44,7 +44,7 @@ export default function Header() {
               로그인
             </Link>
             <Link href="/signup" className={styles.signUpBtn}>
-              회원가입 <ArrowUpRight size={14} className={styles.arrow} />
+              회원가입 <ArrowRight size={15} className={styles.arrow} />
             </Link>
             <button
               className={styles.menuBtn}
@@ -76,7 +76,7 @@ export default function Header() {
                 로그인
               </Link>
               <Link href="/signup" className={styles.mobileSignUpBtn} onClick={handleLinkClick}>
-                회원가입 <ArrowUpRight size={16} />
+                회원가입 <ArrowRight size={16} />
               </Link>
             </div>
           </div>

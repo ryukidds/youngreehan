@@ -19,7 +19,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 60px; /* Wide side padding for edge-to-edge feel */
-  height: 100%;
 }
 
 .logo {
@@ -42,22 +41,16 @@
 
 .desktopNav {
   display: flex;
-  height: 100%;
-  gap: 0;
+  gap: 32px;
 }
 
 .navLink {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-muted);
   transition: color 0.2s var(--transition-smooth);
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 0 calc(12.2857px + .535714vw);
-  line-height: 1;
+  padding: 8px 0;
   text-decoration: none;
 }
 
@@ -72,46 +65,46 @@
 .actions {
   display: flex;
   align-items: center;
-  height: 100%;
-  gap: 0;
+  gap: 12px;
 }
 
 .loginBtn {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--foreground);
-  display: flex;
-  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  display: inline-flex;
   align-items: center;
-  height: 100%;
-  padding: 0 calc(12.2857px + .535714vw);
-  line-height: 1;
+  justify-content: center;
+  transition: opacity 0.2s;
   text-decoration: none;
-  transition: color 0.2s;
+  box-shadow: none;
 }
 
 .loginBtn:hover {
-  color: var(--primary-color);
+  opacity: 0.85;
 }
 
 .signUpBtn {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--primary-color);
-  display: flex;
-  justify-content: center;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  display: inline-flex;
   align-items: center;
-  height: 100%;
-  padding: 0 calc(12.2857px + .535714vw);
-  line-height: 1;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.2s;
   text-decoration: none;
-  background-color: transparent;
-  gap: 4px;
-  transition: color 0.2s var(--transition-smooth);
+  box-shadow: none;
 }
 
 .signUpBtn:hover {
-  color: var(--primary-hover);
+  opacity: 0.85;
 }
 
 .arrow {
@@ -119,13 +112,13 @@
 }
 
 .signUpBtn:hover .arrow {
-  transform: translate(2px, -2px);
+  transform: translateX(3px);
 }
 
 .menuBtn {
   display: none;
   color: #ffffff;
-  background-color: var(--primary-color);
+  background-color: #000000;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -133,7 +126,8 @@
   align-items: center;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  transition: opacity 0.2s;
+  box-shadow: none;
 }
 
 .menuBtn:hover {
