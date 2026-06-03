@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 import { products } from "@/data/products";
@@ -39,15 +39,13 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    return scrollYProgress.onChange((latest) => {
-      // Map scroll progress [0, 1] to index 0, 1, 2, 3
-      let index = Math.floor(latest * 4);
-      if (index > 3) index = 3;
-      if (index < 0) index = 0;
-      setActiveImageIdx(index);
-    });
-  }, [scrollYProgress]);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    // Map scroll progress [0, 1] to index 0, 1, 2, 3
+    let index = Math.floor(latest * 4);
+    if (index > 3) index = 3;
+    if (index < 0) index = 0;
+    setActiveImageIdx(index);
+  });
 
   // Framer Motion Custom Transition
   const customTransition = {
@@ -239,7 +237,7 @@ export default function Home() {
 
         {/* Products Grid */}
         <div className={styles.productsGrid}>
-          {products.map((product, idx) => (
+          {products.slice(0, 4).map((product, idx) => (
             <Link href={`/product/${product.id}`} key={product.id}>
               <motion.div
                 className={styles.productWrapper}

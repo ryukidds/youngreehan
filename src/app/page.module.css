@@ -65,7 +65,7 @@
 
 .imageBox {
   width: 100%;
-  max-width: 320px;
+  max-width: 440px; /* Increased size to match smartphone footprint and occupy desktop grid column beautifully */
   aspect-ratio: 3 / 4; /* Rectangular aspect ratio for clean portrait look */
   background-color: var(--bg-card);
   border-radius: var(--radius-xl);
@@ -321,7 +321,7 @@
   }
   
   .imageBox {
-    max-width: 200px; /* Sized down on mobile to prevent viewport overflow */
+    max-width: 260px; /* Sized down on mobile to prevent viewport overflow but keep it prominent */
     margin: 0 auto;
   }
   
