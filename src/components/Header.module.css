@@ -45,7 +45,7 @@
 }
 
 .navLink {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text-muted);
   transition: color 0.2s var(--transition-smooth);
@@ -69,7 +69,7 @@
 }
 
 .loginBtn {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   background-color: #000000;
   color: #ffffff;
@@ -88,7 +88,7 @@
 }
 
 .signUpBtn {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   background-color: var(--primary-color);
   color: #ffffff;
