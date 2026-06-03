@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, User, Mail, Lock } from "lucide-react";
 import styles from "@/app/login/auth.module.css";
 
 export default function SignupPage() {
@@ -31,6 +31,7 @@ export default function SignupPage() {
           <div className={styles.inputGroup}>
             <label className={styles.label} htmlFor="name">이름 / 회사명</label>
             <div className={styles.inputWrapper}>
+              <User size={16} className={styles.inputIcon} />
               <input
                 id="name"
                 type="text"
@@ -46,6 +47,7 @@ export default function SignupPage() {
           <div className={styles.inputGroup}>
             <label className={styles.label} htmlFor="email">이메일 주소</label>
             <div className={styles.inputWrapper}>
+              <Mail size={16} className={styles.inputIcon} />
               <input
                 id="email"
                 type="email"
@@ -61,6 +63,7 @@ export default function SignupPage() {
           <div className={styles.inputGroup}>
             <label className={styles.label} htmlFor="password">비밀번호</label>
             <div className={styles.inputWrapper}>
+              <Lock size={16} className={styles.inputIcon} />
               <input
                 id="password"
                 type="password"
