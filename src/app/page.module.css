@@ -454,9 +454,10 @@
 }
 
 .cardVisual {
+  --card-border-radius: 15.9% / 13%;
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 40px;
+  border-radius: var(--card-border-radius);
   overflow: hidden;
   position: relative;
   display: flex;

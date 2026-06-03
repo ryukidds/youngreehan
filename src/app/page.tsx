@@ -171,7 +171,7 @@ export default function Home() {
               </svg>
             </div>
             <p className={styles.cardCaption}>
-              단체복부터 다채로운 라이프스타일 굿즈 라인업 지원
+              팀의 개성을 돋보이게 할 다채로운 라이프스타일 웨어 제안
             </p>
           </div>
 
@@ -187,7 +187,7 @@ export default function Home() {
               />
             </div>
             <p className={styles.cardCaption}>
-              고품질 친환경 코튼 원단과 탄탄한 이중 봉제 마감
+              누구나 쉽고 편리하게 확인하는 실시간 견적
             </p>
           </div>
 
@@ -207,7 +207,7 @@ export default function Home() {
               </div>
             </div>
             <p className={styles.cardCaption}>
-              제작 완료 즉시 문앞까지 도달하는 실시간 배송 서비스
+              기다림을 최소화한 빠르고 안전한 다이렉트 배송 시스템
             </p>
           </div>
         </div>
