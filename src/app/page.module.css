@@ -625,7 +625,10 @@
 }
 
 .visualNotification {
-  background-color: #e0f2fe; /* Sky blue background */
+  background-image: url('/images/map.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 20px;
 }
 
