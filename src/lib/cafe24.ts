@@ -1,7 +1,6 @@
 const MALL_ID = process.env.NEXT_PUBLIC_CAFE24_MALL_ID || "youngrihan";
 const CLIENT_ID = process.env.CAFE24_CLIENT_ID || "your_cafe24_client_id";
 const CLIENT_SECRET = process.env.CAFE24_CLIENT_SECRET || "your_cafe24_client_secret";
-const REDIRECT_URI = process.env.NEXT_PUBLIC_CAFE24_REDIRECT_URI || "http://localhost:3002/api/auth/cafe24/callback";
 
 export interface Cafe24TokenResponse {
   access_token: string;
@@ -19,66 +18,6 @@ export function isMockMode(): boolean {
   return CLIENT_ID === "your_cafe24_client_id" || CLIENT_SECRET === "your_cafe24_client_secret";
 }
 
-/**
- * Returns the Cafe24 OAuth Redirect URL for Customer SSO Login
- */
-export function getCustomerAuthUrl(): string {
-  if (isMockMode()) {
-    // Return local mock callback URL for testing
-    return `/api/auth/cafe24/mock-login?redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
-  }
-  
-  const url = `https://${MALL_ID}.cafe24api.com/api/v2/oauth/authorize`;
-  const params = new URLSearchParams({
-    response_type: "code",
-    client_id: CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
-    scope: "mall.customer",
-  });
-  return `${url}?${params.toString()}`;
-}
-
-/**
- * Exchange Authorization Code for Access Token (Client SSO)
- */
-export async function exchangeCodeForToken(code: string): Promise<Cafe24TokenResponse> {
-  if (isMockMode()) {
-    // Generate a mock token response
-    return {
-      access_token: `mock_access_token_${Date.now()}`,
-      expires_at: new Date(Date.now() + 3600 * 1000).toISOString(),
-      refresh_token: `mock_refresh_token_${Date.now()}`,
-      refresh_token_expires_at: new Date(Date.now() + 30 * 24 * 3600 * 1000).toISOString(),
-      client_id: CLIENT_ID,
-      mall_id: MALL_ID,
-      user_id: code === "mock_code" ? "guest_user" : code, // using the code as user_id for mock logins
-      scopes: ["mall.customer"],
-    };
-  }
-
-  const tokenUrl = `https://${MALL_ID}.cafe24api.com/api/v2/oauth/token`;
-  const credentials = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
-
-  const response = await fetch(tokenUrl, {
-    method: "POST",
-    headers: {
-      "Authorization": `Basic ${credentials}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      grant_type: "authorization_code",
-      code,
-      redirect_uri: REDIRECT_URI,
-    }),
-  });
-
-  if (!response.ok) {
-    const errText = await response.text();
-    throw new Error(`Cafe24 Token exchange failed: ${response.statusText} - ${errText}`);
-  }
-
-  return response.json() as Promise<Cafe24TokenResponse>;
-}
 
 /**
  * Creates a personal payment link for a custom approved quote price
