@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra Premium Interactive Landing Page</title>
+  <!-- Google Fonts: High-end Outfit & Noto Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS Reset & Variable Tokens */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #070709;
+      --text-light: #f9fafb;
+      --text-muted: #8e939e;
+      --primary: #2563eb; /* High-luxury Cobalt */
+      --primary-glow: rgba(37, 99, 235, 0.2);
+      --purple: #7c3aed; /* Premium Violet */
+      --purple-glow: rgba(124, 58, 237, 0.2);
+      --font-outfit: 'Outfit', 'Noto Sans KR', sans-serif;
+      --transition-speedy: cubic-bezier(0.16, 1, 0.3, 1); /* expo.out equivalent */
+    }
+
+    /* Native CSS Scroll Snapping */
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      background-color: var(--bg-dark);
+      scroll-padding-top: 0px;
+    }
+
+    body {
+      color: var(--text-light);
+      font-family: var(--font-outfit);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg-dark);
+    }
+
+    /* Tech-luxe Grid Overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Scroll Container */
+    .scroll-container {
+      width: 100%;
+    }
+
+    /* Sections */
+    section {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 2rem;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    /* Background Ambient Lights */
+    .glow-light {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(160px);
+      z-index: 1;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      width: 500px;
+      height: 500px;
+      background: var(--primary);
+      top: -15%;
+      left: 15%;
+    }
+
+    .glow-2 {
+      width: 600px;
+      height: 600px;
+      background: var(--purple);
+      bottom: -15%;
+      right: 15%;
+    }
+
+    /* Premium Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(to right, #ffffff 40%, #8e939e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav {
+      display: flex;
+      gap: 3rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      transition: color 0.2s var(--transition-speedy), transform 0.2s var(--transition-speedy);
+    }
+
+    nav a:hover {
+      color: var(--text-light);
+      transform: translateY(-1px);
+    }
+
+    /* Section Content */
+    .sec-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    /* Premium Typography */
+    h1 {
+      font-size: 5.5rem;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -3px;
+      word-break: keep-all;
+    }
+
+    h2 {
+      font-size: 4.8rem;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -2.5px;
+      word-break: keep-all;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 40%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-text-purple {
+      background: linear-gradient(135deg, #ffffff 40%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      max-width: 620px;
+      line-height: 1.7;
+      letter-spacing: -0.2px;
+    }
+
+    /* Section 1: Hero Button */
+    #section1 {
+      background-color: #050507;
+    }
+
+    .cta-btn {
+      margin-top: 1.5rem;
+      background: #ffffff;
+      color: #000000;
+      padding: 1.1rem 3rem;
+      border-radius: 9999px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+      transition: background-color 0.2s var(--transition-speedy), color 0.2s var(--transition-speedy), transform 0.2s var(--transition-speedy);
+    }
+
+    .cta-btn:hover {
+      background: transparent;
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+    }
+
+    /* Scroll Down Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      z-index: 10;
+    }
+
+    .mouse-wheel {
+      width: 22px;
+      height: 36px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .mouse-wheel::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      background-color: var(--text-light);
+      border-radius: 2px;
+      animation: scrollMove 1.5s infinite var(--transition-speedy);
+    }
+
+    @keyframes scrollMove {
+      0% { top: 6px; opacity: 1; }
+      100% { top: 20px; opacity: 0; }
+    }
+
+    /* High-end Glassmorphic Cards */
+    .cards-container {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 5rem;
+      perspective: 1500px;
+    }
+
+    .card {
+      width: 250px;
+      height: 320px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      gap: 1.2rem;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      transition: border-color 0.3s var(--transition-speedy), background-color 0.3s var(--transition-speedy), transform 0.4s var(--transition-speedy);
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.6rem;
+      background: rgba(37, 99, 235, 0.08);
+      color: #3b82f6;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+    }
+
+    .card:nth-child(2) .card-icon {
+      background: rgba(124, 58, 237, 0.08);
+      color: #8b5cf6;
+      border: 1px solid rgba(124, 58, 237, 0.15);
+    }
+
+    .card:nth-child(3) .card-icon {
+      background: rgba(236, 72, 153, 0.08);
+      color: #ec4899;
+      border: 1px solid rgba(236, 72, 153, 0.15);
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Custom styles for Section 3 Cards */
+    #section3 .card-icon {
+      background: rgba(16, 185, 129, 0.08);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+    
+    #section3 .card:nth-child(2) .card-icon {
+      background: rgba(245, 158, 11, 0.08);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+
+    #section3 .card:nth-child(3) .card-icon {
+      background: rgba(239, 68, 68, 0.08);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+
+    /* Mobile Responsive styling */
+    @media (max-width: 768px) {
+      header {
+        padding: 1.2rem 2rem;
+      }
+      h1 {
+        font-size: 3.4rem;
+        letter-spacing: -1.5px;
+      }
+      h2 {
+        font-size: 3rem;
+        letter-spacing: -1.5px;
+      }
+      .cards-container {
+        flex-direction: column;
+        gap: 1.2rem;
+        margin-top: 2rem;
+      }
+      .card {
+        width: 320px;
+        height: 130px;
+        flex-direction: row;
+        text-align: left;
+        padding: 1.5rem;
+        border-radius: 20px;
+      }
+      .card-icon {
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tech Grid Overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Ambient Lights -->
+  <div class="glow-light glow-1"></div>
+  <div class="glow-light glow-2"></div>
+
+  <!-- Premium Header -->
+  <header>
+    <div class="logo">ANTIGRAVITY</div>
+    <nav>
+      <a href="#section1">HOME</a>
+      <a href="#section2">EXPAND</a>
+      <a href="#section3">SCALE</a>
+    </nav>
+  </header>
+
+  <!-- Scroll Container -->
+  <div class="scroll-container">
+    
+    <!-- Section 1: Hero -->
+    <section id="section1">
+      <div class="sec-content">
+        <h1 class="hero-title"><span class="gradient-text">Future of Web</span><br>Interactivity</h1>
+        <p class="subtitle hero-sub">GSAP와 ScrollTrigger를 통해 완성한 압도적인 스피드와 고급스러운 인터랙션 스냅 페이지입니다.</p>
+        <a href="#section2" class="cta-btn hero-btn">시작하기</a>
+      </div>
+      <div class="scroll-indicator">
+        <span>SCROLL</span>
+        <div class="mouse-wheel"></div>
+      </div>
+    </section>
+
+    <!-- Section 2: Spread Cards -->
+    <section id="section2">
+      <div class="sec-content">
+        <h2><span class="gradient-text">Expand Horizon</span></h2>
+        <p class="subtitle">스크롤 깊이에 연동되어 카드가 양옆으로 신속하고 역동적이게 뻗어 나갑니다.</p>
+        
+        <div class="cards-container spread-container">
+          <!-- Card 1 -->
+          <div class="card card-left">
+            <div class="card-icon">✦</div>
+            <h3>신속성</h3>
+            <p>초고속 로딩 속도와 최적화된 모션 인터랙션을 구축합니다.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="card card-center">
+            <div class="card-icon">⚡</div>
+            <h3>효율성</h3>
+            <p>효과적인 코드 구조로 경량화된 고퀄리티 화면을 완성합니다.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="card card-right">
+            <div class="card-icon">♥</div>
+            <h3>아름다움</h3>
+            <p>풍부한 시각 효과로 사용자의 첫인상을 압도합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Zoom Cards -->
+    <section id="section3">
+      <div class="sec-content">
+        <h2><span class="gradient-text-purple">Scale up Focus</span></h2>
+        <p class="subtitle">사용자의 제스처에 맞춰 카드가 밀도 높은 스케일업 효과와 함께 전면으로 다가옵니다.</p>
+        
+        <div class="cards-container scale-container">
+          <!-- Card 1 -->
+          <div class="card scale-card">
+            <div class="card-icon">✓</div>
+            <h3>모바일 최적화</h3>
+            <p>모든 모바일 기기에서도 매끄러운 모션이 연동됩니다.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="card scale-card">
+            <div class="card-icon">★</div>
+            <h3>디자인 일관성</h3>
+            <p>심플함과 정교함을 결합한 최고급 비주얼 디자인.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="card scale-card">
+            <div class="card-icon">▲</div>
+            <h3>강렬한 몰입</h3>
+            <p>스크롤을 통한 스토리텔링으로 체류 시간을 높입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- GSAP Core & Plugins CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  
+  <script>
+    // GSAP ScrollTrigger 플러그인 등록
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Hero Section (Section 1) Initial Animation: Snappy Expo Easing
+    const heroEase = "power4.out";
+    gsap.from(".hero-title", { opacity: 0, y: 70, duration: 1.2, ease: heroEase });
+    gsap.from(".hero-sub", { opacity: 0, y: 40, duration: 1.2, delay: 0.15, ease: heroEase });
+    gsap.from(".hero-btn", { opacity: 0, y: 30, duration: 1.2, delay: 0.3, ease: heroEase });
+
+    // 2. Section 2: Cards Spread (양옆 벌어짐) - Fast & Snappy Easing
+    // start와 end 트리거 지점을 조율해 카드가 더 빠르고 신속하게 반응하도록 만듭니다.
+    const spreadTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#section2",
+        start: "top 95%",   // 섹션이 보이기 시작하자마자 바로 반응
+        end: "top top",     // 섹션이 최상단에 올 때 애니메이션 완료
+        scrub: 0.3,         // 0.3초의 관성 딜레이를 주어 극도의 부드러움과 신속성 결합
+      }
+    });
+
+    spreadTl.from(".card-left", { x: -280, rotateY: -15, opacity: 0, ease: "power3.out" })
+            .from(".card-right", { x: 280, rotateY: 15, opacity: 0, ease: "power3.out" }, "<")
+            .from(".card-center", { y: 100, scale: 0.95, opacity: 0, ease: "power3.out" }, "<");
+
+    // 3. Section 3: Cards Scale (크기 줌인) - Staggered & Crisp Motion
+    const scaleTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#section3",
+        start: "top 95%",
+        end: "top top",
+        scrub: 0.3,
+      }
+    });
+
+    scaleTl.from(".scale-card", {
+      scale: 0.5,
+      rotateX: -25,
+      opacity: 0,
+      stagger: 0.05,        // 시차 간격을 절반(0.05초)으로 줄여 반응 속도 극대화
+      ease: "power4.out"    // 강하게 밀고 들어오는 가속도 적용
+    });
+
+    // 4. Premium Navigation: High-speed Expo smooth scroll
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        
+        // CSS 스냅 충돌 방지를 위해 임시 비활성화
+        document.documentElement.style.scrollSnapType = "none";
+        
+        gsap.to(window, {
+          duration: 0.6,          // 스크롤 이동 시간 단축 (1초 -> 0.6초)
+          scrollTo: targetId,
+          ease: "expo.out",       // 가장 신속하고 스피디한 가속/감속 처리
+          onComplete: () => {
+            document.documentElement.style.scrollSnapType = "y mandatory";
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

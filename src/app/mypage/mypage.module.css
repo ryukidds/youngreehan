@@ -1,0 +1,320 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  width: 100%;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #f4f4f5;
+  padding-bottom: 24px;
+}
+
+.titleSection h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -1.5px;
+  margin-bottom: 8px;
+}
+
+.titleSection p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.logoutBtn {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background-color: var(--bg-card);
+  padding: 10px 20px;
+  border-radius: 40px;
+  transition: background-color 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.logoutBtn:hover {
+  background-color: var(--bg-card-hover);
+  color: #000000;
+}
+
+/* Quote Cards Grid */
+.quoteGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quoteCard {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: transform 0.2s;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 16px;
+}
+
+.quoteIdRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quoteId {
+  font-size: 18px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.quoteDate {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Badges */
+.badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 40px;
+  text-transform: uppercase;
+}
+
+.pending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.approved {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.paid {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+.rejected {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+/* Card Content Details */
+.cardContent {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+.specsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.specRow {
+  display: flex;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.specLabel {
+  width: 140px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.specVal {
+  color: #000000;
+  font-weight: 700;
+}
+
+.positionsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.positionTag {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+/* Action Area */
+.actionArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 16px;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  padding-left: 40px;
+}
+
+.priceDisplay {
+  text-align: right;
+}
+
+.priceLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.priceVal {
+  font-size: 24px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.payBtn {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.payBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+.paidStatusBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #10b981;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.pendingBox {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* Empty Dashboard state */
+.emptyState {
+  text-align: center;
+  padding: 80px 24px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.emptyTitle {
+  font-size: 20px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.emptyDesc {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.shopBtn {
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 40px;
+  margin-top: 12px;
+}
+
+/* Prompt to login UI */
+.loginPromptCard {
+  max-width: 500px;
+  margin: 100px auto;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loginPromptIcon {
+  font-size: 48px;
+}
+
+.loginPromptCard h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -1px;
+}
+
+.loginPromptCard p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .cardContent {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .actionArea {
+    border-left: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-left: 0;
+    padding-top: 24px;
+    align-items: stretch;
+  }
+  
+  .priceDisplay {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .payBtn {
+    text-align: center;
+    justify-content: center;
+  }
+}

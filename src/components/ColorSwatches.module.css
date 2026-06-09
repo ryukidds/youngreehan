@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.swatchList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px; /* Tighter gap for compact micro-size swatches */
+}
+
+.swatchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: block;
+}
+
+.swatch:hover {
+  transform: scale(1.35);
+  z-index: 2;
+}
+
+.whiteBorder {
+  border: 1px solid #d4d4d8 !important; /* Visible border for white/ivory swatches */
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 50;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: #000000 transparent transparent transparent;
+}
+
+.swatchWrapper:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.moreBadge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #66666b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  user-select: none;
+  line-height: 1;
+}

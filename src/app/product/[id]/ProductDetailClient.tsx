@@ -19,12 +19,75 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     product.sizes.reduce((acc, size) => ({ ...acc, [size]: 0 }), {})
   );
   
+  const [activeTab, setActiveTab] = useState("detail");
+
+  React.useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-140px 0px -50% 0px", // Offset to adjust sticky header height
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveTab(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+    const sections = ["detail", "info", "guide"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.unobserve(el);
+      });
+    };
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const getSizeSpecs = (size: string) => {
+    const specs: Record<string, { chest: number; length: number; shoulder: number; sleeve: number }> = {
+      "110": { chest: 34, length: 44, shoulder: 29, sleeve: 13 },
+      "120": { chest: 36, length: 48, shoulder: 31, sleeve: 14 },
+      "130": { chest: 38, length: 52, shoulder: 33, sleeve: 15 },
+      "140": { chest: 40, length: 56, shoulder: 35, sleeve: 16 },
+      "150": { chest: 43, length: 60, shoulder: 38, sleeve: 17 },
+      "160": { chest: 46, length: 63, shoulder: 41, sleeve: 18 },
+      "XS":  { chest: 46, length: 63, shoulder: 41, sleeve: 18 },
+      "S":   { chest: 49, length: 66, shoulder: 44, sleeve: 19 },
+      "M":   { chest: 52, length: 70, shoulder: 47, sleeve: 20 },
+      "L":   { chest: 55, length: 74, shoulder: 50, sleeve: 22 },
+      "XL":  { chest: 58, length: 78, shoulder: 53, sleeve: 24 },
+      "2XL": { chest: 61, length: 82, shoulder: 56, sleeve: 26 },
+      "3XL": { chest: 64, length: 84, shoulder: 59, sleeve: 26 },
+      "4XL": { chest: 67, length: 85, shoulder: 62, sleeve: 27 },
+      "5XL": { chest: 70, length: 86, shoulder: 65, sleeve: 27 },
+    };
+    return specs[size.toUpperCase()] || { chest: 50, length: 70, shoulder: 45, sleeve: 20 };
+  };
+  
   // Printing options state
   const [hasPrint, setHasPrint] = useState<boolean>(true); // Default: With Print
   const [printMethods, setPrintMethods] = useState<string[]>(["나염"]); // Default Screen Print
   const [selectedPositions, setSelectedPositions] = useState<number[]>([3]); // Default Front Center (3)
   const [requests, setRequests] = useState("");
   const [fileName, setFileName] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
   const handleQtyChange = (size: string, increment: number) => {
@@ -134,24 +197,64 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
 ※ 견적을 복사하여 카카오톡 채널에 전달해주시면 빠르게 안내해 드리겠습니다.`;
   };
 
-  const handleCtaClick = (actionType: "주문" | "문의") => {
-    const text = getQuoteText(actionType);
-    
-    // Copy to clipboard
-    navigator.clipboard.writeText(text).then(() => {
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-      
-      // Redirect to KakaoTalk channel
-      setTimeout(() => {
-        window.open("https://pf.kakao.com/_xbYwGX", "_blank");
-      }, 1000);
-    });
+  const handleCtaClick = async (actionType: "주문" | "문의") => {
+    if (totalQty === 0) return;
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("productId", product.id);
+      formData.append("productName", product.name);
+      formData.append("colorName", selectedColor.name);
+      formData.append("quantities", JSON.stringify(quantities));
+      formData.append("hasPrint", String(hasPrint));
+      formData.append("printMethods", JSON.stringify(hasPrint ? printMethods : []));
+      formData.append("selectedPositions", JSON.stringify(hasPrint ? selectedPositions : []));
+      formData.append("requests", requests);
+      formData.append("subtotal", String(subtotal));
+      formData.append("discountAmount", String(discountAmount));
+      formData.append("printFee", String(printFee));
+      formData.append("totalPrice", String(finalTotal));
+
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+      }
+
+      const res = await fetch("/api/quotes", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Copy to clipboard as a helpful helper
+        const text = getQuoteText(actionType);
+        await navigator.clipboard.writeText(text);
+
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+
+        // Redirect to mypage
+        setTimeout(() => {
+          window.location.href = "/mypage";
+        }, 1500);
+      } else {
+        alert(`견적 제출 실패: ${data.error || "알 수 없는 에러"}`);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(`견적 접수 중 에러가 발생했습니다: ${err.message || err}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFileName(e.target.files[0].name);
+      const file = e.target.files[0];
+      setFileName(file.name);
+      setSelectedFile(file);
     }
   };
 
@@ -451,20 +554,196 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
             <button
               onClick={() => handleCtaClick("주문")}
               className={styles.orderBtn}
-              disabled={totalQty === 0}
-              style={{ opacity: totalQty === 0 ? 0.4 : 1, cursor: totalQty === 0 ? "not-allowed" : "pointer" }}
+              disabled={totalQty === 0 || isSubmitting}
+              style={{ opacity: (totalQty === 0 || isSubmitting) ? 0.4 : 1, cursor: (totalQty === 0 || isSubmitting) ? "not-allowed" : "pointer" }}
             >
-              주문하기 <Send size={16} />
+              {isSubmitting ? "제출 중..." : "주문하기"} <Send size={16} />
             </button>
             <button
               onClick={() => handleCtaClick("문의")}
               className={styles.inquiryBtn}
+              disabled={isSubmitting}
+              style={{ opacity: isSubmitting ? 0.6 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
             >
-              상세 견적 문의
+              {isSubmitting ? "처리 중..." : "상세 견적 문의"}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Sticky Tab Navigation */}
+      <div className={styles.tabContainer}>
+        <div className={styles.tabBar}>
+          <button
+            onClick={() => scrollToSection("detail")}
+            className={`${styles.tabBtn} ${activeTab === "detail" ? styles.tabActive : ""}`}
+          >
+            상세페이지
+          </button>
+          <button
+            onClick={() => scrollToSection("info")}
+            className={`${styles.tabBtn} ${activeTab === "info" ? styles.tabActive : ""}`}
+          >
+            상품정보
+          </button>
+          <button
+            onClick={() => scrollToSection("guide")}
+            className={`${styles.tabBtn} ${activeTab === "guide" ? styles.tabActive : ""}`}
+          >
+            제작가이드
+          </button>
+        </div>
+      </div>
+
+      {/* 1. 상세페이지 섹션 */}
+      <section id="detail" className={styles.sectionBlock}>
+        <h2 className={styles.sectionTitle}>PRODUCT DETAIL</h2>
+        <p className={styles.sectionSub}>프리미엄 핏과 내구성을 경험해 보세요.</p>
+        
+        <div className={styles.detailCard}>
+          <div className={styles.detailTextContent}>
+            <h3>{product.name}</h3>
+            <p className={styles.detailTagline}>{product.tagline}</p>
+            <p className={styles.detailDesc}>{product.description}</p>
+            <div className={styles.detailBadgeRow}>
+              <span>정밀 넥라인 리브 마감</span>
+              <span>100% 고밀도 프리미엄 원사</span>
+              <span>비침 방지 및 형태 안정 가공</span>
+            </div>
+          </div>
+          
+          {/* Big Showcase Image Grid */}
+          <div className={styles.detailImageGrid}>
+            {product.colors.slice(0, 2).map((color, cIdx) => (
+              <div key={cIdx} className={styles.detailImageWrapper}>
+                {color.image && (
+                  <Image
+                    src={color.image}
+                    alt={`${product.name} - ${color.name}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className={styles.detailShowcaseImg}
+                  />
+                )}
+                <span className={styles.imageColorBadge}>{color.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2. 상품정보 섹션 */}
+      <section id="info" className={styles.sectionBlock}>
+        <h2 className={styles.sectionTitle}>INFORMATION</h2>
+        <p className={styles.sectionSub}>상품 스펙 및 상세 치수를 확인하세요.</p>
+        
+        <div className={styles.infoGrid}>
+          {/* Specification Sheet */}
+          <div className={styles.specSheet}>
+            <h3>원단 및 스펙 세부정보</h3>
+            <table className={styles.specTable}>
+              <tbody>
+                <tr>
+                  <th>브랜드</th>
+                  <td>{product.brand}</td>
+                </tr>
+                <tr>
+                  <th>제품 카테고리</th>
+                  <td>{product.category}</td>
+                </tr>
+                <tr>
+                  <th>소재 혼용률</th>
+                  <td>순면 100% (일부 멜란지/그레이 색상 면/폴리 혼방)</td>
+                </tr>
+                <tr>
+                  <th>두께 및 중량</th>
+                  <td>{product.name.includes("17수") ? "5.6온스 (헤비웨이트)" : product.name.includes("20수") ? "5.0온스 (스탠다드)" : "4.0온스~7.4온스 (고유 스펙)"}</td>
+                </tr>
+                <tr>
+                  <th>신축성</th>
+                  <td>보통 (활동이 편안한 리브 편직 조직)</td>
+                </tr>
+                <tr>
+                  <th>비침 여부</th>
+                  <td>거의 없음 (화이트 계열 미세 비침 가능)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Size Dimension Table */}
+          <div className={styles.specSheet}>
+            <h3>상세 실측 치수 조견표 (cm)</h3>
+            <div className={styles.tableResponsive}>
+              <table className={styles.sizeTable}>
+                <thead>
+                  <tr>
+                    <th>사이즈</th>
+                    <th>총장</th>
+                    <th>가슴단면</th>
+                    <th>어깨너비</th>
+                    <th>소매길이</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {product.sizes.map((size) => {
+                    const spec = getSizeSpecs(size);
+                    return (
+                      <tr key={size}>
+                        <td><strong>{size}</strong></td>
+                        <td>{spec.length}</td>
+                        <td>{spec.chest}</td>
+                        <td>{spec.shoulder}</td>
+                        <td>{spec.sleeve}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <span className={styles.tableNotice}>
+              ※ 실측 사이즈는 측정 방법이나 리뉴얼 시점에 따라 1~2cm 내외의 오차가 발생할 수 있습니다.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. 제작가이드 섹션 */}
+      <section id="guide" className={styles.sectionBlock}>
+        <h2 className={styles.sectionTitle}>PRODUCTION GUIDE</h2>
+        <p className={styles.sectionSub}>영리한 티셔츠 제작 프로세스와 인쇄 팁을 확인하세요.</p>
+        
+        <div className={styles.guideContainer}>
+          {/* Guide Card 1 */}
+          <div className={styles.guideCard}>
+            <div className={styles.guideIconBox}>🎨</div>
+            <h4>인쇄 파일 첨부 요령</h4>
+            <p>
+              가장 깨끗하고 고화질의 정밀 인쇄물을 얻기 위해 디자인 파일은 <strong>일러스트레이터(AI, 벡터 형식)</strong> 파일로 접수해 주시는 것을 적극 권장합니다.
+            </p>
+            <p>
+              JPG/PNG 이미지 파일의 경우 해상도가 <strong>300dpi 이상</strong>이어야 깨짐 현상 없이 선명하게 고화질 인쇄가 가능합니다.
+            </p>
+          </div>
+
+          {/* Guide Card 2 */}
+          <div className={styles.guideCard}>
+            <div className={styles.guideIconBox}>⚙️</div>
+            <h4>인쇄 기법 가이드</h4>
+            <ul>
+              <li>
+                <strong>나염인쇄 (스크린 프린트)</strong>: 클래식하고 오래가는 인쇄 기법으로, 30장 이상 대량 제작 시 최고의 가성비와 선명함을 제공합니다.
+              </li>
+              <li>
+                <strong>전사/디지털인쇄 (DTF)</strong>: 풀컬러나 얇은 선, 그라데이션이 들어간 사진형 도안을 고정밀 디지털 필름으로 열 압착 인쇄합니다.
+              </li>
+              <li>
+                <strong>자수 (Embroidery)</strong>: 도톰한 입체감과 뛰어난 내구성이 특징으로, 워크웨어 및 맨투맨, 아우터의 소형 로고 포인트로 적극 추천합니다.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {/* Copy notification popup */}
       <AnimatePresence>

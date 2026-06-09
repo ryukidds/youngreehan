@@ -6,9 +6,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import styles from "./collections.module.css";
+import ColorSwatches from "@/components/ColorSwatches";
 
 export default function CollectionsAllPage() {
   const [selectedBrands, setSelectedBrands] = React.useState<string[]>([]);
+  const [hoveredColors, setHoveredColors] = React.useState<Record<string, number | null>>({});
 
   // Get unique brands and product counts dynamically
   const uniqueBrands = React.useMemo(() => {
@@ -92,34 +94,43 @@ export default function CollectionsAllPage() {
                     {/* Card box containing the image cutout, centered on gray background */}
                     <div className={styles.productCard}>
                       <div className={styles.imageWrapper}>
-                        {product.colors.length > 0 && product.colors[0].image ? (
-                          <Image
-                            src={product.colors[0].image}
-                            alt={product.name}
-                            width={400}
-                            height={533} // Matches the 3:4 aspect ratio approximately
-                            className={styles.productImage}
-                            priority={idx < 3}
-                          />
-                        ) : (
-                          <div className={styles.noImagePlaceholder}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className={styles.noImageIcon}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.9 2.9m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375 0 11-.75 0 .375 0 01.75 0z"
-                              />
-                            </svg>
-                            <span>NO IMAGE</span>
-                          </div>
-                        )}
+                        {(() => {
+                          const hoveredColorIdx = hoveredColors[product.id];
+                          let imageSrc = product.colors.length > 0 && product.colors[0].image ? product.colors[0].image : "";
+                          
+                          if (hoveredColorIdx !== undefined && hoveredColorIdx !== null && product.colors[hoveredColorIdx]) {
+                            imageSrc = product.colors[hoveredColorIdx].image;
+                          }
+
+                          return imageSrc ? (
+                            <Image
+                              src={imageSrc}
+                              alt={product.name}
+                              width={400}
+                              height={533} // Matches the 3:4 aspect ratio approximately
+                              className={styles.productImage}
+                              priority={idx < 3}
+                            />
+                          ) : (
+                            <div className={styles.noImagePlaceholder}>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className={styles.noImageIcon}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.9 2.9m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375 0 11-.75 0 .375 0 01.75 0z"
+                                />
+                              </svg>
+                              <span>NO IMAGE</span>
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
 
@@ -127,6 +138,19 @@ export default function CollectionsAllPage() {
                     <div className={styles.cardCaption}>
                       <span className={styles.brandLabel}>{product.brand}</span>
                       <h3 className={styles.productName}>{product.name}</h3>
+                      
+                      <div className={styles.swatchArea}>
+                        <ColorSwatches
+                          colors={product.colors}
+                          onHoverColor={(colorIdx) => {
+                            setHoveredColors((prev) => ({
+                              ...prev,
+                              [product.id]: colorIdx,
+                            }));
+                          }}
+                        />
+                      </div>
+
                       <span className={styles.priceLabel}>
                         {product.basePrice.toLocaleString()}원
                       </span>

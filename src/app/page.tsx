@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-
 import { ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 import { products } from "@/data/products";
+import ColorSwatches from "@/components/ColorSwatches";
 
 const heroImages = [
   "/images/hero/hero1.jpg",
@@ -18,24 +19,27 @@ const heroImages = [
 export default function Home() {
   const [showFloatingCta, setShowFloatingCta] = useState(false);
   const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const [hoveredColors, setHoveredColors] = useState<Record<string, number | null>>({});
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Calculate scroll progress manually for the hero section to prevent bugs with Framer Motion useScroll
+    let rafId: number;
+    let isVisible = false;
+
+    const updateScrollProgress = () => {
       if (scrollContainerRef.current) {
         const rect = scrollContainerRef.current.getBoundingClientRect();
-        const containerTop = rect.top + window.scrollY;
         const containerHeight = rect.height;
         const viewportHeight = window.innerHeight;
         
-        const scrollStart = containerTop;
-        const scrollEnd = containerTop + containerHeight - viewportHeight;
-        
+        const maxScroll = containerHeight - viewportHeight;
         let progress = 0;
-        if (window.scrollY > scrollStart) {
-          progress = (window.scrollY - scrollStart) / (scrollEnd - scrollStart);
+        
+        if (maxScroll > 0) {
+          // rect.top is negative when scrolled past the top of the container
+          progress = -rect.top / maxScroll;
         }
+        
         if (progress > 1) progress = 1;
         if (progress < 0) progress = 0;
         
@@ -46,19 +50,51 @@ export default function Home() {
         setActiveImageIdx(index);
       }
 
-      // Show floating CTA once we scroll past 50% of viewport height
-      if (window.scrollY > window.innerHeight * 0.5) {
+      if (isVisible) {
+        rafId = requestAnimationFrame(updateScrollProgress);
+      }
+    };
+
+    // Track when the heroScrollContainer is within the viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          rafId = requestAnimationFrame(updateScrollProgress);
+        } else {
+          cancelAnimationFrame(rafId);
+        }
+      },
+      {
+        threshold: [0, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0],
+      }
+    );
+
+    if (scrollContainerRef.current) {
+      observer.observe(scrollContainerRef.current);
+    }
+
+    // Scroll event fallback to check for floating CTA button
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop > window.innerHeight * 0.5) {
         setShowFloatingCta(true);
       } else {
         setShowFloatingCta(false);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    // Initialize immediately
+    window.addEventListener("scroll", handleScroll, { capture: true, passive: true });
     handleScroll();
-    
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      if (scrollContainerRef.current) {
+        observer.unobserve(scrollContainerRef.current);
+      }
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", handleScroll, { capture: true });
+    };
   }, []);
 
   // Framer Motion Custom Transition
@@ -357,7 +393,15 @@ export default function Home() {
                         "/images/products/model3.jpg",
                         "/images/products/model4.jpg"
                       ];
-                      const imageSrc = modelImages[idx] || (product.colors.length > 0 ? product.colors[0].image : "");
+                      
+                      const hoveredColorIdx = hoveredColors[product.id];
+                      let imageSrc = modelImages[idx] || (product.colors.length > 0 ? product.colors[0].image : "");
+                      
+                      // Swap to hovered color image if active
+                      if (hoveredColorIdx !== undefined && hoveredColorIdx !== null && product.colors[hoveredColorIdx]) {
+                        imageSrc = product.colors[hoveredColorIdx].image;
+                      }
+
                       return imageSrc ? (
                         <Image
                           src={imageSrc}
@@ -393,6 +437,19 @@ export default function Home() {
                 {/* Card Caption placed OUTSIDE the card box */}
                 <div className={styles.cardCaption}>
                   <h3 className={styles.productName}>{product.name}</h3>
+                  
+                  <div className={styles.swatchArea}>
+                    <ColorSwatches
+                      colors={product.colors}
+                      onHoverColor={(colorIdx) => {
+                        setHoveredColors((prev) => ({
+                          ...prev,
+                          [product.id]: colorIdx,
+                        }));
+                      }}
+                    />
+                  </div>
+
                   <div className={styles.productMeta}>
                     <span>{product.category}</span>
                     <span> &middot; </span>

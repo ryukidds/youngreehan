@@ -245,6 +245,13 @@
   padding-left: 8px;
 }
 
+.swatchArea {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+}
+
 .productName {
   font-size: 18px;
   font-weight: 800;

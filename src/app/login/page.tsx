@@ -9,8 +9,10 @@ export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"member" | "guest">("member");
   
   // Member Login States
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(""); // acts as Cafe24 ID/username
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Guest Order Lookup States
   const [guestName, setGuestName] = useState("");
@@ -22,9 +24,29 @@ export default function LoginPage() {
   const [findEmail, setFindEmail] = useState("");
   const [findName, setFindName] = useState("");
 
-  const handleMemberSubmit = (e: React.FormEvent) => {
+  const handleMemberSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`로그인되었습니다! (아이디: ${email}) (테스트 모드)`);
+    setErrorMsg("");
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/auth/login-direct", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: email, password }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = "/mypage";
+      } else {
+        setErrorMsg(data.error || "로그인에 실패했습니다.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg("서버 통신 오류가 발생했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleGuestSubmit = (e: React.FormEvent) => {
@@ -78,18 +100,33 @@ export default function LoginPage() {
           /* Member Login Form */
           <>
             <form onSubmit={handleMemberSubmit} className={styles.form}>
+              {errorMsg && (
+                <div style={{
+                  color: "#dc2626",
+                  backgroundColor: "#fef2f2",
+                  padding: "12px",
+                  borderRadius: "8px",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  textAlign: "center"
+                }}>
+                  ⚠️ {errorMsg}
+                </div>
+              )}
+
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="email">이메일 주소</label>
+                <label className={styles.label} htmlFor="email">카페24 아이디</label>
                 <div className={styles.inputWrapper}>
-                  <Mail size={16} className={styles.inputIcon} />
+                  <User size={16} className={styles.inputIcon} />
                   <input
                     id="email"
-                    type="email"
+                    type="text"
                     required
-                    placeholder="name@company.com"
+                    placeholder="카페24 ID를 입력하세요"
                     className={styles.input}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -106,12 +143,13 @@ export default function LoginPage() {
                     className={styles.input}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
 
-              <button type="submit" className={styles.submitBtn}>
-                로그인 <LogIn size={16} />
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                {isSubmitting ? "로그인 중..." : "로그인"} <LogIn size={16} />
               </button>
             </form>
 
