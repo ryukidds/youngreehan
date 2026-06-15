@@ -44,6 +44,33 @@ export default function LoginPage() {
   const [findName, setFindName] = useState("");
 
   const handleMemberSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // 1. Admin Login (Handles both local & production securely via the backend API)
+    if (email === "admin") {
+      e.preventDefault();
+      setIsSubmitting(true);
+      setErrorMsg("");
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: email, password }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = "/admin";
+        } else {
+          setErrorMsg(data.error || "관리자 로그인에 실패했습니다.");
+          setIsSubmitting(false);
+        }
+      } catch (err) {
+        console.error("Admin login failed:", err);
+        setErrorMsg("로그인 처리 중 오류가 발생했습니다.");
+        setIsSubmitting(false);
+      }
+      return;
+    }
+
+    // 2. Normal Customer Login
     if (typeof window !== "undefined") {
       const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
       if (isLocal) {
@@ -62,23 +89,8 @@ export default function LoginPage() {
           });
 
           // Set local mock cookie for localhost session detection
-          if (email === "admin") {
-            const res = await fetch("/api/auth/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username: email, password }),
-            });
-            const data = await res.json();
-            if (data.success) {
-              window.location.href = "/admin";
-            } else {
-              setErrorMsg(data.error || "관리자 로그인에 실패했습니다.");
-              setIsSubmitting(false);
-            }
-          } else {
-            document.cookie = `cafe24_user=${encodeURIComponent(email)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
-            window.location.href = "/mypage";
-          }
+          document.cookie = `cafe24_user=${encodeURIComponent(email)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
+          window.location.href = "/mypage";
         } catch (err) {
           console.error("Local login failed:", err);
           setErrorMsg("로그인 처리 중 오류가 발생했습니다. (로컬 테스트)");
