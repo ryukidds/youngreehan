@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { exchangeCodeForToken, saveTokensToFile } from "@/lib/cafe24";
+import { exchangeCodeForToken, saveTokens } from "@/lib/cafe24";
 
 export const dynamic = "force-dynamic";
 
@@ -27,8 +27,8 @@ export async function GET(req: NextRequest) {
     console.log("[OAuth Callback] Exchanging authorization code for access token...");
     const tokenData = await exchangeCodeForToken(code);
     
-    // Save tokens locally in the JSON file
-    saveTokensToFile(tokenData.accessToken, tokenData.refreshToken, tokenData.expiresIn, tokenData.mallId);
+    // Save tokens locally in the JSON file and to Supabase
+    await saveTokens(tokenData.accessToken, tokenData.refreshToken, tokenData.expiresIn, tokenData.mallId);
     console.log("[OAuth Callback] Admin authentication token successfully saved!");
 
     const adminUrl = new URL("/admin", req.url);

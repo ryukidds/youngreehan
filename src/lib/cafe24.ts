@@ -7,6 +7,7 @@
 
 import fs from "fs";
 import path from "path";
+import { supabase } from "./supabase";
 
 const MALL_ID = process.env.NEXT_PUBLIC_CAFE24_MALL_ID || "hypq";
 const CLIENT_ID = process.env.CAFE24_CLIENT_ID || "";
@@ -260,12 +261,83 @@ export function getTokensFromFile(): TokenData | null {
 }
 
 /**
+ * Async helper to get tokens.
+ * Tries Supabase first, falls back to environment variables, then local file.
+ */
+export async function getTokens(): Promise<TokenData | null> {
+  // 1. Try to read from Supabase if Key is set
+  if (process.env.SUPABASE_ANON_KEY) {
+    try {
+      const { data, error } = await supabase
+        .from("cafe24_tokens")
+        .select("*")
+        .eq("id", 1)
+        .single();
+        
+      if (data && data.access_token) {
+        return {
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token,
+          expiresAt: Number(data.expires_at),
+          mallId: data.mall_id || "hypq",
+        };
+      }
+    } catch (err) {
+      console.warn("[Supabase] Failed to fetch tokens from DB:", err);
+    }
+  }
+
+  // 2. Fallback to env/file methods
+  return getTokensFromFile();
+}
+
+/**
+ * Async helper to save tokens.
+ * Saves to Supabase first, then local file.
+ */
+export async function saveTokens(
+  accessToken: string,
+  refreshToken: string,
+  expiresIn: number,
+  mallId?: string
+) {
+  const expiresAt = Date.now() + (expiresIn || 7200) * 1000;
+
+  // 1. Save to Supabase
+  if (process.env.SUPABASE_ANON_KEY) {
+    try {
+      const { error } = await supabase
+        .from("cafe24_tokens")
+        .upsert({
+          id: 1,
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_at: expiresAt,
+          mall_id: mallId || "hypq",
+          updated_at: new Date().toISOString(),
+        });
+        
+      if (error) {
+        console.error("[Supabase] Failed to save tokens to DB:", error);
+      } else {
+        console.log("[Supabase] Tokens saved to DB successfully!");
+      }
+    } catch (err) {
+      console.error("[Supabase] Error saving tokens to DB:", err);
+    }
+  }
+
+  // 2. Fallback to local file for development
+  saveTokensToFile(accessToken, refreshToken, expiresIn, mallId);
+}
+
+/**
  * Unified Cafe24 Admin Fetcher.
- * Automatically loads Admin tokens from server-side file storage,
+ * Automatically loads Admin tokens from DB/storage,
  * checks for expiration, refreshes the token, and saves it.
  */
 export async function cafe24Fetch(endpoint: string, options: RequestInit = {}) {
-  let tokens = getTokensFromFile();
+  let tokens = await getTokens();
 
   if (!tokens) {
     throw new Cafe24AuthError("No Cafe24 tokens found. Admin must authenticate first.");
@@ -277,7 +349,7 @@ export async function cafe24Fetch(endpoint: string, options: RequestInit = {}) {
     console.log("[Cafe24 Fetch] Access token expired or close to expiry. Refreshing...");
     try {
       const refreshed = await refreshAccessToken(tokens.refreshToken);
-      saveTokensToFile(refreshed.accessToken, refreshed.refreshToken, refreshed.expiresIn, tokens.mallId);
+      await saveTokens(refreshed.accessToken, refreshed.refreshToken, refreshed.expiresIn, tokens.mallId);
       tokens = {
         accessToken: refreshed.accessToken,
         refreshToken: refreshed.refreshToken,
@@ -299,7 +371,7 @@ export async function cafe24Fetch(endpoint: string, options: RequestInit = {}) {
       console.log("[Cafe24 Fetch] Received 401. Force refreshing token...");
       try {
         const refreshed = await refreshAccessToken(tokens.refreshToken);
-        saveTokensToFile(refreshed.accessToken, refreshed.refreshToken, refreshed.expiresIn, tokens.mallId);
+        await saveTokens(refreshed.accessToken, refreshed.refreshToken, refreshed.expiresIn, tokens.mallId);
         return await cafe24AdminFetch(endpoint, refreshed.accessToken, options);
       } catch (refreshErr) {
         console.error("[Cafe24 Fetch] Force refresh retry failed:", refreshErr);

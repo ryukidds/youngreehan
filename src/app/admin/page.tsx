@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getQuotes } from "@/lib/db";
 import { ArrowLeft } from "lucide-react";
-import { getTokensFromFile, cafe24Fetch } from "@/lib/cafe24";
+import { getTokens, cafe24Fetch } from "@/lib/cafe24";
 import AdminDashboardClient from "./AdminDashboardClient";
 import { isAdminUser } from "@/lib/session";
 import styles from "./admin.module.css";
@@ -40,7 +40,7 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
   let connectionDetail = "";
   let tokens = null;
   try {
-    tokens = getTokensFromFile();
+    tokens = await getTokens();
     if (tokens) {
       // Fetch a lightweight endpoint to verify validity
       await cafe24Fetch("/categories");
