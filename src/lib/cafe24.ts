@@ -225,11 +225,30 @@ export function saveTokensToFile(
     mallId: mallId || "hypq",
     issuedAt: Date.now()
   };
-  fs.writeFileSync(TOKEN_FILE_PATH, JSON.stringify(tokenData, null, 2), "utf8");
-  console.log("[Cafe24] Tokens saved to file:", TOKEN_FILE_PATH);
+  try {
+    const dir = path.dirname(TOKEN_FILE_PATH);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(TOKEN_FILE_PATH, JSON.stringify(tokenData, null, 2), "utf8");
+    console.log("[Cafe24] Tokens saved to file:", TOKEN_FILE_PATH);
+  } catch (err) {
+    console.warn("[Cafe24] Failed to save tokens to file (expected in read-only serverless environments):", err);
+  }
 }
 
 export function getTokensFromFile(): TokenData | null {
+  // 1. First check Environment Variables (highly useful for production/Vercel)
+  if (process.env.CAFE24_ACCESS_TOKEN && process.env.CAFE24_REFRESH_TOKEN) {
+    return {
+      accessToken: process.env.CAFE24_ACCESS_TOKEN,
+      refreshToken: process.env.CAFE24_REFRESH_TOKEN,
+      expiresAt: Number(process.env.CAFE24_EXPIRES_AT || (Date.now() + 7200 * 1000)),
+      mallId: process.env.NEXT_PUBLIC_CAFE24_MALL_ID || "hypq",
+    };
+  }
+
+  // 2. Fallback to local file for development
   try {
     if (!fs.existsSync(TOKEN_FILE_PATH)) return null;
     const content = fs.readFileSync(TOKEN_FILE_PATH, "utf8");
