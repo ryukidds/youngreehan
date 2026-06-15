@@ -71,35 +71,36 @@ export default function LoginPage() {
     }
 
     // 2. Normal Customer Login
-    if (typeof window !== "undefined") {
-      const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-      if (isLocal) {
-        e.preventDefault(); // Prevent native navigation which drops us on Cafe24 homepage
-        setIsSubmitting(true);
-        setErrorMsg("");
+    e.preventDefault(); // Always prevent native HTML form submit to bypass Next.js rewrites body stream bugs
+    setIsSubmitting(true);
+    setErrorMsg("");
 
-        try {
-          const formData = new FormData(e.currentTarget);
-          
-          // Submit to Cafe24 directly via fetch with no-cors to bypass Next.js proxy stream issues
-          await fetch("https://hypq.cafe24.com/exec/front/Member/login/", {
-            method: "POST",
-            mode: "no-cors",
-            body: formData,
-          });
+    try {
+      const res = await fetch("/api/cafe24/customers/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          member_id: email,
+          password: password,
+        }),
+      });
 
-          // Set local mock cookie for localhost session detection
-          document.cookie = `cafe24_user=${encodeURIComponent(email)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
-          window.location.href = "/mypage";
-        } catch (err) {
-          console.error("Local login failed:", err);
-          setErrorMsg("로그인 처리 중 오류가 발생했습니다. (로컬 테스트)");
-          setIsSubmitting(false);
-        }
-      } else {
-        // Production: Let native form submit handle it
-        setIsSubmitting(true);
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "로그인에 실패했습니다.");
       }
+
+      // Set cookie for session detection (used by getCurrentUser and getClientCurrentUser)
+      document.cookie = `cafe24_user=${encodeURIComponent(email)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
+      
+      // Redirect locally or production to mypage
+      window.location.href = "/mypage";
+    } catch (err: any) {
+      console.error("Login failed:", err);
+      setErrorMsg(err.message || "로그인 처리 중 오류가 발생했습니다.");
+      setIsSubmitting(false);
     }
   };
 

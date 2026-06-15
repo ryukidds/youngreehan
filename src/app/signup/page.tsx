@@ -68,57 +68,57 @@ export default function SignupPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Always prevent native HTML form submit to bypass Next.js rewrites body stream bugs
     setErrorMsg("");
 
     // Frontend Validations
     if (password !== confirmPassword) {
-      e.preventDefault();
       setErrorMsg("비밀번호가 일치하지 않습니다.");
       return;
     }
 
     if (!agreeToS || !agreePrivacy) {
-      e.preventDefault();
       setErrorMsg("필수 약관에 동의하셔야 회원가입이 가능합니다.");
       return;
     }
 
     if (mobile2.length < 3 || mobile3.length !== 4) {
-      e.preventDefault();
       setErrorMsg("올바른 휴대전화 번호를 입력하세요.");
       return;
     }
 
-    if (typeof window !== "undefined") {
-      const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-      if (isLocal) {
-        e.preventDefault(); // Prevent native navigation which drops us on Cafe24 homepage
-        setIsSubmitting(true);
+    setIsSubmitting(true);
 
-        try {
-          const formData = new FormData(e.currentTarget);
+    try {
+      const phone = `${mobile1}-${mobile2}-${mobile3}`;
+      const res = await fetch("/api/cafe24/customers/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          member_id: username,
+          name,
+          email,
+          password,
+          phone,
+        }),
+      });
 
-          // Submit to Cafe24 directly via fetch with no-cors to bypass Next.js proxy stream issues
-          await fetch("https://hypq.cafe24.com/exec/front/Member/join/", {
-            method: "POST",
-            mode: "no-cors",
-            body: formData,
-          });
-
-          // Set local mock cookie for localhost session detection
-          document.cookie = `cafe24_user=${encodeURIComponent(username)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
-          
-          // Redirect locally to mypage
-          window.location.href = "/mypage";
-        } catch (err) {
-          console.error("Local signup failed:", err);
-          setErrorMsg("회원가입 처리 중 오류가 발생했습니다. (로컬 테스트)");
-          setIsSubmitting(false);
-        }
-      } else {
-        // Production: Let native form submit handle it
-        setIsSubmitting(true);
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "회원가입에 실패했습니다.");
       }
+
+      // Set cookie for session detection (used by getCurrentUser and getClientCurrentUser)
+      document.cookie = `cafe24_user=${encodeURIComponent(username)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
+      
+      // Redirect locally or production to mypage
+      window.location.href = "/mypage";
+    } catch (err: any) {
+      console.error("Signup failed:", err);
+      setErrorMsg(err.message || "회원가입 처리 중 오류가 발생했습니다.");
+      setIsSubmitting(false);
     }
   };
 

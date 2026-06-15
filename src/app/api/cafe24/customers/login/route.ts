@@ -48,10 +48,19 @@ export async function POST(request: NextRequest) {
       customer: customerSession,
     });
 
+    const isProd = process.env.NODE_ENV === "production";
+    const secureFlag = isProd ? "; Secure" : "";
+
     // Set customer session cookie
     response.headers.append(
       "Set-Cookie",
-      `cafe24_customer=${encodeURIComponent(JSON.stringify(customerSession))}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`
+      `cafe24_customer=${encodeURIComponent(JSON.stringify(customerSession))}; HttpOnly${secureFlag}; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`
+    );
+
+    // Set cafe24_user cookie for frontend UI context compatibility
+    response.headers.append(
+      "Set-Cookie",
+      `cafe24_user=${encodeURIComponent(customer.member_id)}${secureFlag}; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`
     );
 
     return response;
