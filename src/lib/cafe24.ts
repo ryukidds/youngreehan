@@ -26,9 +26,6 @@ const SCOPES = [
   "mall.write_customer",
   "mall.read_order",
   "mall.write_order",
-  "mall.read_shipping",
-  "mall.read_application",
-  "mall.write_application",
 ].join(",");
 
 
