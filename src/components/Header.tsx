@@ -20,7 +20,8 @@ export default function Header() {
 
   const navLinks = [
     { name: "상품", href: "/collections/all" },
-    { name: "견적문의", href: "https://pf.kakao.com/_xbYwGX" },
+    { name: "빠른견적", href: "/quotes" },
+    { name: "견적문의", href: "/board/estimate" },
   ];
 
   const handleLinkClick = () => {
@@ -51,11 +52,11 @@ export default function Header() {
             {user.loggedIn ? (
               <>
                 <Link href="/mypage" className={styles.loginBtn} style={{ fontWeight: 700 }}>
-                  마이페이지 ({user.userId})
+                  마이페이지
                 </Link>
-                <Link href="/api/auth/logout" className={styles.signUpBtn}>
+                <a href="/api/auth/logout" className={styles.signUpBtn}>
                   로그아웃
-                </Link>
+                </a>
               </>
             ) : (
               <>
@@ -96,11 +97,11 @@ export default function Header() {
               {user.loggedIn ? (
                 <>
                   <Link href="/mypage" className={styles.mobileLoginBtn} onClick={handleLinkClick} style={{ fontWeight: 700 }}>
-                    마이페이지 ({user.userId})
+                    마이페이지
                   </Link>
-                  <Link href="/api/auth/logout" className={styles.mobileSignUpBtn} onClick={handleLinkClick}>
+                  <a href="/api/auth/logout" className={styles.mobileSignUpBtn} onClick={handleLinkClick}>
                     로그아웃
-                  </Link>
+                  </a>
                 </>
               ) : (
                 <>

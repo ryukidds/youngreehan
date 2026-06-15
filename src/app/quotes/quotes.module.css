@@ -1,0 +1,797 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  width: 100%;
+}
+
+.titleSection {
+  margin-bottom: 40px;
+  text-align: left;
+  border-bottom: 1px solid #f4f4f5;
+  padding-bottom: 24px;
+}
+
+.titleSection h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -1.5px;
+  margin: 0 0 8px 0;
+}
+
+.titleSection p {
+  font-size: 14px;
+  color: #71717a;
+  margin: 0;
+}
+
+/* Product Selector Dropdown */
+.productSelectCard {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.select {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1.5px solid #e4e4e7;
+  border-radius: 12px;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.select:focus {
+  border-color: #0052ff;
+}
+
+/* Main Grid Layout */
+.grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftSection {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e4e4e7;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.optionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+.optionValue {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+}
+
+/* Color Picker */
+.colorPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.colorDotBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 2px;
+  border: 2px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.colorDotBtn.active {
+  border-color: #0052ff;
+}
+
+.colorInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Size grid */
+.sizeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+}
+
+.sizeBox {
+  background-color: #ffffff;
+  border: 1.5px solid #e4e4e7;
+  border-radius: 8px;
+  padding: 12px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.sizeBox:hover {
+  border-color: #b4b4b4;
+}
+
+.sizeBox.active {
+  border-color: #0052ff;
+  background-color: rgba(0, 82, 255, 0.03);
+  color: #0052ff;
+}
+
+.sizeName {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.sizePriceText {
+  font-size: 9px;
+  font-weight: 600;
+  color: #a1a1aa;
+}
+
+/* Stepper adjustments */
+.selectedSizesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.selectedSizeRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectedSizeLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.stepBtn {
+  background: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #71717a;
+}
+
+.stepBtn:hover {
+  background-color: #f4f4f5;
+  color: #000000;
+}
+
+.stepValue {
+  font-size: 13px;
+  font-weight: 700;
+  width: 32px;
+  text-align: center;
+  color: #000000;
+}
+
+/* Printing configurations */
+.toggleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleSwitch {
+  display: flex;
+  background-color: #f4f4f5;
+  padding: 4px;
+  border-radius: 30px;
+  gap: 2px;
+}
+
+.toggleBtn {
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: #71717a;
+  padding: 6px 14px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.toggleBtn.active {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.subOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkboxLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+.checkboxes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.checkBtn {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.checkBtn.active {
+  border-color: #0052ff;
+  color: #0052ff;
+  background-color: rgba(0, 82, 255, 0.02);
+}
+
+/* File upload */
+.fileUploadArea {
+  border: 1.5px dashed #e4e4e7;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  background-color: #fafafa;
+}
+
+.fileUploadArea:hover {
+  background-color: #f4f4f5;
+  border-color: #b4b4b4;
+}
+
+.fileInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploadIcon {
+  color: #71717a;
+  margin-bottom: 8px;
+}
+
+.uploadLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.uploadHelp {
+  font-size: 11px;
+  color: #a1a1aa;
+  margin-top: 4px;
+}
+
+.uploadedFileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.fileName {
+  font-size: 12px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.removeFileBtn {
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: #dc2626;
+  cursor: pointer;
+}
+
+/* Textarea requests */
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 14px;
+  font-size: 13px;
+  border: 1.5px solid #e4e4e7;
+  border-radius: 12px;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.textarea:focus {
+  border-color: #0052ff;
+}
+
+/* Invoice Bill panel */
+.rightSection {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  padding: 32px;
+  position: sticky;
+  top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.billTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.billRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #71717a;
+}
+
+.billRowLabel {
+  font-weight: 600;
+}
+
+.billRowValue {
+  font-weight: 700;
+  color: #000000;
+}
+
+.discountValue {
+  color: #ef4444;
+}
+
+.billDivider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+  margin: 8px 0;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 4px;
+}
+
+.totalLabel {
+  font-size: 14px;
+  font-weight: 800;
+  color: #000000;
+}
+
+.totalAmount {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0052ff;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 40px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.submitBtn:hover {
+  background-color: #1a1a1a;
+}
+
+.submitBtn:disabled {
+  background-color: #e4e4e7;
+  color: #a1a1aa;
+  cursor: not-allowed;
+}
+
+.infoHint {
+  font-size: 11px;
+  color: #a1a1aa;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Toast alert notification */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #10b981;
+  color: #ffffff;
+  padding: 16px 32px;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+  z-index: 100;
+}
+
+/* Multi-color quantity styles */
+.colorDotBtn.previewing {
+  outline: 2px solid #0052ff;
+  outline-offset: 2px;
+}
+
+.colorQuantitiesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.colorQuantityCard {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 18px 20px;
+  transition: all 0.2s ease;
+}
+
+.colorQuantityCard:hover {
+  border-color: #d4d4d8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.colorCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #f4f4f5;
+  padding-bottom: 10px;
+}
+
+.colorInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.colorCardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.removeColorBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ef4444;
+  background-color: #fef2f2;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.removeColorBtn:hover {
+  background-color: #fee2e2;
+}
+
+.sizeSteppersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.sizeStepperBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.sizeLabelContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sizeName {
+  font-size: 13px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.sizeUpchargeText {
+  font-size: 10px;
+  color: #0052ff;
+  font-weight: 600;
+}
+
+.sizeStepperControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 2px 6px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sizeStepBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  color: #71717a;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.sizeStepBtn:hover:not(:disabled) {
+  background-color: #f4f4f5;
+  color: #000000;
+}
+
+.sizeStepBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.sizeQtyVal {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* List size styles */
+.sizeList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.sizeRowItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f4f4f5;
+}
+
+.sizeRowItem:last-child {
+  border-bottom: none;
+}
+
+.sizeInfoLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sizeLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.stepperControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.stepperBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  color: #71717a;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.stepperBtn:hover:not(:disabled) {
+  background-color: #f4f4f5;
+  color: #000000;
+}
+
+.stepperBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.stepperVal {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Actions Row & Cart Button */
+.actionButtonsRow {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.actionButtonsRow button, .actionButtonsRow .cartBtn {
+  flex: 1;
+}
+
+.cartBtn {
+  border: 1.5px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 16px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cartBtn:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.cartBtn:disabled {
+  background-color: #e4e4e7;
+  color: #a1a1aa;
+  border-color: #e4e4e7;
+  cursor: not-allowed;
+}

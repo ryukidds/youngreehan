@@ -44,6 +44,8 @@ next-env.d.ts
 /public/uploads/*
 !/public/uploads/.gitkeep
 /src/data/quotes.json
+/src/data/users.json
+cafe24-tokens.json
 .npm-cache/
 
 

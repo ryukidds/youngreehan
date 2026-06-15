@@ -8,6 +8,7 @@ export interface Quote {
   productName: string;
   colorName: string;
   quantities: Record<string, number>;
+  colorQuantities?: Record<string, Record<string, number>>;
   hasPrint: boolean;
   printMethods: string[];
   selectedPositions: number[];
@@ -20,8 +21,21 @@ export interface Quote {
   totalPrice: number;
   status: "PENDING" | "APPROVED" | "PAID" | "REJECTED";
   paymentUrl?: string;
+  productNo?: number | null;
+  comments?: QuoteComment[];
+  writerName?: string;
+  password?: string;
+  title?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface QuoteComment {
+  id: string;
+  sender: "USER" | "ADMIN";
+  senderId: string;
+  message: string;
+  createdAt: string;
 }
 
 const DB_PATH = path.join(process.cwd(), "src/data/quotes.json");

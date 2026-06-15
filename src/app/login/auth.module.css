@@ -111,21 +111,38 @@
   width: 100%;
 }
 
-.inputIcon {
-  position: absolute;
-  left: 16px;
-  color: #a1a1aa;
-}
-
 .input {
   width: 100%;
-  background-color: #f4f4f5; /* Flat light gray background */
-  border: none; /* No input borders */
-  border-radius: var(--radius-md);
-  padding: 14px 16px 14px 44px;
-  font-size: 15px;
+  background-color: #f8fafc; /* Sleek light modern slate/gray background */
+  border: 1px solid #e2e8f0; /* Subtle input border */
+  border-radius: 8px; /* Refined radius */
+  padding: 14px 16px; /* Removed left icon padding */
+  font-size: 14px; /* Sophisticated text size */
   color: #000000;
-  transition: background-color 0.2s;
+  letter-spacing: -0.01em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.inputWithAction {
+  padding-right: 44px; /* Space for password visibility toggle */
+}
+
+.passwordToggleBtn {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #a1a1aa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.passwordToggleBtn:hover {
+  color: #000000;
 }
 
 .input::placeholder {
@@ -133,8 +150,9 @@
 }
 
 .input:focus {
-  background-color: #e4e4e7; /* Flat hover/focus indicator */
-  box-shadow: none;
+  background-color: #ffffff;
+  border-color: #0052ff;
+  box-shadow: 0 0 0 4px rgba(0, 82, 255, 0.08); /* Premium glow shadow */
 }
 
 .submitBtn {
@@ -413,3 +431,151 @@
     padding: 28px 20px;
   }
 }
+
+/* Cellphone Input Field Styles */
+.phoneGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.phoneSelect {
+  flex: 1.2;
+  width: 0;
+  min-width: 0;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #000000;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phoneSelect:focus {
+  background-color: #ffffff;
+  border-color: #0052ff;
+  box-shadow: 0 0 0 4px rgba(0, 82, 255, 0.08);
+}
+
+.phoneInput {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #000000;
+  text-align: center;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phoneInput:focus {
+  background-color: #ffffff;
+  border-color: #0052ff;
+  box-shadow: 0 0 0 4px rgba(0, 82, 255, 0.08);
+}
+
+.phoneSeparator {
+  color: #a1a1aa;
+  font-weight: 500;
+}
+
+/* Agreement Checklist Styles */
+.agreementContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+  background-color: #f4f4f5;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.agreementItem {
+  display: flex;
+  align-items: center; /* Center aligned for better layout alignment */
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+  line-height: 1.4;
+}
+
+.checkboxLabelOptional {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.checkboxInput {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.checkboxInput:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.checkboxInput:checked::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg); /* Perfect centering with transform */
+}
+
+.agreementHeader {
+  border-bottom: 1px solid #e4e4e7;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+}
+
+.agreementHeader .checkboxLabel {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.subAgreements {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 32px;
+  margin-top: -4px;
+}
+

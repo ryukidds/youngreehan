@@ -1,11 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/session";
 
-export async function GET() {
+export const dynamic = "force-dynamic";
+
+export async function GET(req: NextRequest) {
   try {
-    const userId = await getCurrentUser();
-    return NextResponse.json({ loggedIn: userId !== null, userId });
-  } catch {
-    return NextResponse.json({ loggedIn: false, userId: null });
+    const cookie = req.cookies.get("cafe24_user");
+    if (cookie && cookie.value) {
+      return NextResponse.json({
+        loggedIn: true,
+        userId: decodeURIComponent(cookie.value),
+      });
+    }
+    return NextResponse.json({
+      loggedIn: false,
+      userId: null,
+    });
+  } catch (error: any) {
+    console.error("[Auth Me API] Error getting session:", error);
+    return NextResponse.json({
+      loggedIn: false,
+      userId: null,
+      error: error.message,
+    });
   }
 }

@@ -105,23 +105,8 @@
   color: #000000;
 }
 
-.ratingRow {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--text-dim);
-  margin-top: 4px;
-}
 
-.ratingStar {
-  color: #ff9500;
-}
 
-.reviewsCount {
-  color: var(--text-muted);
-  text-decoration: underline;
-}
 
 .description {
   font-size: 14px;
@@ -472,8 +457,8 @@
 /* Actions */
 .actionRow {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
   margin-top: 12px;
 }
 
@@ -565,11 +550,11 @@
     left: 0;
     width: 100%;
     background-color: #ffffff;
-    padding: 16px 24px 24px;
+    padding: 14px 16px 20px;
     z-index: 100;
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns inline even on mobile! */
-    gap: 12px;
+    grid-template-columns: 1fr 1fr 1fr; /* Three columns inline even on mobile! */
+    gap: 8px;
     margin-top: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.05); /* Very light boundary line only at footer split */
   }
@@ -722,6 +707,21 @@
   line-height: 1.6;
   color: var(--text-muted);
   word-break: keep-all;
+}
+
+.detailDescHtml {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  word-break: keep-all;
+}
+
+.detailDescHtml img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 16px auto;
+  border-radius: var(--radius-md);
 }
 
 .detailBadgeRow {
@@ -958,6 +958,269 @@
   
   .guideCard {
     padding: 24px;
+  }
+}
+
+.descriptionContainer {
+  max-width: 1200px;
+  margin: 64px auto 0;
+  padding: 40px 24px;
+  border-top: 1px solid #e4e4e7;
+}
+
+@media (max-width: 768px) {
+  .descriptionContainer {
+    margin-top: 40px;
+    padding: 24px 16px;
+  }
+}
+
+/* Multi-color quantity styles */
+.colorDotBtn.previewing {
+  outline: 2px solid #0052ff;
+  outline-offset: 2px;
+}
+
+.colorQuantitiesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.colorQuantityCard {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: all 0.2s ease;
+}
+
+.colorQuantityCard:hover {
+  border-color: #d4d4d8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.colorCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #f4f4f5;
+  padding-bottom: 10px;
+}
+
+.colorInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.colorCardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.removeColorBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ef4444;
+  background-color: #fef2f2;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.removeColorBtn:hover {
+  background-color: #fee2e2;
+}
+
+.sizeSteppersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.sizeStepperBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.sizeLabelContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sizeName {
+  font-size: 13px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.sizeUpchargeText {
+  font-size: 10px;
+  color: #0052ff;
+  font-weight: 600;
+}
+
+.sizeStepperControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 2px 6px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sizeStepBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  color: #71717a;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.sizeStepBtn:hover:not(:disabled) {
+  background-color: #f4f4f5;
+  color: #000000;
+}
+
+.sizeStepBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.sizeQtyVal {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* List size styles */
+.sizeList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.sizeRowItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f4f4f5;
+}
+
+.sizeRowItem:last-child {
+  border-bottom: none;
+}
+
+.sizeInfoLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sizeLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #18181b;
+}
+
+.stepperControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.stepperBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  color: #71717a;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.stepperBtn:hover:not(:disabled) {
+  background-color: #f4f4f5;
+  color: #000000;
+}
+
+.stepperBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.stepperVal {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Cart Button Style */
+.cartBtn {
+  border: 1.5px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s var(--transition-smooth);
+}
+
+.cartBtn:hover {
+  background-color: #000000;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .orderBtn, .inquiryBtn, .cartBtn {
+    padding: 14px 8px !important;
+    font-size: 12px !important;
   }
 }
 

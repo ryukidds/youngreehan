@@ -1,30 +1,67 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { products } from "@/data/products";
+import { useSearchParams } from "next/navigation";
+import { type Product } from "@/lib/types";
 import styles from "./collections.module.css";
 import ColorSwatches from "@/components/ColorSwatches";
 
-export default function CollectionsAllPage() {
+function CollectionsContent() {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get("category") || "";
+
   const [selectedBrands, setSelectedBrands] = React.useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = React.useState<string>(initialCategory);
   const [hoveredColors, setHoveredColors] = React.useState<Record<string, number | null>>({});
+  const [displayProducts, setDisplayProducts] = React.useState<Product[]>([]);
+
+  // Sync category from URL on navigation
+  React.useEffect(() => {
+    const cat = searchParams.get("category") || "";
+    setSelectedCategory(cat);
+  }, [searchParams]);
+
+  // Load products from Cafe24 API on mount
+  React.useEffect(() => {
+    async function loadCafe24Products() {
+      try {
+        const res = await fetch("/api/cafe24/products");
+        if (!res.ok) throw new Error("API response error");
+        const data = await res.json();
+        
+        if (data && data.products && data.products.length > 0) {
+          console.log(`[Collections] Loaded ${data.products.length} products from Cafe24.`);
+          setDisplayProducts(data.products);
+        }
+      } catch (err) {
+        console.warn("[Collections] Failed to load Cafe24 products, using static fallback:", err);
+      }
+    }
+    loadCafe24Products();
+  }, []);
 
   // Get unique brands and product counts dynamically
   const uniqueBrands = React.useMemo(() => {
-    const brands = products.map((p) => p.brand);
+    const brands = displayProducts.map((p) => p.brand);
     return Array.from(new Set(brands)).sort();
-  }, []);
+  }, [displayProducts]);
 
   const brandCounts = React.useMemo(() => {
     const counts: Record<string, number> = {};
-    products.forEach((p) => {
+    displayProducts.forEach((p) => {
       counts[p.brand] = (counts[p.brand] || 0) + 1;
     });
     return counts;
-  }, []);
+  }, [displayProducts]);
+
+  // Get unique categories
+  const uniqueCategories = React.useMemo(() => {
+    const categories = displayProducts.map((p) => p.category);
+    return Array.from(new Set(categories));
+  }, [displayProducts]);
 
   const handleBrandToggle = (brand: string) => {
     setSelectedBrands((prev) =>
@@ -32,10 +69,20 @@ export default function CollectionsAllPage() {
     );
   };
 
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory((prev) => (prev === category ? "" : category));
+  };
+
   const filteredProducts = React.useMemo(() => {
-    if (selectedBrands.length === 0) return products;
-    return products.filter((p) => selectedBrands.includes(p.brand));
-  }, [selectedBrands]);
+    let result = displayProducts;
+    if (selectedCategory) {
+      result = result.filter((p) => p.category === selectedCategory);
+    }
+    if (selectedBrands.length > 0) {
+      result = result.filter((p) => selectedBrands.includes(p.brand));
+    }
+    return result;
+  }, [displayProducts, selectedBrands, selectedCategory]);
 
   // Framer Motion Custom Transition
   const customTransition = {
@@ -48,6 +95,25 @@ export default function CollectionsAllPage() {
       <div className={styles.mainLayout}>
         {/* Left Column: Sidebar Filters */}
         <aside className={styles.sidebar}>
+          {/* Category Filter */}
+          <div className={styles.filterHeader}>
+            <span>카테고리</span>
+          </div>
+          <div className={styles.filterGroup}>
+            <div className={styles.categoryPills}>
+              {uniqueCategories.map((cat) => (
+                <button
+                  key={cat}
+                  className={`${styles.categoryPill} ${selectedCategory === cat ? styles.categoryPillActive : ""}`}
+                  onClick={() => handleCategorySelect(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Brand Filter */}
           <div className={styles.filterHeader}>
             <span>브랜드 필터</span>
           </div>
@@ -73,7 +139,9 @@ export default function CollectionsAllPage() {
         {/* Right Column: Main Content Area */}
         <main className={styles.contentArea}>
           <div className={styles.galleryHeader}>
-            <h1 className={styles.pageTitle}>ALL PRODUCTS</h1>
+            <h1 className={styles.pageTitle}>
+              {selectedCategory || "ALL PRODUCTS"}
+            </h1>
           </div>
 
           <div className={styles.productGrid}>
@@ -91,7 +159,6 @@ export default function CollectionsAllPage() {
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ ...customTransition, delay: idx * 0.05 }}
                   >
-                    {/* Card box containing the image cutout, centered on gray background */}
                     <div className={styles.productCard}>
                       <div className={styles.imageWrapper}>
                         {(() => {
@@ -107,9 +174,10 @@ export default function CollectionsAllPage() {
                               src={imageSrc}
                               alt={product.name}
                               width={400}
-                              height={533} // Matches the 3:4 aspect ratio approximately
+                              height={533}
                               className={styles.productImage}
                               priority={idx < 3}
+                              unoptimized={true}
                             />
                           ) : (
                             <div className={styles.noImagePlaceholder}>
@@ -134,7 +202,6 @@ export default function CollectionsAllPage() {
                       </div>
                     </div>
 
-                    {/* Captions placed OUTSIDE the card box (Image -> Brand -> Product Name -> Price) */}
                     <div className={styles.cardCaption}>
                       <span className={styles.brandLabel}>{product.brand}</span>
                       <h3 className={styles.productName}>{product.name}</h3>
@@ -163,5 +230,13 @@ export default function CollectionsAllPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function CollectionsAllPage() {
+  return (
+    <Suspense>
+      <CollectionsContent />
+    </Suspense>
   );
 }

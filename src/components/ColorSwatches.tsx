@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ColorSwatches.module.css";
-import { ProductColor } from "@/data/products";
+import { ProductColor } from "@/lib/types";
 
 interface ColorSwatchesProps {
   colors: ProductColor[];

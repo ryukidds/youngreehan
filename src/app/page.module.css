@@ -362,8 +362,8 @@
   }
   
   .productsGrid {
-    grid-template-columns: 1fr;
-    gap: 36px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
   
   .productsSection {
@@ -845,5 +845,77 @@
   width: 32px;
   height: 32px;
   opacity: 0.4;
+}
+
+/* Category Banner Cards */
+.categoryBanner {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 32px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  transition: transform var(--transition-duration) var(--transition-smooth);
+}
+
+.categoryBanner:hover {
+  transform: translateY(-4px);
+}
+
+.categoryBannerImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s var(--transition-smooth);
+}
+
+.categoryBanner:hover .categoryBannerImage {
+  transform: scale(1.05);
+}
+
+.categoryBannerOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 24px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.categoryBannerTitle {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.categoryBannerSub {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Ad Placeholder Banner */
+.categoryBannerPlaceholder {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 32px;
+  overflow: hidden;
+  background-color: #f4f4f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholderText {
+  font-size: 20px;
+  font-weight: 700;
+  color: #d4d4d8;
+  letter-spacing: 4px;
 }
 

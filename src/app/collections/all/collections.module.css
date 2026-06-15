@@ -301,3 +301,37 @@
   font-weight: 500;
   color: var(--text-muted);
 }
+
+/* Category Filter Pills */
+.categoryPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.categoryPill {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dim);
+  background-color: var(--bg-card);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.categoryPill:hover {
+  background-color: var(--bg-card-hover);
+  color: #000000;
+}
+
+.categoryPillActive {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.categoryPillActive:hover {
+  background-color: #333333;
+  color: #ffffff;
+}

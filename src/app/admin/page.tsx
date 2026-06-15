@@ -1,47 +1,58 @@
 import React from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getQuotes } from "@/lib/db";
 import { ArrowLeft } from "lucide-react";
+import { getTokensFromFile, cafe24Fetch } from "@/lib/cafe24";
+import AdminDashboardClient from "./AdminDashboardClient";
+import { isAdminUser } from "@/lib/session";
 import styles from "./admin.module.css";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminDashboard() {
+interface AdminDashboardProps {
+  searchParams: Promise<{
+    auth_success?: string;
+    auth_error?: string;
+    sync_success?: string;
+    sync_count?: string;
+    sync_error?: string;
+  }>;
+}
+
+export default async function AdminDashboard({ searchParams }: AdminDashboardProps) {
+  const admin = await isAdminUser();
+  if (!admin) {
+    redirect("/login");
+  }
+
+  const params = await searchParams;
+  const authSuccess = params.auth_success === "true";
+  const authError = params.auth_error || null;
+  const syncSuccess = params.sync_success === "true";
+  const syncCount = params.sync_count || "0";
+  const syncError = params.sync_error || null;
+
   const quotes = await getQuotes();
-  // Sort quotes newest first
-  const sortedQuotes = [...quotes].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
 
-  const getStatusBadgeClass = (status: string) => {
-    switch (status) {
-      case "PENDING":
-        return `${styles.badge} ${styles.pending}`;
-      case "APPROVED":
-        return `${styles.badge} ${styles.approved}`;
-      case "PAID":
-        return `${styles.badge} ${styles.paid}`;
-      case "REJECTED":
-        return `${styles.badge} ${styles.rejected}`;
-      default:
-        return styles.badge;
+  // Check Cafe24 API connection status
+  let isConnected = false;
+  let connectionDetail = "";
+  let tokens = null;
+  try {
+    tokens = getTokensFromFile();
+    if (tokens) {
+      // Fetch a lightweight endpoint to verify validity
+      await cafe24Fetch("/categories");
+      isConnected = true;
+      connectionDetail = "카페24 어드민 API와 성공적으로 연결되었습니다.";
+    } else {
+      connectionDetail = "인증 토큰 정보가 없습니다. 최초 1회 인증이 필요합니다.";
     }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case "PENDING":
-        return "대기 중";
-      case "APPROVED":
-        return "승인 완료";
-      case "PAID":
-        return "결제 완료";
-      case "REJECTED":
-        return "반려됨";
-      default:
-        return status;
-    }
-  };
+  } catch (err: any) {
+    isConnected = false;
+    connectionDetail = err.message || "연동 토큰 만료 또는 연결 실패";
+  }
 
   return (
     <div className={styles.container}>
@@ -55,72 +66,20 @@ export default async function AdminDashboard() {
         </Link>
       </div>
 
-      <div className={styles.tableCard}>
-        <div className={styles.tableResponsive}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>견적번호</th>
-                <th>신청고객</th>
-                <th>선택 상품</th>
-                <th>합계 수량</th>
-                <th>예상 가격</th>
-                <th>첨부 도안</th>
-                <th>신청일</th>
-                <th>상태</th>
-                <th>관리</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedQuotes.length === 0 ? (
-                <tr>
-                  <td colSpan={9} style={{ textAlign: "center", padding: "40px" }}>
-                    아직 신청된 견적이 존재하지 않습니다.
-                  </td>
-                </tr>
-              ) : (
-                sortedQuotes.map((quote) => {
-                  const totalQty = Object.values(quote.quantities).reduce((a, b) => a + b, 0);
-                  return (
-                    <tr key={quote.id}>
-                      <td>
-                        <strong>{quote.id}</strong>
-                      </td>
-                      <td>{quote.userId}</td>
-                      <td>
-                        {quote.productName} ({quote.colorName})
-                      </td>
-                      <td>{totalQty}개</td>
-                      <td>₩{quote.totalPrice.toLocaleString()}원</td>
-                      <td>
-                        {quote.fileName ? (
-                          <span style={{ color: "#0052ff", fontWeight: 700 }}>
-                            📁 {quote.fileName.substring(0, 15)}
-                            {quote.fileName.length > 15 && "..."}
-                          </span>
-                        ) : (
-                          <span style={{ color: "#a1a1aa" }}>없음</span>
-                        )}
-                      </td>
-                      <td>{new Date(quote.createdAt).toLocaleDateString("ko-KR")}</td>
-                      <td>
-                        <span className={getStatusBadgeClass(quote.status)}>
-                          {getStatusLabel(quote.status)}
-                        </span>
-                      </td>
-                      <td>
-                        <Link href={`/admin/quotes/${quote.id}`} className={styles.rowLink}>
-                          상세보기
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <AdminDashboardClient
+        initialQuotes={quotes}
+        isConnected={isConnected}
+        connectionDetail={connectionDetail}
+        mallId={tokens?.mallId}
+        issuedAt={tokens?.issuedAt}
+        expiresAt={tokens?.expiresAt}
+        authSuccess={authSuccess}
+        authError={authError}
+        syncSuccess={syncSuccess}
+        syncCount={syncCount}
+        syncError={syncError}
+      />
     </div>
   );
 }
+

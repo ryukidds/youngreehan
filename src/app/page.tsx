@@ -3,11 +3,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
-import { products } from "@/data/products";
-import ColorSwatches from "@/components/ColorSwatches";
+
 
 const heroImages = [
   "/images/hero/hero1.jpg",
@@ -19,7 +18,7 @@ const heroImages = [
 export default function Home() {
   const [showFloatingCta, setShowFloatingCta] = useState(false);
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const [hoveredColors, setHoveredColors] = useState<Record<string, number | null>>({});
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -351,7 +350,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Products Section */}
+      {/* Categories Section */}
       <section id="products" className={styles.productsSection}>
         {/* Section Header */}
         <motion.div
@@ -362,109 +361,111 @@ export default function Home() {
           transition={{ duration: 0.7 }}
         >
           <h2 className={styles.sectionTitle}>
-            제작부터 배송까지 완료되는<br />
-            주요 품목을 직접 확인하세요
+            카테고리별로 살펴보세요
           </h2>
           <div className={`${styles.sectionRight} ${styles.desktopOnly}`}>
             <Link href="/collections/all" className={styles.learnMoreBtn}>
-              더 알아보기
+              전체 상품 보기
             </Link>
           </div>
         </motion.div>
 
-        {/* Products Grid */}
+        {/* Category Banners Grid */}
         <div className={styles.productsGrid}>
-          {products.slice(0, 4).map((product, idx) => (
-            <Link href={`/product/${product.id}`} key={product.id}>
-              <motion.div
-                className={styles.productWrapper}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ ...customTransition, delay: idx * 0.15 }}
-              >
-                {/* Square Card Box - Full image, no text overlays */}
-                <div className={styles.productCard}>
-                  <div className={styles.imageWrapper}>
-                    {(() => {
-                      const modelImages = [
-                        "/images/products/model1.jpg",
-                        "/images/products/model2.jpg",
-                        "/images/products/model3.jpg",
-                        "/images/products/model4.jpg"
-                      ];
-                      
-                      const hoveredColorIdx = hoveredColors[product.id];
-                      let imageSrc = modelImages[idx] || (product.colors.length > 0 ? product.colors[0].image : "");
-                      
-                      // Swap to hovered color image if active
-                      if (hoveredColorIdx !== undefined && hoveredColorIdx !== null && product.colors[hoveredColorIdx]) {
-                        imageSrc = product.colors[hoveredColorIdx].image;
-                      }
-
-                      return imageSrc ? (
-                        <Image
-                          src={imageSrc}
-                          alt={product.name}
-                          width={500}
-                          height={500}
-                          className={styles.productImage}
-                          priority={idx === 0}
-                        />
-                      ) : (
-                        <div className={styles.noImagePlaceholderHome}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className={styles.noImageIconHome}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.9 2.9m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375 0 11-.75 0 .375 0 01.75 0z"
-                            />
-                          </svg>
-                          <span>NO IMAGE</span>
-                        </div>
-                      );
-                    })()}
-                  </div>
+          {/* Banner 1: 티셔츠 */}
+          <Link href="/collections/all?category=티셔츠">
+            <motion.div
+              className={styles.productWrapper}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ ...customTransition, delay: 0 }}
+            >
+              <div className={styles.categoryBanner}>
+                <Image
+                  src="/images/categories/tshirts.jpg"
+                  alt="티셔츠 카테고리"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className={styles.categoryBannerImage}
+                  priority
+                />
+                <div className={styles.categoryBannerOverlay}>
+                  <span className={styles.categoryBannerTitle}>티셔츠</span>
+                  <span className={styles.categoryBannerSub}>T-SHIRTS</span>
                 </div>
+              </div>
+            </motion.div>
+          </Link>
 
-                {/* Card Caption placed OUTSIDE the card box */}
-                <div className={styles.cardCaption}>
-                  <h3 className={styles.productName}>{product.name}</h3>
-                  
-                  <div className={styles.swatchArea}>
-                    <ColorSwatches
-                      colors={product.colors}
-                      onHoverColor={(colorIdx) => {
-                        setHoveredColors((prev) => ({
-                          ...prev,
-                          [product.id]: colorIdx,
-                        }));
-                      }}
-                    />
-                  </div>
-
-                  <div className={styles.productMeta}>
-                    <span>{product.category}</span>
-                    <span> &middot; </span>
-                    <span>₩{product.basePrice.toLocaleString()}원부터</span>
-                  </div>
+          {/* Banner 2: 액티브웨어 */}
+          <Link href="/collections/all?category=액티브웨어">
+            <motion.div
+              className={styles.productWrapper}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ ...customTransition, delay: 0.15 }}
+            >
+              <div className={styles.categoryBanner}>
+                <Image
+                  src="/images/categories/activewear.jpg"
+                  alt="액티브웨어 카테고리"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className={styles.categoryBannerImage}
+                />
+                <div className={styles.categoryBannerOverlay}>
+                  <span className={styles.categoryBannerTitle}>액티브웨어</span>
+                  <span className={styles.categoryBannerSub}>ACTIVEWEAR</span>
                 </div>
-              </motion.div>
-            </Link>
-          ))}
+              </div>
+            </motion.div>
+          </Link>
+
+          {/* Banner 3: 스웻셔츠 */}
+          <Link href="/collections/all?category=스웻셔츠">
+            <motion.div
+              className={styles.productWrapper}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ ...customTransition, delay: 0.3 }}
+            >
+              <div className={styles.categoryBanner}>
+                <Image
+                  src="/images/categories/sweatshirts.jpg"
+                  alt="스웻셔츠 카테고리"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className={styles.categoryBannerImage}
+                />
+                <div className={styles.categoryBannerOverlay}>
+                  <span className={styles.categoryBannerTitle}>스웻셔츠</span>
+                  <span className={styles.categoryBannerSub}>SWEATSHIRTS</span>
+                </div>
+              </div>
+            </motion.div>
+          </Link>
+
+          {/* Banner 4: 광고 공란 (Placeholder) */}
+          <motion.div
+            className={styles.productWrapper}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ ...customTransition, delay: 0.45 }}
+          >
+            <div className={styles.categoryBannerPlaceholder}>
+              <span className={styles.placeholderText}>AD</span>
+            </div>
+          </motion.div>
         </div>
 
         {/* Mobile-Only Learn More Button at the bottom */}
         <div className={`${styles.mobileOnly} ${styles.learnMoreBtnMobileWrapper}`}>
           <Link href="/collections/all" className={styles.learnMoreBtn}>
-            더 알아보기
+            전체 상품 보기
           </Link>
         </div>
       </section>

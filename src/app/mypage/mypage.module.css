@@ -189,6 +189,57 @@
   color: #000000;
 }
 
+/* Tabs Menu */
+.tabContainer {
+  display: flex;
+  background-color: #f4f4f5;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 32px;
+  max-width: 600px;
+}
+
+.tabButton {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 12px;
+  border-radius: 9px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabButton:hover {
+  color: #000000;
+}
+
+.activeTab {
+  background-color: #ffffff;
+  color: #000000 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.deleteCartBtn {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+  background-color: #fef2f2;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteCartBtn:hover {
+  background-color: #fee2e2;
+}
+
 .payBtn {
   background-color: var(--primary-color);
   color: #ffffff;

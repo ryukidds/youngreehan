@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { LogIn, Search, User, Lock, FileText, X, Mail } from "lucide-react";
+import { LogIn, Search, X, Eye, EyeOff } from "lucide-react";
 import styles from "./auth.module.css";
 
 export default function LoginPage() {
@@ -11,8 +11,27 @@ export default function LoginPage() {
   // Member Login States
   const [email, setEmail] = useState(""); // acts as Cafe24 ID/username
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showGuestPassword, setShowGuestPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Dynamic actions/urls
+  const [formAction, setFormAction] = useState("/exec/front/Member/login/");
+  const [returnUrl, setReturnUrl] = useState("/mypage");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+      if (isLocal) {
+        setFormAction("https://hypq.cafe24.com/exec/front/Member/login/");
+        setReturnUrl(`${window.location.origin}/mypage`);
+      } else {
+        setFormAction("/exec/front/Member/login/");
+        setReturnUrl("/mypage");
+      }
+    }
+  }, []);
 
   // Guest Order Lookup States
   const [guestName, setGuestName] = useState("");
@@ -24,28 +43,51 @@ export default function LoginPage() {
   const [findEmail, setFindEmail] = useState("");
   const [findName, setFindName] = useState("");
 
-  const handleMemberSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg("");
-    setIsSubmitting(true);
+  const handleMemberSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (typeof window !== "undefined") {
+      const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+      if (isLocal) {
+        e.preventDefault(); // Prevent native navigation which drops us on Cafe24 homepage
+        setIsSubmitting(true);
+        setErrorMsg("");
 
-    try {
-      const res = await fetch("/api/auth/login-direct", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        window.location.href = "/mypage";
+        try {
+          const formData = new FormData(e.currentTarget);
+          
+          // Submit to Cafe24 directly via fetch with no-cors to bypass Next.js proxy stream issues
+          await fetch("https://hypq.cafe24.com/exec/front/Member/login/", {
+            method: "POST",
+            mode: "no-cors",
+            body: formData,
+          });
+
+          // Set local mock cookie for localhost session detection
+          if (email === "admin") {
+            const res = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username: email, password }),
+            });
+            const data = await res.json();
+            if (data.success) {
+              window.location.href = "/admin";
+            } else {
+              setErrorMsg(data.error || "관리자 로그인에 실패했습니다.");
+              setIsSubmitting(false);
+            }
+          } else {
+            document.cookie = `cafe24_user=${encodeURIComponent(email)}; path=/; max-age=${3600 * 24 * 7}; SameSite=Lax`;
+            window.location.href = "/mypage";
+          }
+        } catch (err) {
+          console.error("Local login failed:", err);
+          setErrorMsg("로그인 처리 중 오류가 발생했습니다. (로컬 테스트)");
+          setIsSubmitting(false);
+        }
       } else {
-        setErrorMsg(data.error || "로그인에 실패했습니다.");
+        // Production: Let native form submit handle it
+        setIsSubmitting(true);
       }
-    } catch (err: any) {
-      console.error(err);
-      setErrorMsg("서버 통신 오류가 발생했습니다.");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -99,7 +141,20 @@ export default function LoginPage() {
         {activeTab === "member" ? (
           /* Member Login Form */
           <>
-            <form onSubmit={handleMemberSubmit} className={styles.form}>
+            <form
+              action={formAction}
+              method="POST"
+              onSubmit={handleMemberSubmit}
+              className={styles.form}
+            >
+              <input type="hidden" name="returnUrl" value={returnUrl} />
+              <input type="hidden" name="forbidIpUrl" value="/" />
+              <input type="hidden" name="certificationUrl" value="/intro/adult_certification.html" />
+              <input type="hidden" name="sIsSnsCheckid" value="" />
+              <input type="hidden" name="sProvider" value="" />
+              <input type="hidden" name="ch_ref" value="" />
+              <input type="hidden" name="checkoutToken" value="" />
+
               {errorMsg && (
                 <div style={{
                   color: "#dc2626",
@@ -115,14 +170,14 @@ export default function LoginPage() {
               )}
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="email">카페24 아이디</label>
+                <label className={styles.label} htmlFor="email">아이디</label>
                 <div className={styles.inputWrapper}>
-                  <User size={16} className={styles.inputIcon} />
                   <input
                     id="email"
+                    name="member_id"
                     type="text"
                     required
-                    placeholder="카페24 ID를 입력하세요"
+                    placeholder="아이디를 입력하세요"
                     className={styles.input}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -134,17 +189,25 @@ export default function LoginPage() {
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="password">비밀번호</label>
                 <div className={styles.inputWrapper}>
-                  <Lock size={16} className={styles.inputIcon} />
                   <input
                     id="password"
-                    type="password"
+                    name="member_passwd"
+                    type={showPassword ? "text" : "password"}
                     required
                     placeholder="비밀번호를 입력하세요"
-                    className={styles.input}
+                    className={`${styles.input} ${styles.inputWithAction}`}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isSubmitting}
                   />
+                  <button
+                    type="button"
+                    className={styles.passwordToggleBtn}
+                    onClick={() => setShowPassword(!showPassword)}
+                    title={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
                 </div>
               </div>
 
@@ -153,32 +216,7 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Social Logins */}
-            <div className={styles.socialSection}>
-              <div className={styles.socialDivider}>
-                <span>또는 간편 로그인</span>
-              </div>
-              <div className={styles.socialButtons}>
-                <button
-                  type="button"
-                  className={styles.kakaoBtn}
-                  onClick={() => alert("카카오 간편 로그인 페이지로 이동합니다. (테스트)")}
-                >
-                  <svg className={styles.socialIcon} viewBox="0 0 24 24" width="16" height="16">
-                    <path fill="currentColor" d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.557 1.707 4.8 4.27 6.054-.188.702-.68 2.531-.777 2.94-.123.518.197.51.413.367.17-.113 2.709-1.854 3.793-2.593.435.061.884.093 1.341.093 4.97 0 9-3.186 9-7.115C21 6.185 16.97 3 12 3z"/>
-                  </svg>
-                  카카오 로그인
-                </button>
-                <button
-                  type="button"
-                  className={styles.naverBtn}
-                  onClick={() => alert("네이버 간편 로그인 페이지로 이동합니다. (테스트)")}
-                >
-                  <span className={styles.naverIcon}>N</span>
-                  네이버 로그인
-                </button>
-              </div>
-            </div>
+            {/* Social Logins removed */}
 
             {/* Member Support Links */}
             <div className={styles.memberLinks}>
@@ -215,7 +253,6 @@ export default function LoginPage() {
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="guestName">주문자명</label>
                 <div className={styles.inputWrapper}>
-                  <User size={16} className={styles.inputIcon} />
                   <input
                     id="guestName"
                     type="text"
@@ -231,7 +268,6 @@ export default function LoginPage() {
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="guestOrderNumber">주문번호</label>
                 <div className={styles.inputWrapper}>
-                  <FileText size={16} className={styles.inputIcon} />
                   <input
                     id="guestOrderNumber"
                     type="text"
@@ -247,16 +283,23 @@ export default function LoginPage() {
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="guestPassword">주문 비밀번호</label>
                 <div className={styles.inputWrapper}>
-                  <Lock size={16} className={styles.inputIcon} />
                   <input
                     id="guestPassword"
-                    type="password"
+                    type={showGuestPassword ? "text" : "password"}
                     required
                     placeholder="주문 당시 설정한 비밀번호를 입력하세요"
-                    className={styles.input}
+                    className={`${styles.input} ${styles.inputWithAction}`}
                     value={guestPassword}
                     onChange={(e) => setGuestPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    className={styles.passwordToggleBtn}
+                    onClick={() => setShowGuestPassword(!showGuestPassword)}
+                    title={showGuestPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                  >
+                    {showGuestPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
                 </div>
               </div>
 

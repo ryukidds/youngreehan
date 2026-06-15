@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Quote } from "@/lib/db";
-import { ArrowLeft, Download, CreditCard, Copy } from "lucide-react";
+import { ArrowLeft, Download, CreditCard, Copy, RefreshCw, Send } from "lucide-react";
 import styles from "../../admin.module.css";
 
 interface QuoteDetailClientProps {
@@ -13,8 +13,43 @@ interface QuoteDetailClientProps {
 export default function QuoteDetailClient({ quote: initialQuote }: QuoteDetailClientProps) {
   const [quote, setQuote] = useState<Quote>(initialQuote);
   const [finalPrice, setFinalPrice] = useState<number>(initialQuote.totalPrice);
+  const [newComment, setNewComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const handleAddComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(`/api/quotes/${quote.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "add_comment",
+          comment: {
+            sender: "ADMIN",
+            senderId: "Admin Manager",
+            message: newComment.trim(),
+          },
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success && data.quote) {
+        setQuote(data.quote);
+        setNewComment("");
+      } else {
+        alert(`댓글 등록 실패: ${data.error}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("댓글 등록에 실패했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const getPositionName = (id: number) => {
     const names: Record<number, string> = {
@@ -78,10 +113,47 @@ export default function QuoteDetailClient({ quote: initialQuote }: QuoteDetailCl
     }
   };
 
+  const handleSyncPayment = async () => {
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/admin/quotes/sync-payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        // Fetch updated quote details
+        const quoteRes = await fetch(`/api/quotes/${quote.id}`);
+        const quoteData = await quoteRes.json();
+        
+        if (quoteData.success) {
+          setQuote(quoteData.quote);
+          if (quoteData.quote.status === "PAID") {
+            alert("결제가 완료된 주문임이 확인되어 결제완료 상태로 업데이트되었습니다!");
+          } else {
+            alert("카페24에 아직 입금/결제 내역이 확인되지 않습니다.");
+          }
+        } else {
+          alert("업데이트된 견적서 정보를 불러오는 데 실패했습니다.");
+        }
+      } else {
+        alert(`동기화 에러: ${data.message}`);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert("결제 상태 동기화 요청에 실패했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleCopyLink = () => {
     if (quote.paymentUrl) {
-      // Create absolute payment link for copying
-      const absoluteUrl = window.location.origin + quote.paymentUrl;
+      // Create absolute payment link for copying (relative vs absolute check)
+      const absoluteUrl = quote.paymentUrl.startsWith("/")
+        ? window.location.origin + quote.paymentUrl
+        : quote.paymentUrl;
       navigator.clipboard.writeText(absoluteUrl).then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -142,14 +214,33 @@ export default function QuoteDetailClient({ quote: initialQuote }: QuoteDetailCl
               <span className={styles.metaValue}>{quote.productName} ({quote.colorName})</span>
             </div>
 
-            <div className={styles.metaItem}>
-              <span className={styles.metaLabel}>사이즈 및 수량</span>
-              <span className={styles.metaValue}>
-                {Object.entries(quote.quantities)
-                  .filter(([, qty]) => qty > 0)
-                  .map(([size, qty]) => `${size}(${qty}개)`)
-                  .join(", ")}
-              </span>
+            <div className={styles.metaItem} style={{ gridColumn: "span 2" }}>
+              <span className={styles.metaLabel}>사이즈 및 수량 상세</span>
+              <div className={styles.metaValue} style={{ marginTop: 6 }}>
+                {quote.colorQuantities ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {Object.entries(quote.colorQuantities).map(([color, sizes]) => {
+                      const sizeStr = Object.entries(sizes)
+                        .filter(([, qty]) => qty > 0)
+                        .map(([size, qty]) => `${size}(${qty}개)`)
+                        .join(", ");
+                      return sizeStr ? (
+                        <div key={color} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <span className={styles.positionTag} style={{ margin: 0, padding: "2px 8px", fontSize: "11px", backgroundColor: "#f4f4f5", borderRadius: "6px", fontWeight: 700 }}>{color}</span>
+                          <span>{sizeStr}</span>
+                        </div>
+                      ) : null;
+                    })}
+                  </div>
+                ) : (
+                  <span>
+                    {Object.entries(quote.quantities)
+                      .filter(([, qty]) => qty > 0)
+                      .map(([size, qty]) => `${size}(${qty}개)`)
+                      .join(", ")}
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className={styles.metaItemFull} style={{ gridColumn: "span 2" }}>
@@ -200,6 +291,119 @@ export default function QuoteDetailClient({ quote: initialQuote }: QuoteDetailCl
               </div>
             )}
           </div>
+
+          {/* Admin-Customer Chat thread section */}
+          <div className={styles.adminCommentsSection} style={{ marginTop: "40px", borderTop: "1px solid #000000", paddingTop: "32px" }}>
+            <h3 style={{ fontSize: "16px", fontWeight: 800, color: "#000000", marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}>
+              💬 고객 소통 게시판 ({quote.comments?.length || 0})
+            </h3>
+
+            <div className={styles.commentsList} style={{ display: "flex", flexDirection: "column", gap: "16px", maxHeight: "300px", overflowY: "auto", marginBottom: "20px", paddingRight: "4px" }}>
+              {(!quote.comments || quote.comments.length === 0) ? (
+                <div style={{ textAlign: "center", padding: "30px 10px", fontSize: "13px", color: "#a1a1aa" }}>
+                  고객과의 댓글 소통 내역이 없습니다. 안내 댓글을 먼저 작성하실 수 있습니다.
+                </div>
+              ) : (
+                quote.comments.map((comment) => {
+                  const isAdmin = comment.sender === "ADMIN";
+                  return (
+                    <div
+                      key={comment.id}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "8px",
+                        width: "100%",
+                        paddingBottom: "12px",
+                        borderBottom: "1px solid #000000",
+                        backgroundColor: "#ffffff",
+                        border: isAdmin ? "1px solid #000000" : "none",
+                        borderRadius: isAdmin ? "8px" : "0",
+                        padding: isAdmin ? "12px" : "0 0 12px 0",
+                        boxSizing: "border-box",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px" }}>
+                        <span style={{
+                          fontWeight: 800,
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                          fontSize: "9px",
+                          backgroundColor: isAdmin ? "#000000" : "#ffffff",
+                          color: isAdmin ? "#ffffff" : "#000000",
+                          border: isAdmin ? "none" : "1px solid #000000"
+                        }}>
+                          {isAdmin ? "관리자" : "고객"}
+                        </span>
+                        <span style={{ fontWeight: 700, color: "#18181b" }}>{comment.senderId}</span>
+                        <span style={{ color: "#a1a1aa" }}>
+                          {new Date(comment.createdAt).toLocaleString("ko-KR", {
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          })}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          lineHeight: "1.6",
+                          color: "#3f3f46",
+                          wordBreak: "break-all",
+                          whiteSpace: "pre-wrap",
+                          marginTop: "4px",
+                        }}
+                      >
+                        {comment.message}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Comment write form */}
+            <form onSubmit={handleAddComment} style={{ display: "flex", flexDirection: "column", gap: "10px", borderTop: "1px solid #000000", paddingTop: "16px" }}>
+              <textarea
+                placeholder="고객에게 안내할 피드백이나 협의 사항을 작성해 주세요..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                disabled={isSubmitting}
+                style={{
+                  width: "100%",
+                  height: "80px",
+                  padding: "12px",
+                  fontSize: "13px",
+                  border: "1px solid #000000",
+                  borderRadius: "8px",
+                  backgroundColor: "#ffffff",
+                  outline: "none",
+                  resize: "none",
+                  boxSizing: "border-box",
+                  color: "#000000"
+                }}
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting || !newComment.trim()}
+                style={{
+                  alignSelf: "flex-end",
+                  backgroundColor: "#000000",
+                  color: "#ffffff",
+                  fontWeight: 700,
+                  fontSize: "12px",
+                  padding: "10px 20px",
+                  borderRadius: "4px",
+                  border: "1px solid #000000",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                댓글 등록 <Send size={12} style={{ display: "inline-block", marginLeft: "2px" }} />
+              </button>
+            </form>
+          </div>
         </div>
 
         {/* Right: Actions form card */}
@@ -247,9 +451,28 @@ export default function QuoteDetailClient({ quote: initialQuote }: QuoteDetailCl
             <div className={styles.linkBox}>
               <span className={styles.linkLabel}>생성된 Cafe24 결제 링크</span>
               <span className={styles.linkVal}>{quote.paymentUrl}</span>
-              <button onClick={handleCopyLink} className={styles.copyBtn}>
-                {copied ? <span style={{ color: "#10b981" }}>✓ 복사 완료!</span> : "결제 링크 복사"}
-              </button>
+              
+              <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
+                <button onClick={handleCopyLink} className={styles.copyBtn} style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", gap: "4px" }}>
+                  <Copy size={12} /> {copied ? "✓ 복사" : "링크 복사"}
+                </button>
+                
+                <button 
+                  onClick={handleSyncPayment} 
+                  disabled={isSubmitting} 
+                  className={styles.copyBtn}
+                  style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", gap: "4px", backgroundColor: "#0052ff", color: "#ffffff" }}
+                >
+                  <RefreshCw size={12} className={isSubmitting ? "animate-spin" : ""} /> 결제상태 확인
+                </button>
+              </div>
+
+              {quote.productNo && (
+                <div style={{ fontSize: 11, color: "#71717a", marginTop: "12px", borderTop: "1px solid #f4f4f5", paddingTop: "8px", textAlign: "left" }}>
+                  <strong>카페24 상품번호:</strong> {quote.productNo}
+                </div>
+              )}
+
               <div style={{ fontSize: 11, color: "#a1a1aa", marginTop: 8 }}>
                 고객 마이페이지에 자동 노출되며, 카카오톡 상담창에 복사해서 직접 전달하실 수도 있습니다.
               </div>

@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Plus, Minus, Send, Check, Upload } from "lucide-react";
-import { Product } from "@/data/products";
+import { Product } from "@/lib/types";
 import GarmentHotspots from "@/components/GarmentHotspots";
+import { getClientCurrentUser } from "@/lib/sessionClient";
 import styles from "./product.module.css";
 
 interface ProductDetailClientProps {
@@ -15,70 +16,9 @@ interface ProductDetailClientProps {
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [quantities, setQuantities] = useState<Record<string, number>>(() =>
-    product.sizes.reduce((acc, size) => ({ ...acc, [size]: 0 }), {})
-  );
-  
-  const [activeTab, setActiveTab] = useState("detail");
-
-  React.useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-140px 0px -50% 0px", // Offset to adjust sticky header height
-      threshold: 0,
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveTab(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-    const sections = ["detail", "info", "guide"];
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      sections.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) observer.unobserve(el);
-      });
-    };
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const getSizeSpecs = (size: string) => {
-    const specs: Record<string, { chest: number; length: number; shoulder: number; sleeve: number }> = {
-      "110": { chest: 34, length: 44, shoulder: 29, sleeve: 13 },
-      "120": { chest: 36, length: 48, shoulder: 31, sleeve: 14 },
-      "130": { chest: 38, length: 52, shoulder: 33, sleeve: 15 },
-      "140": { chest: 40, length: 56, shoulder: 35, sleeve: 16 },
-      "150": { chest: 43, length: 60, shoulder: 38, sleeve: 17 },
-      "160": { chest: 46, length: 63, shoulder: 41, sleeve: 18 },
-      "XS":  { chest: 46, length: 63, shoulder: 41, sleeve: 18 },
-      "S":   { chest: 49, length: 66, shoulder: 44, sleeve: 19 },
-      "M":   { chest: 52, length: 70, shoulder: 47, sleeve: 20 },
-      "L":   { chest: 55, length: 74, shoulder: 50, sleeve: 22 },
-      "XL":  { chest: 58, length: 78, shoulder: 53, sleeve: 24 },
-      "2XL": { chest: 61, length: 82, shoulder: 56, sleeve: 26 },
-      "3XL": { chest: 64, length: 84, shoulder: 59, sleeve: 26 },
-      "4XL": { chest: 67, length: 85, shoulder: 62, sleeve: 27 },
-      "5XL": { chest: 70, length: 86, shoulder: 65, sleeve: 27 },
-    };
-    return specs[size.toUpperCase()] || { chest: 50, length: 70, shoulder: 45, sleeve: 20 };
-  };
+  const [colorQuantities, setColorQuantities] = useState<Record<string, Record<string, number>>>(() => ({
+    [product.colors[0].name]: product.sizes.reduce((acc, size) => ({ ...acc, [size]: 0 }), {})
+  }));
   
   // Printing options state
   const [hasPrint, setHasPrint] = useState<boolean>(true); // Default: With Print
@@ -90,12 +30,84 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
-  const handleQtyChange = (size: string, increment: number) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [size]: Math.max(0, prev[size] + increment),
-    }));
+  const [writerName, setWriterName] = useState("");
+  const [password, setPassword] = useState("");
+  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [showGuestModal, setShowGuestModal] = useState(false);
+
+  React.useEffect(() => {
+    const user = getClientCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+      setWriterName(user);
+    }
+  }, []);
+
+  const handleColorSelect = (color: typeof product.colors[0]) => {
+    setSelectedColor(color);
+    setColorQuantities((prev) => {
+      const next = { ...prev };
+      if (next[color.name]) {
+        // Deselect color
+        delete next[color.name];
+        
+        // If there's still another color selected, set it as active preview
+        const remainingKeys = Object.keys(next);
+        if (remainingKeys.length > 0) {
+          const firstRemaining = product.colors.find(c => c.name === remainingKeys[0]);
+          if (firstRemaining) {
+            setSelectedColor(firstRemaining);
+          }
+        }
+        return next;
+      } else {
+        // Select color
+        return {
+          ...prev,
+          [color.name]: product.sizes.reduce((acc, size) => ({ ...acc, [size]: 0 }), {})
+        };
+      }
+    });
   };
+
+  const handleColorQtyChange = (colorName: string, size: string, increment: number) => {
+    setColorQuantities((prev) => {
+      const colorMap = prev[colorName] || product.sizes.reduce((acc, s) => ({ ...acc, [s]: 0 }), {});
+      return {
+        ...prev,
+        [colorName]: {
+          ...colorMap,
+          [size]: Math.max(0, (colorMap[size] || 0) + increment),
+        },
+      };
+    });
+  };
+
+  const handleRemoveColor = (colorName: string) => {
+    setColorQuantities((prev) => {
+      const next = { ...prev };
+      delete next[colorName];
+      if (Object.keys(next).length === 0) {
+        return {
+          [product.colors[0].name]: product.sizes.reduce((acc, s) => ({ ...acc, [s]: 0 }), {})
+        };
+      }
+      return next;
+    });
+  };
+
+  const quantities = React.useMemo(() => {
+    const sum: Record<string, number> = {};
+    product.sizes.forEach(size => {
+      sum[size] = 0;
+    });
+    Object.values(colorQuantities).forEach(sizesMap => {
+      Object.entries(sizesMap).forEach(([size, qty]) => {
+        sum[size] = (sum[size] || 0) + qty;
+      });
+    });
+    return sum;
+  }, [colorQuantities, product.sizes]);
 
   const handleToggleMethod = (method: string) => {
     setPrintMethods((prev) =>
@@ -163,13 +175,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const finalTotal = subtotal - discountAmount + printFee;
 
   const getQuoteText = (actionType: "주문" | "문의") => {
-    const sizeDetails = Object.entries(quantities)
-      .filter(([, qty]) => qty > 0)
-      .map(([size, qty]) => {
-        const upcharge = product.sizeUpcharges?.[size] || 0;
-        const extra = upcharge > 0 ? ` (+₩${upcharge.toLocaleString()})` : "";
-        return `- ${size}${extra} 사이즈: ${qty}개`;
+    const sizeDetails = Object.entries(colorQuantities)
+      .map(([colorName, sizesMap]) => {
+        const detailStr = Object.entries(sizesMap)
+          .filter(([, qty]) => qty > 0)
+          .map(([size, qty]) => {
+            const upcharge = product.sizeUpcharges?.[size] || 0;
+            const extra = upcharge > 0 ? `(+₩${upcharge.toLocaleString()})` : "";
+            return `${size}${extra}: ${qty}개`;
+          })
+          .join(", ");
+        return detailStr ? `- ${colorName} 색상: ${detailStr}` : null;
       })
+      .filter(Boolean)
       .join("\n");
 
     const positionsText = selectedPositions
@@ -181,7 +199,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     return `[영리한 - ${actionType} 접수 안내]
 --------------------------------
 ■ 요청 품목: ${product.name}
-■ 선택 색상: ${selectedColor.name}
+■ 선택 색상: ${Object.keys(colorQuantities).join(", ")}
 ■ 상세 수량:
 ${sizeDetails || "- 선택된 수량 없음 (카카오톡 채팅으로 수량 조율)"}
 ■ 프린팅 정보:
@@ -197,16 +215,19 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
 ※ 견적을 복사하여 카카오톡 채널에 전달해주시면 빠르게 안내해 드리겠습니다.`;
   };
 
-  const handleCtaClick = async (actionType: "주문" | "문의") => {
-    if (totalQty === 0) return;
+  const executeSubmit = async (wName: string, wPass: string) => {
     setIsSubmitting(true);
 
     try {
       const formData = new FormData();
       formData.append("productId", product.id);
       formData.append("productName", product.name);
-      formData.append("colorName", selectedColor.name);
+      formData.append("writerName", wName);
+      formData.append("password", wPass);
+      formData.append("title", `${wName || "비회원"}님의 시안/견적 문의`);
+      formData.append("colorName", Object.keys(colorQuantities).join(", "));
       formData.append("quantities", JSON.stringify(quantities));
+      formData.append("colorQuantities", JSON.stringify(colorQuantities));
       formData.append("hasPrint", String(hasPrint));
       formData.append("printMethods", JSON.stringify(hasPrint ? printMethods : []));
       formData.append("selectedPositions", JSON.stringify(hasPrint ? selectedPositions : []));
@@ -229,15 +250,15 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
 
       if (data.success) {
         // Copy to clipboard as a helpful helper
-        const text = getQuoteText(actionType);
+        const text = getQuoteText("문의");
         await navigator.clipboard.writeText(text);
 
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000);
 
-        // Redirect to mypage
+        // Redirect to the newly created quote post board thread
         setTimeout(() => {
-          window.location.href = "/mypage";
+          window.location.href = `/quotes/${data.quote.id}`;
         }, 1500);
       } else {
         alert(`견적 제출 실패: ${data.error || "알 수 없는 에러"}`);
@@ -250,11 +271,76 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
     }
   };
 
+  const handleCtaClick = async (actionType: "주문" | "문의") => {
+    if (totalQty === 0) return;
+    
+    if (!currentUser) {
+      setShowGuestModal(true);
+      return;
+    }
+
+    await executeSubmit(currentUser, "");
+  };
+
+  const handleGuestSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!writerName.trim()) {
+      alert("비회원 문의를 위해 작성자명을 입력해 주세요.");
+      return;
+    }
+    if (!password.trim()) {
+      alert("비회원 문의를 위해 비밀번호를 입력해 주세요.");
+      return;
+    }
+    if (password.trim().length !== 4 || isNaN(Number(password))) {
+      alert("비밀번호는 숫자 4자리로 입력해 주세요.");
+      return;
+    }
+    setShowGuestModal(false);
+    await executeSubmit(writerName.trim(), password.trim());
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setFileName(file.name);
       setSelectedFile(file);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (totalQty === 0) {
+      alert("수량을 최소 1개 이상 입력해 주세요.");
+      return;
+    }
+    try {
+      const cartItem = {
+        id: `CART-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        productId: product.id,
+        productName: product.name,
+        colorName: Object.keys(colorQuantities).join(", "),
+        colorQuantities: colorQuantities,
+        quantities: quantities,
+        hasPrint: hasPrint,
+        printMethods: hasPrint ? printMethods : [],
+        selectedPositions: hasPrint ? selectedPositions : [],
+        fileName: fileName,
+        requests: requests,
+        subtotal: subtotal,
+        discountAmount: discountAmount,
+        printFee: printFee,
+        totalPrice: finalTotal,
+      };
+
+      const existingCartJson = localStorage.getItem("youngreehan_cart");
+      const cart = existingCartJson ? JSON.parse(existingCartJson) : [];
+      cart.push(cartItem);
+      localStorage.setItem("youngreehan_cart", JSON.stringify(cart));
+
+      alert("장바구니에 상품이 담겼습니다. 마이페이지에서 확인하실 수 있습니다.");
+    } catch (err) {
+      console.error(err);
+      alert("장바구니 담기에 실패했습니다.");
     }
   };
 
@@ -283,6 +369,7 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
                   height={600}
                   className={styles.mainImage}
                   priority
+                  unoptimized={true}
                 />
               ) : (
                 <div className={styles.noImagePlaceholderLarge}>
@@ -331,91 +418,111 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
               <span className={styles.priceUnit}>1개당</span>
               <span className={styles.priceVal}>₩{product.basePrice.toLocaleString()}원</span>
             </div>
-            <div className={styles.ratingRow}>
-              <span className={styles.ratingStar}>★</span>
-              <span>4.9</span>
-              <span className={styles.divider}>|</span>
-              <span className={styles.reviewsCount}>리뷰 3,795개</span>
-            </div>
-            <p className={styles.description}>{product.description}</p>
+
+            <p className={styles.description}>{product.tagline || product.description}</p>
           </div>
 
           {/* Color Picker */}
           <div className={styles.optionGroup}>
             <div className={styles.optionHeader}>
-              <span className={styles.optionLabel}>색상</span>
-              <span className={styles.optionValue}>{selectedColor.name}</span>
+              <span className={styles.optionLabel}>색상 선택 (여러 개 선택 가능)</span>
+              <span className={styles.optionValue}>
+                선택됨: {Object.keys(colorQuantities).join(", ")}
+              </span>
             </div>
             <div className={styles.colorPicker}>
-              {product.colors.map((color) => (
-                <button
-                  key={color.name}
-                  onClick={() => setSelectedColor(color)}
-                  className={`${styles.colorDotBtn} ${
-                    selectedColor.name === color.name ? styles.active : ""
-                  }`}
-                  title={color.name}
-                >
-                  <span
-                    className={styles.colorInner}
-                    style={{
-                      backgroundColor: color.hex,
-                      border: color.hex.toLowerCase() === "#ffffff" ? "1.5px solid #e4e4e7" : "none"
-                    }}
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Size Picker (Grid style) */}
-          <div className={styles.optionGroup}>
-            <span className={styles.optionLabel}>사이즈 선택 및 추가 수량</span>
-            <div className={styles.sizeGrid}>
-              {product.sizes.map((size) => {
-                const upcharge = product.sizeUpcharges?.[size] || 0;
-                const isExtraPrice = upcharge > 0;
-                const isSelected = quantities[size] > 0;
+              {product.colors.map((color) => {
+                const isSelected = !!colorQuantities[color.name];
+                const isPreviewing = selectedColor.name === color.name;
                 return (
                   <button
-                    key={size}
-                    onClick={() => handleQtyChange(size, quantities[size] === 0 ? 1 : 0)}
-                    className={`${styles.sizeBox} ${isSelected ? styles.active : ""}`}
+                    key={color.name}
+                    type="button"
+                    onClick={() => handleColorSelect(color)}
+                    className={`${styles.colorDotBtn} ${
+                      isSelected ? styles.active : ""
+                    } ${isPreviewing ? styles.previewing : ""}`}
+                    title={`${color.name} (${isSelected ? "선택됨" : "미선택"}) - 클릭 시 미리보기`}
                   >
-                    <span className={styles.sizeName}>{size}</span>
-                    {isExtraPrice && <span className={styles.sizePriceText}>+₩{upcharge.toLocaleString()}</span>}
+                    <span
+                      className={styles.colorInner}
+                      style={{
+                        backgroundColor: color.hex,
+                        border: color.hex.toLowerCase() === "#ffffff" ? "1.5px solid #e4e4e7" : "none"
+                      }}
+                    />
                   </button>
                 );
               })}
             </div>
+          </div>
 
-            {/* Steppers for active sizes */}
-            {Object.entries(quantities).some(([, qty]) => qty > 0) && (
-              <div className={styles.selectedSizesList}>
-                {Object.entries(quantities)
-                  .filter(([, qty]) => qty > 0)
-                  .map(([size, qty]) => (
-                    <div key={size} className={styles.selectedSizeRow}>
-                      <span className={styles.selectedSizeLabel}>{size} 사이즈</span>
-                      <div className={styles.stepper}>
-                        <button
-                          onClick={() => handleQtyChange(size, -1)}
-                          className={styles.stepBtn}
-                        >
-                          <Minus size={12} />
-                        </button>
-                        <span className={styles.stepCount}>{qty}</span>
-                        <button
-                          onClick={() => handleQtyChange(size, 1)}
-                          className={styles.stepBtn}
-                        >
-                          <Plus size={12} />
-                        </button>
+          {/* Color & Size Quantity Cards */}
+          <div className={styles.optionGroup}>
+            <span className={styles.optionLabel}>색상별 사이즈 수량 입력</span>
+            <div className={styles.colorQuantitiesContainer}>
+              {Object.entries(colorQuantities).map(([colorName, sizesMap]) => {
+                const colorObj = product.colors.find(c => c.name === colorName) || product.colors[0];
+                return (
+                  <div key={colorName} className={styles.colorQuantityCard}>
+                    <div className={styles.colorCardHeader}>
+                      <div className={styles.colorInfo}>
+                        <span 
+                          className={styles.colorDot} 
+                          style={{ 
+                            backgroundColor: colorObj.hex,
+                            border: colorObj.hex.toLowerCase() === "#ffffff" ? "1px solid #e4e4e7" : "none"
+                          }} 
+                        />
+                        <span className={styles.colorCardTitle}>{colorName} 색상</span>
                       </div>
+                      {Object.keys(colorQuantities).length > 1 && (
+                        <button
+                          type="button"
+                          className={styles.removeColorBtn}
+                          onClick={() => handleRemoveColor(colorName)}
+                        >
+                          삭제
+                        </button>
+                      )}
                     </div>
-                  ))}
-              </div>
-            )}
+
+                    <div className={styles.sizeList}>
+                      {product.sizes.map((size) => {
+                        const qty = sizesMap[size] || 0;
+                        const upcharge = product.sizeUpcharges?.[size] || 0;
+                        return (
+                          <div key={size} className={styles.sizeRowItem}>
+                            <div className={styles.sizeInfoLeft}>
+                              <span className={styles.sizeLabel}>{size} 사이즈</span>
+                              {upcharge > 0 && <span className={styles.sizeUpchargeText}>+₩{upcharge.toLocaleString()}</span>}
+                            </div>
+                            <div className={styles.stepperControl}>
+                              <button
+                                type="button"
+                                onClick={() => handleColorQtyChange(colorName, size, -1)}
+                                className={styles.stepperBtn}
+                                disabled={qty === 0}
+                              >
+                                <Minus size={12} />
+                              </button>
+                              <span className={styles.stepperVal}>{qty}</span>
+                              <button
+                                type="button"
+                                onClick={() => handleColorQtyChange(colorName, size, 1)}
+                                className={styles.stepperBtn}
+                              >
+                                <Plus size={12} />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Printing Option Toggle */}
@@ -552,198 +659,40 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
           {/* Action CTAs - Bold solid Primary Blue and Solid Grey Secondary ghost button */}
           <div className={styles.actionRow}>
             <button
-              onClick={() => handleCtaClick("주문")}
+              type="button"
+              onClick={handleAddToCart}
+              className={styles.cartBtn}
+              disabled={totalQty === 0 || isSubmitting}
+              style={{ opacity: (totalQty === 0 || isSubmitting) ? 0.4 : 1, cursor: (totalQty === 0 || isSubmitting) ? "not-allowed" : "pointer" }}
+            >
+              장바구니 담기
+            </button>
+            <button
+              type="button"
+              onClick={() => handleCtaClick("문의")}
               className={styles.orderBtn}
               disabled={totalQty === 0 || isSubmitting}
               style={{ opacity: (totalQty === 0 || isSubmitting) ? 0.4 : 1, cursor: (totalQty === 0 || isSubmitting) ? "not-allowed" : "pointer" }}
             >
-              {isSubmitting ? "제출 중..." : "주문하기"} <Send size={16} />
-            </button>
-            <button
-              onClick={() => handleCtaClick("문의")}
-              className={styles.inquiryBtn}
-              disabled={isSubmitting}
-              style={{ opacity: isSubmitting ? 0.6 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
-            >
-              {isSubmitting ? "처리 중..." : "상세 견적 문의"}
+              {isSubmitting ? "제출 중..." : "견적 문의하기"} <Send size={16} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Sticky Tab Navigation */}
-      <div className={styles.tabContainer}>
-        <div className={styles.tabBar}>
-          <button
-            onClick={() => scrollToSection("detail")}
-            className={`${styles.tabBtn} ${activeTab === "detail" ? styles.tabActive : ""}`}
-          >
-            상세페이지
-          </button>
-          <button
-            onClick={() => scrollToSection("info")}
-            className={`${styles.tabBtn} ${activeTab === "info" ? styles.tabActive : ""}`}
-          >
-            상품정보
-          </button>
-          <button
-            onClick={() => scrollToSection("guide")}
-            className={`${styles.tabBtn} ${activeTab === "guide" ? styles.tabActive : ""}`}
-          >
-            제작가이드
-          </button>
-        </div>
-      </div>
-
-      {/* 1. 상세페이지 섹션 */}
-      <section id="detail" className={styles.sectionBlock}>
-        <h2 className={styles.sectionTitle}>PRODUCT DETAIL</h2>
-        <p className={styles.sectionSub}>프리미엄 핏과 내구성을 경험해 보세요.</p>
-        
-        <div className={styles.detailCard}>
-          <div className={styles.detailTextContent}>
-            <h3>{product.name}</h3>
-            <p className={styles.detailTagline}>{product.tagline}</p>
+      {/* Description Section */}
+      {product.description && (
+        <div className={styles.descriptionContainer}>
+          {product.description.includes("<") || product.description.includes(">") ? (
+            <div 
+              className={styles.detailDescHtml} 
+              dangerouslySetInnerHTML={{ __html: product.description }} 
+            />
+          ) : (
             <p className={styles.detailDesc}>{product.description}</p>
-            <div className={styles.detailBadgeRow}>
-              <span>정밀 넥라인 리브 마감</span>
-              <span>100% 고밀도 프리미엄 원사</span>
-              <span>비침 방지 및 형태 안정 가공</span>
-            </div>
-          </div>
-          
-          {/* Big Showcase Image Grid */}
-          <div className={styles.detailImageGrid}>
-            {product.colors.slice(0, 2).map((color, cIdx) => (
-              <div key={cIdx} className={styles.detailImageWrapper}>
-                {color.image && (
-                  <Image
-                    src={color.image}
-                    alt={`${product.name} - ${color.name}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className={styles.detailShowcaseImg}
-                  />
-                )}
-                <span className={styles.imageColorBadge}>{color.name}</span>
-              </div>
-            ))}
-          </div>
+          )}
         </div>
-      </section>
-
-      {/* 2. 상품정보 섹션 */}
-      <section id="info" className={styles.sectionBlock}>
-        <h2 className={styles.sectionTitle}>INFORMATION</h2>
-        <p className={styles.sectionSub}>상품 스펙 및 상세 치수를 확인하세요.</p>
-        
-        <div className={styles.infoGrid}>
-          {/* Specification Sheet */}
-          <div className={styles.specSheet}>
-            <h3>원단 및 스펙 세부정보</h3>
-            <table className={styles.specTable}>
-              <tbody>
-                <tr>
-                  <th>브랜드</th>
-                  <td>{product.brand}</td>
-                </tr>
-                <tr>
-                  <th>제품 카테고리</th>
-                  <td>{product.category}</td>
-                </tr>
-                <tr>
-                  <th>소재 혼용률</th>
-                  <td>순면 100% (일부 멜란지/그레이 색상 면/폴리 혼방)</td>
-                </tr>
-                <tr>
-                  <th>두께 및 중량</th>
-                  <td>{product.name.includes("17수") ? "5.6온스 (헤비웨이트)" : product.name.includes("20수") ? "5.0온스 (스탠다드)" : "4.0온스~7.4온스 (고유 스펙)"}</td>
-                </tr>
-                <tr>
-                  <th>신축성</th>
-                  <td>보통 (활동이 편안한 리브 편직 조직)</td>
-                </tr>
-                <tr>
-                  <th>비침 여부</th>
-                  <td>거의 없음 (화이트 계열 미세 비침 가능)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Size Dimension Table */}
-          <div className={styles.specSheet}>
-            <h3>상세 실측 치수 조견표 (cm)</h3>
-            <div className={styles.tableResponsive}>
-              <table className={styles.sizeTable}>
-                <thead>
-                  <tr>
-                    <th>사이즈</th>
-                    <th>총장</th>
-                    <th>가슴단면</th>
-                    <th>어깨너비</th>
-                    <th>소매길이</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {product.sizes.map((size) => {
-                    const spec = getSizeSpecs(size);
-                    return (
-                      <tr key={size}>
-                        <td><strong>{size}</strong></td>
-                        <td>{spec.length}</td>
-                        <td>{spec.chest}</td>
-                        <td>{spec.shoulder}</td>
-                        <td>{spec.sleeve}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            <span className={styles.tableNotice}>
-              ※ 실측 사이즈는 측정 방법이나 리뉴얼 시점에 따라 1~2cm 내외의 오차가 발생할 수 있습니다.
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. 제작가이드 섹션 */}
-      <section id="guide" className={styles.sectionBlock}>
-        <h2 className={styles.sectionTitle}>PRODUCTION GUIDE</h2>
-        <p className={styles.sectionSub}>영리한 티셔츠 제작 프로세스와 인쇄 팁을 확인하세요.</p>
-        
-        <div className={styles.guideContainer}>
-          {/* Guide Card 1 */}
-          <div className={styles.guideCard}>
-            <div className={styles.guideIconBox}>🎨</div>
-            <h4>인쇄 파일 첨부 요령</h4>
-            <p>
-              가장 깨끗하고 고화질의 정밀 인쇄물을 얻기 위해 디자인 파일은 <strong>일러스트레이터(AI, 벡터 형식)</strong> 파일로 접수해 주시는 것을 적극 권장합니다.
-            </p>
-            <p>
-              JPG/PNG 이미지 파일의 경우 해상도가 <strong>300dpi 이상</strong>이어야 깨짐 현상 없이 선명하게 고화질 인쇄가 가능합니다.
-            </p>
-          </div>
-
-          {/* Guide Card 2 */}
-          <div className={styles.guideCard}>
-            <div className={styles.guideIconBox}>⚙️</div>
-            <h4>인쇄 기법 가이드</h4>
-            <ul>
-              <li>
-                <strong>나염인쇄 (스크린 프린트)</strong>: 클래식하고 오래가는 인쇄 기법으로, 30장 이상 대량 제작 시 최고의 가성비와 선명함을 제공합니다.
-              </li>
-              <li>
-                <strong>전사/디지털인쇄 (DTF)</strong>: 풀컬러나 얇은 선, 그라데이션이 들어간 사진형 도안을 고정밀 디지털 필름으로 열 압착 인쇄합니다.
-              </li>
-              <li>
-                <strong>자수 (Embroidery)</strong>: 도톰한 입체감과 뛰어난 내구성이 특징으로, 워크웨어 및 맨투맨, 아우터의 소형 로고 포인트로 적극 추천합니다.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      )}
 
       {/* Copy notification popup */}
       <AnimatePresence>
@@ -760,6 +709,113 @@ ${hasPrint ? `- 인쇄 위치: ${positionsText || "선택없음"}` : ""}
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Guest Credentials Collection Modal */}
+      {showGuestModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1000,
+        }}>
+          <div style={{
+            backgroundColor: "#ffffff",
+            border: "1px solid #e4e4e7",
+            borderRadius: "12px",
+            padding: "30px",
+            width: "100%",
+            maxWidth: "400px",
+            boxSizing: "border-box",
+          }}>
+            <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#18181b", marginBottom: "12px", textAlign: "center" }}>
+              비회원 견적 문의 정보
+            </h2>
+            <p style={{ fontSize: "13px", color: "#71717a", marginBottom: "20px", textAlign: "center", lineHeight: "1.5" }}>
+              문의 내역 조회 및 답변 확인을 위해 작성자명과 비밀번호를 설정해 주세요.
+            </p>
+            <form onSubmit={handleGuestSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: 700, color: "#4b5563", marginBottom: "4px" }}>작성자명</label>
+                <input
+                  type="text"
+                  placeholder="예: 김동희"
+                  value={writerName}
+                  onChange={(e) => setWriterName(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    fontSize: "13px",
+                    border: "1px solid #e4e4e7",
+                    borderRadius: "8px",
+                    boxSizing: "border-box"
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "11px", fontWeight: 700, color: "#4b5563", marginBottom: "4px" }}>비밀번호 (숫자 4자리)</label>
+                <input
+                  type="password"
+                  maxLength={4}
+                  placeholder="숫자 4자리"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px 12px",
+                    fontSize: "13px",
+                    border: "1px solid #e4e4e7",
+                    borderRadius: "8px",
+                    boxSizing: "border-box"
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                <button
+                  type="button"
+                  onClick={() => setShowGuestModal(false)}
+                  style={{
+                    flex: 1,
+                    backgroundColor: "#ffffff",
+                    color: "#71717a",
+                    border: "1px solid #e4e4e7",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  취소
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    flex: 1,
+                    backgroundColor: "#0052ff",
+                    color: "#ffffff",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  제출하기
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
