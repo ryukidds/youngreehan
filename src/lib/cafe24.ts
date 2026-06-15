@@ -8,7 +8,6 @@
 import fs from "fs";
 import path from "path";
 import { supabase } from "./supabase";
-import { products as staticProducts } from "@/data/products";
 
 const MALL_ID = process.env.NEXT_PUBLIC_CAFE24_MALL_ID || "hypq";
 const CLIENT_ID = process.env.CAFE24_CLIENT_ID || "";
@@ -843,8 +842,8 @@ export async function fetchMappedProducts() {
 
     return productsMapped;
   } catch (error) {
-    console.warn("[Cafe24] Error fetching/mapping products, falling back to static catalog products:", error);
-    return staticProducts;
+    console.error("[Cafe24] Error fetching/mapping products:", error);
+    return [];
   }
 }
 
@@ -880,7 +879,7 @@ export async function fetchMappedProductById(id: string) {
     // 4. Map product
     return mapCafe24Product(product, categoryMap, optionsList);
   } catch (error) {
-    console.warn(`[Cafe24] Error fetching product ${id}, falling back to static product definition:`, error);
-    return staticProducts.find((p) => p.id === id) || null;
+    console.error(`[Cafe24] Error fetching product ${id}:`, error);
+    return null;
   }
 }
